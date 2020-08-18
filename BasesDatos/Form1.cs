@@ -8,13 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+
 namespace BasesDatos
 {
     public partial class Form1 : Form
     {
+        public string nombre_archivo;
+        public Archivo arc;
+        public long cabecera;
+        public BaseDatos BaseDatos;
         public Form1()
         {
             InitializeComponent();
+           
+            arc = new Archivo();
         }
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -77,10 +85,46 @@ namespace BasesDatos
             this.PanelCentral.Tag = form;
             form.Show();
         }
-
+        
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormInPanel(new FormEntidades());
+        }
+
+        
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (arc.SaveD.ShowDialog() == DialogResult.OK)
+            {
+
+                nombre_archivo = arc.SaveD.FileName;
+                arc.nombre_archivo = nombre_archivo;
+                
+               
+                arc.CreaArchivo(nombre_archivo, 0);
+                BaseDatos = arc.BaseD;
+
+                FormEntidades formEntidades = new FormEntidades();
+                formEntidades.Archivo = arc;
+                formEntidades.baseActual = BaseDatos;
+                
+                AbrirFormInPanel(formEntidades);
+            }
+        }
+        private void guardarToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cerrarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            arc.CierraArchivo();
+            if (this.PanelCentral.Controls.Count > 0)
+                this.PanelCentral.Controls.RemoveAt(0);
+        }
+        public void CierraArchivo()
+        {
+            
         }
     }
 }

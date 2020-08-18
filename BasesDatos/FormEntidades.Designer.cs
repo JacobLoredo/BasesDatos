@@ -38,14 +38,10 @@
             this.btnBotonAgregarAtributos = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.PanelTablaEntidades = new System.Windows.Forms.Panel();
-            this.DirSigEnt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DirDatos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DirAtr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DirEnt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DataGridEntidades = new System.Windows.Forms.DataGridView();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.PanelTablaEntidades.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridEntidades)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -54,14 +50,14 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(142, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 25);
+            this.label1.Size = new System.Drawing.Size(123, 25);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Cabecera: ";
+            this.label1.Text = "NombreBD:";
             // 
             // tbCabecera
             // 
             this.tbCabecera.Enabled = false;
-            this.tbCabecera.Location = new System.Drawing.Point(268, 13);
+            this.tbCabecera.Location = new System.Drawing.Point(15, 12);
             this.tbCabecera.Name = "tbCabecera";
             this.tbCabecera.Size = new System.Drawing.Size(60, 20);
             this.tbCabecera.TabIndex = 1;
@@ -148,62 +144,34 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(446, 16);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 25);
+            this.label4.Size = new System.Drawing.Size(78, 25);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Entidades";
+            this.label4.Text = "Tablas";
             // 
             // PanelTablaEntidades
             // 
-            this.PanelTablaEntidades.Controls.Add(this.dataGridView1);
+            this.PanelTablaEntidades.Controls.Add(this.DataGridEntidades);
             this.PanelTablaEntidades.Location = new System.Drawing.Point(15, 47);
             this.PanelTablaEntidades.Name = "PanelTablaEntidades";
             this.PanelTablaEntidades.Size = new System.Drawing.Size(935, 248);
             this.PanelTablaEntidades.TabIndex = 2;
             // 
-            // DirSigEnt
+            // DataGridEntidades
             // 
-            this.DirSigEnt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DirSigEnt.HeaderText = "DirSigEnt";
-            this.DirSigEnt.Name = "DirSigEnt";
-            // 
-            // DirDatos
-            // 
-            this.DirDatos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DirDatos.HeaderText = "DirDatos";
-            this.DirDatos.Name = "DirDatos";
-            // 
-            // DirAtr
-            // 
-            this.DirAtr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DirAtr.HeaderText = "DirAtr";
-            this.DirAtr.Name = "DirAtr";
-            // 
-            // DirEnt
-            // 
-            this.DirEnt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DirEnt.HeaderText = "DirEnt";
-            this.DirEnt.Name = "DirEnt";
+            this.DataGridEntidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridEntidades.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Nombre});
+            this.DataGridEntidades.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DataGridEntidades.Location = new System.Drawing.Point(0, 0);
+            this.DataGridEntidades.Name = "DataGridEntidades";
+            this.DataGridEntidades.Size = new System.Drawing.Size(935, 248);
+            this.DataGridEntidades.TabIndex = 0;
             // 
             // Nombre
             // 
             this.Nombre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Nombre.HeaderText = "Nombre";
             this.Nombre.Name = "Nombre";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nombre,
-            this.DirEnt,
-            this.DirAtr,
-            this.DirDatos,
-            this.DirSigEnt});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(935, 248);
-            this.dataGridView1.TabIndex = 0;
             // 
             // FormEntidades
             // 
@@ -225,7 +193,7 @@
             this.Text = "FormEntidades";
             this.Load += new System.EventHandler(this.FormEntidades_Load);
             this.PanelTablaEntidades.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridEntidades)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,7 +202,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbCabecera;
         private System.Windows.Forms.Button btnBotonAgregar;
         private System.Windows.Forms.Button btnBotonModificar;
         private System.Windows.Forms.Button btnBotonEliminar;
@@ -243,11 +210,8 @@
         private System.Windows.Forms.Button btnBotonAgregarAtributos;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel PanelTablaEntidades;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DataGridEntidades;
+        public System.Windows.Forms.TextBox tbCabecera;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DirEnt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DirAtr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DirDatos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DirSigEnt;
     }
 }
