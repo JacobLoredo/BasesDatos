@@ -26,7 +26,7 @@ namespace BasesDatos
             openFile = new OpenFileDialog { InitialDirectory = Directory.GetCurrentDirectory() };
         }
 
-        public bool IntentaAbrir()
+        public void AbrirBase()
         {
             try
             {
@@ -38,39 +38,36 @@ namespace BasesDatos
                 if (openFile.ShowDialog() == DialogResult.OK)
                 {
 
-                    ArchivoFuente = new FileStream(openFile.FileName, FileMode.Open);
-                    nombre_archivo = openFile.FileName;
-                    return true;
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    
+                    string ruta = File.ReadAllText(openFile.FileName);
+
+                    BaseDatos bas=js.Deserialize<BaseDatos>(ruta);
+                    
+                    BaseD = bas;
                 }
                 else
                 {
                     MessageBox.Show("Extension incorrecta");
-                    nombre_archivo = "";
-                    ArchivoFuente = null;
-                    return false;
+                   
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                MessageBox.Show("Error al abri el archivo");
-                return false;
+                
+                MessageBox.Show(e.Message);
+                
             }
 
 
         }
         public void CierraArchivo()
         {
-            if (ArchivoFuente != null)
+           
+            if (BaseD!=null)
             {
-                ArchivoFuente.Close();
-                ArchivoFuente = null;
+                BaseD = null;
             }
-            if (escribe != null)
-                escribe.Close();
-
-            if (lee != null)
-                lee.Close();
         }
         public void GuardarTabla(Tabla json)
         {
@@ -78,8 +75,19 @@ namespace BasesDatos
             
             try
             {
+                //SaveD.InitialDirectory
+               
                 string jsonData = js.Serialize(json);
-                File.WriteAllText(di.FullName+"//"+json._NombreTabla.ToString()+".TB",jsonData);
+                if (di==null)
+                {
+                    File.WriteAllText(SaveD.InitialDirectory + "//" + BaseD._NombreBD + "//" + json._NombreTabla.ToString() + ".TB", jsonData);
+                    
+                }
+                else
+                {
+                    File.WriteAllText(di.FullName+"//"+json._NombreTabla.ToString()+".TB",jsonData);
+
+                }
 
             }
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }
@@ -92,7 +100,17 @@ namespace BasesDatos
             try
             {
                 string jsonData = js.Serialize(json);
-                File.WriteAllText(di.FullName + "//" + json._NombreBD.ToString()+".BD", jsonData);
+                if (di == null)
+                {
+                    File.WriteAllText(SaveD.InitialDirectory + "//" + BaseD._NombreBD +"//"+ json._NombreBD.ToString()+".BD", jsonData);
+
+                }
+                else
+                {
+                    File.WriteAllText(di.FullName + "//" + json._NombreBD.ToString() + ".BD", jsonData);
+
+                }
+                
 
             }
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }

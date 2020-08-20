@@ -22,23 +22,38 @@ namespace BasesDatos
 
         private void FormEntidades_Load(object sender, EventArgs e)
         {
+            if (baseActual!=null)
+            {
             label1.Text += " "+baseActual._NombreBD;
+                cargaTablas();
+            }
            
         }
+        public void cargaTablas() {
+            if (baseActual.Tablas.Count > 0)
+            {
+                foreach (Tabla item in baseActual.Tablas)
+                {
+                    int n = DataGridEntidades.Rows.Add();
 
+                    DataGridEntidades.Rows[n].Cells[0].Value =item._NombreTabla;
+                }
+            }
+        }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
             if (res==0)
             {
                 Tabla tabla = new Tabla(textBox1.Text);
+                
                 baseActual.Tablas.Add(tabla);
                 DataGridEntidades.Rows.Clear();
 
                 foreach (Tabla tb in baseActual.Tablas)
                 {
                     int n = DataGridEntidades.Rows.Add();
-
+                   
                     DataGridEntidades.Rows[n].Cells[0].Value = tb._NombreTabla;
                    
                 }
@@ -49,6 +64,7 @@ namespace BasesDatos
             else
             {
                 MessageBox.Show("La entidad deseada ya existe");
+                textBox1.Text = "";
             }
         }
         public int ChecaEntidadRepetida(string NombreEntidad) {

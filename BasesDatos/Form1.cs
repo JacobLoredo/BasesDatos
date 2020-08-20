@@ -88,7 +88,16 @@ namespace BasesDatos
         
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormInPanel(new FormEntidades());
+            arc = new Archivo();
+            arc.AbrirBase();
+            BaseDatos = arc.BaseD;
+            FormEntidades formEntidades = new FormEntidades();
+            formEntidades.Archivo = arc;
+            
+            formEntidades.baseActual = arc.BaseD;
+
+            AbrirFormInPanel(formEntidades);
+            
         }
 
         
@@ -119,6 +128,7 @@ namespace BasesDatos
         private void cerrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             arc.CierraArchivo();
+            arc = null;
             if (this.PanelCentral.Controls.Count > 0)
                 this.PanelCentral.Controls.RemoveAt(0);
         }
