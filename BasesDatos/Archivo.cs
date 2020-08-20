@@ -96,7 +96,7 @@ namespace BasesDatos
 
         public void GuardaBase(BaseDatos json) {
             JavaScriptSerializer js = new JavaScriptSerializer();
-
+            
             try
             {
                 string jsonData = js.Serialize(json);
@@ -115,7 +115,9 @@ namespace BasesDatos
             }
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }
         }
-
+        public void EliminaTabla(string nombreTabla) {
+            File.Delete(SaveD.InitialDirectory + "//" + BaseD._NombreBD + "//" + nombreTabla + ".TB");
+        }
         public void CreaArchivo(string obj, int op)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();

@@ -91,6 +91,7 @@
             this.btnBotonModificar.TabIndex = 4;
             this.btnBotonModificar.Text = "Modificar";
             this.btnBotonModificar.UseVisualStyleBackColor = false;
+            this.btnBotonModificar.Click += new System.EventHandler(this.btnBotonModificar_Click);
             // 
             // btnBotonEliminar
             // 
@@ -105,6 +106,7 @@
             this.btnBotonEliminar.TabIndex = 5;
             this.btnBotonEliminar.Text = "Eliminar";
             this.btnBotonEliminar.UseVisualStyleBackColor = false;
+            this.btnBotonEliminar.Click += new System.EventHandler(this.btnBotonEliminar_Click);
             // 
             // textBox1
             // 
