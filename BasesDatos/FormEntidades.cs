@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BasesDatos
@@ -23,31 +14,32 @@ namespace BasesDatos
 
         private void FormEntidades_Load(object sender, EventArgs e)
         {
-            if (baseActual!=null)
+            if (baseActual != null)
             {
-            label1.Text += " "+baseActual._NombreBD;
+                label1.Text += " " + baseActual._NombreBD;
                 cargaTablas();
             }
-           
+
         }
-        public void cargaTablas() {
+        public void cargaTablas()
+        {
             if (baseActual.Tablas.Count > 0)
             {
                 foreach (Tabla item in baseActual.Tablas)
                 {
                     int n = DataGridEntidades.Rows.Add();
 
-                    DataGridEntidades.Rows[n].Cells[0].Value =item._NombreTabla;
+                    DataGridEntidades.Rows[n].Cells[0].Value = item._NombreTabla;
                 }
             }
         }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
-            if (res==0)
+            if (res == 0)
             {
                 Tabla tabla = new Tabla(textBox1.Text);
-                
+
                 baseActual.Tablas.Add(tabla);
                 actualizaDataGrid();
                 Archivo.GuardarTabla(tabla);
@@ -60,7 +52,8 @@ namespace BasesDatos
                 textBox1.Text = "";
             }
         }
-        public void actualizaDataGrid() {
+        public void actualizaDataGrid()
+        {
             DataGridEntidades.Rows.Clear();
 
             foreach (Tabla tb in baseActual.Tablas)
@@ -71,11 +64,12 @@ namespace BasesDatos
 
             }
         }
-        public int ChecaEntidadRepetida(string NombreEntidad) {
+        public int ChecaEntidadRepetida(string NombreEntidad)
+        {
             int repetido = 0;
-            if (NombreEntidad!="")
+            if (NombreEntidad != "")
             {
-                
+
                 foreach (Tabla item in baseActual.Tablas)
                 {
                     if (item._NombreTabla == NombreEntidad)
@@ -83,7 +77,7 @@ namespace BasesDatos
                         repetido = 1;
                         break;
                     }
-                    
+
                 }
             }
             else
@@ -96,18 +90,19 @@ namespace BasesDatos
         {
 
         }
-        public void BuscaTablaModificar() {
+        public void BuscaTablaModificar()
+        {
 
             foreach (Tabla item in baseActual.Tablas)
             {
-                if (item._NombreTabla== (string)DataGridEntidades.CurrentRow.Cells[0].Value)
+                if (item._NombreTabla == (string)DataGridEntidades.CurrentRow.Cells[0].Value)
                 {
-                    
+
                     ModificaNombreTabla(baseActual.Tablas.IndexOf(item));
                     break;
 
-                } 
-                
+                }
+
             }
         }
         public void BuscaTablaEliminar()
@@ -127,16 +122,17 @@ namespace BasesDatos
 
             }
         }
-        public void ModificaNombreTabla(int index) {
+        public void ModificaNombreTabla(int index)
+        {
             Archivo.EliminaTabla(baseActual.Tablas[index]._NombreTabla);
-            baseActual.Tablas[index]._NombreTabla=textBox1.Text;
+            baseActual.Tablas[index]._NombreTabla = textBox1.Text;
             Archivo.GuardarTabla(baseActual.Tablas[index]);
             Archivo.GuardaBase(baseActual);
         }
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
-            if (res==0)
+            if (res == 0)
             {
                 BuscaTablaModificar();
                 actualizaDataGrid();
@@ -147,13 +143,42 @@ namespace BasesDatos
                 MessageBox.Show("La entidad deseada ya existe");
                 textBox1.Text = "";
             }
-            
+
         }
 
         private void btnBotonEliminar_Click(object sender, EventArgs e)
         {
-            
+
             BuscaTablaEliminar();
+        }
+        public Tabla RegresaTabla()
+        {
+            Tabla tabla = new Tabla();
+            foreach (Tabla item in baseActual.Tablas)
+            {
+                if (item._NombreTabla == (string)DataGridEntidades.CurrentRow.Cells[0].Value)
+                {
+                    tabla = item;
+                    break;
+                }
+
+            }
+            return tabla;
+
+        }
+        private void btnBotonAgregarAtributos_Click(object sender, EventArgs e)
+        {
+            FormAtributos formAtributos = new FormAtributos(RegresaTabla(), baseActual);
+            AddOwnedForm(formAtributos);
+            formAtributos.FormBorderStyle = FormBorderStyle.None;
+            formAtributos.TopLevel = false;
+            formAtributos.Dock = DockStyle.Fill;
+            this.Controls.Add(formAtributos);
+            this.Tag = formAtributos;
+            formAtributos.BringToFront();
+            formAtributos.Show();
+
+
         }
     }
 }

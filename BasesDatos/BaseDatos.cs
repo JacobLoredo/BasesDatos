@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BasesDatos
 {
@@ -11,7 +7,8 @@ namespace BasesDatos
         private string NombreBD;
         private List<Tabla> tablas;
 
-        public BaseDatos(string Nombre) {
+        public BaseDatos(string Nombre)
+        {
             NombreBD = Nombre;
             tablas = new List<Tabla>();
         }
@@ -21,7 +18,7 @@ namespace BasesDatos
             tablas = new List<Tabla>();
         }
 
-        public List<Tabla> Tablas { get { return tablas; } set{tablas=value; }}
+        public List<Tabla> Tablas { get { return tablas; } set { tablas = value; } }
         public string _NombreBD { get { return NombreBD; } set { NombreBD = value; } }
 
 

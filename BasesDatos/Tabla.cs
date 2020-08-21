@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BasesDatos
 {
@@ -15,13 +11,14 @@ namespace BasesDatos
         private List<Atributo> atributos;
 
         /// <param name="nombre">Nombre de la tabla a crear.</param>
-        public Tabla(string nombre) {
+        public Tabla(string nombre)
+        {
             NombreTabla = nombre;
             atributos = new List<Atributo>();
         }
         public Tabla()
         {
-           
+
             atributos = new List<Atributo>();
         }
 

@@ -70,7 +70,7 @@
             this.btnBotonAgregar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.btnBotonAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBotonAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBotonAgregar.Location = new System.Drawing.Point(346, 305);
+            this.btnBotonAgregar.Location = new System.Drawing.Point(240, 303);
             this.btnBotonAgregar.Name = "btnBotonAgregar";
             this.btnBotonAgregar.Size = new System.Drawing.Size(100, 26);
             this.btnBotonAgregar.TabIndex = 3;
@@ -85,7 +85,7 @@
             this.btnBotonModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.btnBotonModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBotonModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBotonModificar.Location = new System.Drawing.Point(346, 337);
+            this.btnBotonModificar.Location = new System.Drawing.Point(240, 335);
             this.btnBotonModificar.Name = "btnBotonModificar";
             this.btnBotonModificar.Size = new System.Drawing.Size(100, 26);
             this.btnBotonModificar.TabIndex = 4;
@@ -100,7 +100,7 @@
             this.btnBotonEliminar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.btnBotonEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBotonEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBotonEliminar.Location = new System.Drawing.Point(346, 369);
+            this.btnBotonEliminar.Location = new System.Drawing.Point(240, 367);
             this.btnBotonEliminar.Name = "btnBotonEliminar";
             this.btnBotonEliminar.Size = new System.Drawing.Size(100, 26);
             this.btnBotonEliminar.TabIndex = 5;
@@ -110,7 +110,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(223, 337);
+            this.textBox1.Location = new System.Drawing.Point(117, 335);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(117, 20);
             this.textBox1.TabIndex = 6;
@@ -120,7 +120,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(140, 337);
+            this.label2.Location = new System.Drawing.Point(34, 335);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 17);
             this.label2.TabIndex = 7;
@@ -133,12 +133,13 @@
             this.btnBotonAgregarAtributos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.btnBotonAgregarAtributos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBotonAgregarAtributos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBotonAgregarAtributos.Location = new System.Drawing.Point(539, 337);
+            this.btnBotonAgregarAtributos.Location = new System.Drawing.Point(433, 335);
             this.btnBotonAgregarAtributos.Name = "btnBotonAgregarAtributos";
             this.btnBotonAgregarAtributos.Size = new System.Drawing.Size(153, 26);
             this.btnBotonAgregarAtributos.TabIndex = 8;
             this.btnBotonAgregarAtributos.Text = "Agregar Atributos";
             this.btnBotonAgregarAtributos.UseVisualStyleBackColor = false;
+            this.btnBotonAgregarAtributos.Click += new System.EventHandler(this.btnBotonAgregarAtributos_Click);
             // 
             // label4
             // 
@@ -155,7 +156,7 @@
             this.PanelTablaEntidades.Controls.Add(this.DataGridEntidades);
             this.PanelTablaEntidades.Location = new System.Drawing.Point(15, 47);
             this.PanelTablaEntidades.Name = "PanelTablaEntidades";
-            this.PanelTablaEntidades.Size = new System.Drawing.Size(935, 248);
+            this.PanelTablaEntidades.Size = new System.Drawing.Size(696, 248);
             this.PanelTablaEntidades.TabIndex = 2;
             // 
             // DataGridEntidades
@@ -166,7 +167,7 @@
             this.DataGridEntidades.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DataGridEntidades.Location = new System.Drawing.Point(0, 0);
             this.DataGridEntidades.Name = "DataGridEntidades";
-            this.DataGridEntidades.Size = new System.Drawing.Size(935, 248);
+            this.DataGridEntidades.Size = new System.Drawing.Size(696, 248);
             this.DataGridEntidades.TabIndex = 0;
             // 
             // Nombre
@@ -179,7 +180,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 433);
+            this.ClientSize = new System.Drawing.Size(732, 433);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnBotonAgregarAtributos);
             this.Controls.Add(this.label2);
