@@ -76,6 +76,22 @@ namespace BasesDatos
 
             }
         }
+        public void BuscaAtributoEliminar()
+        {
+
+            foreach (Atributo item in tablaActual._Atributos)
+            {
+                if (item._NombreAtributo == (string)dataGridAtributos.CurrentRow.Cells[0].Value)
+                {
+                   
+                    tablaActual._Atributos.Remove(item);
+                    Archivo.GuardarTabla(tablaActual);
+                    Archivo.GuardaBase(@base);
+                    break;
+                }
+
+            }
+        }
         public void ModificaAtributo(int index)
         {
             /*Checa cada unas de las posibilidades en las que la persona quiera cambiar 1 o mas elementos de un atributo*/
@@ -131,6 +147,7 @@ namespace BasesDatos
                     if (!ChecaClavePrimariaRepetida())
                     {
                         BuscaAtributoModificar();
+                        CargarAtributos();
                     }
                 }
                 else
@@ -230,6 +247,12 @@ namespace BasesDatos
             {
                 MessageBox.Show("Faltan campos por llenar");
             }
+        }
+
+        private void btnBotonEliminar_Click(object sender, EventArgs e)
+        {
+            BuscaAtributoEliminar();
+            CargarAtributos();
         }
     }
 }

@@ -208,6 +208,7 @@
             this.btnBotonEliminar.TabIndex = 8;
             this.btnBotonEliminar.Text = "Eliminar";
             this.btnBotonEliminar.UseVisualStyleBackColor = false;
+            this.btnBotonEliminar.Click += new System.EventHandler(this.btnBotonEliminar_Click);
             // 
             // btnBotonModificar
             // 
