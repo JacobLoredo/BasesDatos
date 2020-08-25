@@ -22,6 +22,11 @@ namespace BasesDatos
         private extern static void SendMessage(System.IntPtr hwnd, int msg, int wparam, int lparam);
         private void iconClose_Click(object sender, EventArgs e)
         {
+            arc.CierraArchivo();
+            arc = null;
+            if (this.PanelCentral.Controls.Count > 0)
+                this.PanelCentral.Controls.RemoveAt(0);
+
             Application.Exit();
         }
 
@@ -124,6 +129,7 @@ namespace BasesDatos
             arc = null;
             if (this.PanelCentral.Controls.Count > 0)
                 this.PanelCentral.Controls.RemoveAt(0);
+            MessageBox.Show("Cerrar ventana");
         }
         public void CierraArchivo()
         {

@@ -62,16 +62,94 @@ namespace BasesDatos
         {
 
         }
-
-        private void btnBotonModificar_Click(object sender, EventArgs e)
+        public void BuscaAtributoModificar()
         {
 
+            foreach (Atributo item in tablaActual._Atributos)
+            {
+                if (item._NombreAtributo == (string)dataGridAtributos.CurrentRow.Cells[0].Value)
+                {
+
+                    ModificaAtributo(tablaActual._Atributos.IndexOf(item));
+                    break;
+                }
+
+            }
+        }
+        public void ModificaAtributo(int index)
+        {
+            /*Checa cada unas de las posibilidades en las que la persona quiera cambiar 1 o mas elementos de un atributo*/
+            if (textBox1.Text != "")
+            {
+                tablaActual._Atributos[index]._NombreAtributo = textBox1.Text;
+            }
+            else if (CBTipoDato.Text != "")
+            {
+                tablaActual._Atributos[index]._TipoDato = Convert.ToChar(CBTipoDato.Text);
+            }
+            else if (CBTipoLlave.Text != "")
+            {
+                tablaActual._Atributos[index]._TipoLLave = CBTipoLlave.SelectedIndex + 1;
+            }
+            else if (textBox1.Text != "" && CBTipoDato.Text != "")
+            {
+                tablaActual._Atributos[index]._NombreAtributo = textBox1.Text;
+                tablaActual._Atributos[index]._TipoDato = Convert.ToChar(CBTipoDato.Text);
+            }
+            else if (textBox1.Text != "" && CBTipoLlave.Text != "")
+            {
+                tablaActual._Atributos[index]._NombreAtributo = textBox1.Text;
+                tablaActual._Atributos[index]._TipoLLave = CBTipoLlave.SelectedIndex + 1;
+            }
+            else if (CBTipoDato.Text != "" && CBTipoLlave.Text != "")
+            {
+                tablaActual._Atributos[index]._TipoDato = Convert.ToChar(CBTipoDato.Text);
+                tablaActual._Atributos[index]._TipoLLave = CBTipoLlave.SelectedIndex + 1;
+            }
+            else
+            {
+                tablaActual._Atributos[index]._NombreAtributo = textBox1.Text;
+                tablaActual._Atributos[index]._TipoDato = Convert.ToChar(CBTipoDato.Text);
+                tablaActual._Atributos[index]._TipoLLave = CBTipoLlave.SelectedIndex + 1;
+            }
+
+            Archivo.GuardarTabla(tablaActual);
+            Archivo.GuardaBase(@base);
+            textBox1.Text = "";
+            CBTipoDato.Text = "";
+            CBTipoLlave.Text = "";
+            CargarAtributos();
+
+        }
+        private void btnBotonModificar_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "" || CBTipoDato.Text != "" || CBTipoLlave.Text != "")
+            {
+                int res = ChecaAtributoRepetida(textBox1.Text);
+                if (res == 0)
+                {
+                    if (!ChecaClavePrimariaRepetida())
+                    {
+                        BuscaAtributoModificar();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("El atributo deseado ya existe");
+                    textBox1.Text = "";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Faltan campos por llenar");
+            }
         }
 
 
         private void iconClose_Click_1(object sender, EventArgs e)
         {
             this.Close();
+
         }
         public int ChecaAtributoRepetida(string NombreAtributo)
         {
@@ -103,7 +181,7 @@ namespace BasesDatos
 
                 for (int i = 0; i < tablaActual._Atributos.Count; i++)
                 {
-                    if (tablaActual._Atributos[i]._TipoLLave == 1 && CBTipoLlave.SelectedIndex+1 == tablaActual._Atributos[i]._TipoLLave)
+                    if (tablaActual._Atributos[i]._TipoLLave == 1 && CBTipoLlave.SelectedIndex + 1 == tablaActual._Atributos[i]._TipoLLave)
                     {
                         MessageBox.Show("Ya existe un atributo con Clave Primaria");
                         textBox1.Text = "";
@@ -118,17 +196,21 @@ namespace BasesDatos
             }
             return ban;
         }
+        public Atributo CreaAtributo(string n,char TD,int LL) {
+            Atributo atributo = new Atributo(n,TD,LL);
+            return atributo;
+        }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text!=""&&CBTipoDato.Text!=""&&CBTipoLlave.Text!="")
+            if (textBox1.Text != "" && CBTipoDato.Text != "" && CBTipoLlave.Text != "")
             {
 
-            int res = ChecaAtributoRepetida(textBox1.Text);
-            if (res == 0)
-            {
-                if (!ChecaClavePrimariaRepetida())
+                int res = ChecaAtributoRepetida(textBox1.Text);
+                if (res == 0)
                 {
-                        Atributo atributo = new Atributo(textBox1.Text,Convert.ToChar(CBTipoDato.Text),CBTipoLlave.SelectedIndex+1);
+                    if (!ChecaClavePrimariaRepetida())
+                    {
+                        Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1);
                         tablaActual._Atributos.Add(atributo);
                         Archivo.GuardarTabla(tablaActual);
                         Archivo.GuardaBase(@base);
@@ -136,13 +218,13 @@ namespace BasesDatos
                         CBTipoDato.Text = "";
                         CBTipoLlave.Text = "";
                         CargarAtributos();
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("El atributo deseado ya existe");
-                textBox1.Text = "";
-            }
+                else
+                {
+                    MessageBox.Show("El atributo deseado ya existe");
+                    textBox1.Text = "";
+                }
             }
             else
             {

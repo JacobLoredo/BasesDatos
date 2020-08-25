@@ -80,7 +80,7 @@
             this.PanelBarraTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelBarraTitulo.Location = new System.Drawing.Point(250, 0);
             this.PanelBarraTitulo.Name = "PanelBarraTitulo";
-            this.PanelBarraTitulo.Size = new System.Drawing.Size(1050, 50);
+            this.PanelBarraTitulo.Size = new System.Drawing.Size(725, 50);
             this.PanelBarraTitulo.TabIndex = 1;
             // 
             // iconMinimize
@@ -94,7 +94,7 @@
             this.iconMinimize.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
             this.iconMinimize.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconMinimize.IconSize = 40;
-            this.iconMinimize.Location = new System.Drawing.Point(894, 0);
+            this.iconMinimize.Location = new System.Drawing.Point(569, 0);
             this.iconMinimize.Name = "iconMinimize";
             this.iconMinimize.Rotation = 0D;
             this.iconMinimize.Size = new System.Drawing.Size(39, 50);
@@ -113,7 +113,7 @@
             this.iconMaximize.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
             this.iconMaximize.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconMaximize.IconSize = 40;
-            this.iconMaximize.Location = new System.Drawing.Point(933, 0);
+            this.iconMaximize.Location = new System.Drawing.Point(608, 0);
             this.iconMaximize.Name = "iconMaximize";
             this.iconMaximize.Rotation = 0D;
             this.iconMaximize.Size = new System.Drawing.Size(39, 50);
@@ -132,7 +132,7 @@
             this.iconRestore.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
             this.iconRestore.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconRestore.IconSize = 40;
-            this.iconRestore.Location = new System.Drawing.Point(972, 0);
+            this.iconRestore.Location = new System.Drawing.Point(647, 0);
             this.iconRestore.Name = "iconRestore";
             this.iconRestore.Rotation = 0D;
             this.iconRestore.Size = new System.Drawing.Size(39, 50);
@@ -170,7 +170,7 @@
             this.iconClose.IconChar = FontAwesome.Sharp.IconChar.Times;
             this.iconClose.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconClose.IconSize = 40;
-            this.iconClose.Location = new System.Drawing.Point(1011, 0);
+            this.iconClose.Location = new System.Drawing.Point(686, 0);
             this.iconClose.Name = "iconClose";
             this.iconClose.Rotation = 0D;
             this.iconClose.Size = new System.Drawing.Size(39, 50);
@@ -187,7 +187,7 @@
             this.menuStrip1.Margin = new System.Windows.Forms.Padding(50, 0, 0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(50, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 50);
+            this.menuStrip1.Size = new System.Drawing.Size(725, 50);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseDown);
@@ -236,7 +236,7 @@
             this.PanelCentral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelCentral.Location = new System.Drawing.Point(250, 50);
             this.PanelCentral.Name = "PanelCentral";
-            this.PanelCentral.Size = new System.Drawing.Size(1050, 600);
+            this.PanelCentral.Size = new System.Drawing.Size(725, 600);
             this.PanelCentral.TabIndex = 2;
             this.PanelCentral.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelCentral_Paint);
             // 
@@ -244,7 +244,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1300, 650);
+            this.ClientSize = new System.Drawing.Size(975, 650);
             this.Controls.Add(this.PanelCentral);
             this.Controls.Add(this.PanelBarraTitulo);
             this.Controls.Add(this.PanelMenuVertical);

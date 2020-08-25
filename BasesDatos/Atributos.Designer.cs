@@ -252,7 +252,7 @@
             this.iconClose.IconChar = FontAwesome.Sharp.IconChar.Times;
             this.iconClose.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconClose.IconSize = 40;
-            this.iconClose.Location = new System.Drawing.Point(693, 0);
+            this.iconClose.Location = new System.Drawing.Point(648, -1);
             this.iconClose.Name = "iconClose";
             this.iconClose.Rotation = 0D;
             this.iconClose.Size = new System.Drawing.Size(39, 50);

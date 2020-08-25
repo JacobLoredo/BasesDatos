@@ -29,7 +29,7 @@ namespace BasesDatos
                 CierraArchivo();
 
                 openFile.Filter =
-                                  "DICCIONARIO|*.BD";
+                                  "BaseDeDatos|*.BD";
 
                 if (openFile.ShowDialog() == DialogResult.OK)
                 {

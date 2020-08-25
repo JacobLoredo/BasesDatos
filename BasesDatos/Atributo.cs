@@ -14,7 +14,7 @@
         }
         public Atributo()
         {
-            
+
         }
         public string _NombreAtributo { get { return NombreAtributo; } set { NombreAtributo = value; } }
         public char _TipoDato { get { return TipoDato; } set { TipoDato = value; } }
