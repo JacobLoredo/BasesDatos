@@ -6,7 +6,7 @@ namespace BasesDatos
     {
         private string NombreBD;
         private List<Tabla> tablas;
-
+        
         public BaseDatos(string Nombre)
         {
             NombreBD = Nombre;

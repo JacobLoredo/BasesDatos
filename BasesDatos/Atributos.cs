@@ -17,6 +17,7 @@ namespace BasesDatos
             tablaActual = tabla;
             NombreTabla.Text += " " + tablaActual._NombreTabla;
             CargarAtributos();
+            
         }
         public void CargarAtributos()
         {
@@ -35,7 +36,26 @@ namespace BasesDatos
         }
         private void CBTipoLlave_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
+            //MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
+            if (CBTipoLlave.SelectedIndex ==1)
+            {
+                MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
+                label4.Visible = true;
+                CBForanea.Visible = true;
+                foreach (Tabla item in @base.Tablas)
+                {
+                    if (item._NombreTabla!=tablaActual._NombreTabla)
+                    {
+                        CBForanea.Items.Add(item._NombreTabla.ToString());
+                    }
+                }
+            }
+            else
+            {
+                label4.Visible = false;
+                CBForanea.Visible = false;
+                CBForanea.Items.Clear();
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -253,6 +273,19 @@ namespace BasesDatos
         {
             BuscaAtributoEliminar();
             CargarAtributos();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RegistrosFm formRegistros = new RegistrosFm(@base,tablaActual);
+            AddOwnedForm(formRegistros);
+            formRegistros.FormBorderStyle = FormBorderStyle.None;
+            formRegistros.TopLevel = false;
+            formRegistros.Dock = DockStyle.Fill;
+            this.Controls.Add(formRegistros);
+            this.Tag = formRegistros;
+            formRegistros.BringToFront();
+            formRegistros.Show();
         }
     }
 }

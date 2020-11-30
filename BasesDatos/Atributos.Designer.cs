@@ -34,6 +34,8 @@
             this.TipoDato = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipoLlave = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PanelBotones = new System.Windows.Forms.Panel();
+            this.CBForanea = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.CBTipoLlave = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,6 +48,7 @@
             this.btnBotonModificar = new System.Windows.Forms.Button();
             this.btnBotonAgregar = new System.Windows.Forms.Button();
             this.iconClose = new FontAwesome.Sharp.IconButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.PanelDataAtributos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridAtributos)).BeginInit();
             this.PanelBotones.SuspendLayout();
@@ -93,16 +96,38 @@
             // 
             // PanelBotones
             // 
+            this.PanelBotones.Controls.Add(this.CBForanea);
+            this.PanelBotones.Controls.Add(this.label4);
             this.PanelBotones.Controls.Add(this.CBTipoLlave);
             this.PanelBotones.Controls.Add(this.label3);
             this.PanelBotones.Controls.Add(this.label1);
             this.PanelBotones.Controls.Add(this.CBTipoDato);
             this.PanelBotones.Controls.Add(this.label2);
             this.PanelBotones.Controls.Add(this.textBox1);
-            this.PanelBotones.Location = new System.Drawing.Point(43, 319);
+            this.PanelBotones.Location = new System.Drawing.Point(43, 289);
             this.PanelBotones.Name = "PanelBotones";
-            this.PanelBotones.Size = new System.Drawing.Size(226, 102);
+            this.PanelBotones.Size = new System.Drawing.Size(226, 132);
             this.PanelBotones.TabIndex = 1;
+            // 
+            // CBForanea
+            // 
+            this.CBForanea.FormattingEnabled = true;
+            this.CBForanea.Location = new System.Drawing.Point(126, 93);
+            this.CBForanea.Name = "CBForanea";
+            this.CBForanea.Size = new System.Drawing.Size(97, 21);
+            this.CBForanea.TabIndex = 14;
+            this.CBForanea.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(3, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(117, 17);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Llave Forenea:";
+            this.label4.Visible = false;
             // 
             // CBTipoLlave
             // 
@@ -111,9 +136,9 @@
             "1-PK",
             "2-FK",
             "3-Ninguna"});
-            this.CBTipoLlave.Location = new System.Drawing.Point(147, 59);
+            this.CBTipoLlave.Location = new System.Drawing.Point(126, 59);
             this.CBTipoLlave.Name = "CBTipoLlave";
-            this.CBTipoLlave.Size = new System.Drawing.Size(77, 21);
+            this.CBTipoLlave.Size = new System.Drawing.Size(98, 21);
             this.CBTipoLlave.TabIndex = 12;
             this.CBTipoLlave.SelectedIndexChanged += new System.EventHandler(this.CBTipoLlave_SelectedIndexChanged);
             // 
@@ -146,9 +171,9 @@
             "E",
             "F",
             "C"});
-            this.CBTipoDato.Location = new System.Drawing.Point(147, 32);
+            this.CBTipoDato.Location = new System.Drawing.Point(126, 32);
             this.CBTipoDato.Name = "CBTipoDato";
-            this.CBTipoDato.Size = new System.Drawing.Size(77, 21);
+            this.CBTipoDato.Size = new System.Drawing.Size(98, 21);
             this.CBTipoDato.TabIndex = 9;
             this.CBTipoDato.SelectedIndexChanged += new System.EventHandler(this.CBTipoDato_SelectedIndexChanged);
             // 
@@ -188,7 +213,7 @@
             this.PanelBton.Controls.Add(this.btnBotonEliminar);
             this.PanelBton.Controls.Add(this.btnBotonModificar);
             this.PanelBton.Controls.Add(this.btnBotonAgregar);
-            this.PanelBton.Location = new System.Drawing.Point(359, 319);
+            this.PanelBton.Location = new System.Drawing.Point(349, 319);
             this.PanelBton.Name = "PanelBton";
             this.PanelBton.Size = new System.Drawing.Size(142, 102);
             this.PanelBton.TabIndex = 10;
@@ -261,11 +286,28 @@
             this.iconClose.UseVisualStyleBackColor = false;
             this.iconClose.Click += new System.EventHandler(this.iconClose_Click_1);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(566, 321);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(142, 26);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Agregar Datos";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormAtributos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 433);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.iconClose);
             this.Controls.Add(this.PanelBton);
             this.Controls.Add(this.NombreTabla);
@@ -304,5 +346,8 @@
         private System.Windows.Forms.Button btnBotonModificar;
         private System.Windows.Forms.Button btnBotonAgregar;
         private FontAwesome.Sharp.IconButton iconClose;
+        private System.Windows.Forms.ComboBox CBForanea;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
     }
 }
