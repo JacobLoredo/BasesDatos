@@ -191,7 +191,9 @@ namespace BasesDatos
         {
            
         }
+        private void checarTipoCampo(Atributo atributo, int idTextbox) { 
 
+        }
         private bool chechaTipoDato(Atributo atributo, int idTextbox)
         {
             bool ban = false;
@@ -202,6 +204,7 @@ namespace BasesDatos
             }
             else
             {
+
             if (atributo._TipoDato == 'E')
             {
                 if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[idTextbox].Text, "^[1-9][0-9]*$"))
@@ -233,16 +236,51 @@ namespace BasesDatos
             
             return ban;
             }
-
+        //Funcion para borrar registros
         private void button1_Click(object sender, EventArgs e)
         {
-
-           
             dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
             tablaRegistros._datos.RemoveAt(dataGridView1.CurrentRow.Index);
             Archivo.GuardaBase(baseActual);
-          //  dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
-           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int numTextBox=0;
+            foreach (TextBox item in textBoxes)
+            {
+                if (item.Text!="")
+                {
+                    if (tablaRegistros._Atributos[numTextBox]._TipoDato == 'E')
+                    {
+                        if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[numTextBox].Text, "^[1-9][0-9]*$"))
+                        {
+                            MessageBox.Show("El campo: " + labels[numTextBox].Text + " solo acepta numeros enteros");
+                            textBoxes[numTextBox].Text = "";
+                        }
+                        else
+                        {
+                            dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                        }
+                    }
+                    else if (tablaRegistros._Atributos[numTextBox]._TipoDato == 'F')
+                    {
+                        if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[numTextBox].Text, "^-?[0-9]+(?:.[0-9]+)?$"))
+                        {
+                            MessageBox.Show("El campo: " + labels[numTextBox].Text + " solo acepta numeros Flotantes");
+                            textBoxes[numTextBox].Text = "";
+                            
+                        }
+                        else
+                        {
+                            dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                        }
+                    }
+                    //dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                }
+                numTextBox++;
+            }
+            GuardarData();
         }
     }
 }
