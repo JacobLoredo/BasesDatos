@@ -130,11 +130,25 @@ namespace BasesDatos
             }
             else
             {
-                foreach (TextBox text in textBoxes)
+                for (int i = 0; i < tablaRegistros._Atributos.Count; i++)
                 {
+                    if (tablaRegistros._Atributos[i]._TipoLLave == 1) 
+                    {
+                        
+                        if (textBoxes[i].Text== dataGridView1.CurrentRow.Cells[i].Value.ToString())
+                        {
+                            MessageBox.Show("La Clave Primaria ya existe");
+                        }
+                        else
+                        {
+                            AgregarDataGridView();
+
+                        }
+                        
+                    }
 
                 }
-                AgregarDataGridView();
+                
                 //ChecarDatoRepetido();
             }
         }
@@ -247,6 +261,7 @@ namespace BasesDatos
         private void button2_Click(object sender, EventArgs e)
         {
             int numTextBox=0;
+            bool PKrepetida = false;
             foreach (TextBox item in textBoxes)
             {
                 if (item.Text!="")
@@ -260,9 +275,35 @@ namespace BasesDatos
                         }
                         else
                         {
-                            dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                            if (tablaRegistros._Atributos[numTextBox]._TipoLLave==1)
+                            {
+                              
+                                    for(int i = 0; i < dataGridView1.Rows.Count-1; i++ )
+                                    {
+                                        if (textBoxes[numTextBox].Text == dataGridView1.Rows[i].Cells[numTextBox].Value.ToString())
+                                        {
+                                            MessageBox.Show("La Clave Primaria ya existe");
+                                            textBoxes[numTextBox].Text = "";
+                                            PKrepetida = true;
+                                        break;
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    }
+                                if (!PKrepetida)
+                                {
+                                  dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                                  textBoxes[numTextBox].Text = "";
+                                }
+                            }
+
+                                
                         }
+                            
                     }
+                
                     else if (tablaRegistros._Atributos[numTextBox]._TipoDato == 'F')
                     {
                         if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[numTextBox].Text, "^-?[0-9]+(?:.[0-9]+)?$"))
@@ -274,6 +315,8 @@ namespace BasesDatos
                         else
                         {
                             dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                            
+                            
                         }
                     }
                     //dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
