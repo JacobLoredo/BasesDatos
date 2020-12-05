@@ -9,6 +9,7 @@ namespace BasesDatos
     {
         private string NombreTabla;
         private List<Atributo> atributos;
+        private List<string> datos;
 
         /// <param name="nombre">Nombre de la tabla a crear.</param>
         public Tabla(string nombre)
@@ -20,11 +21,13 @@ namespace BasesDatos
         {
 
             atributos = new List<Atributo>();
+            datos = new List<string>();
         }
 
         /// <value> Gets and set la lista de atributos de la tabla .</value>
         public List<Atributo> _Atributos { get { return atributos; } set { atributos = value; } }
         /// <value>Gets and set el nombre de la tabla</value>
         public string _NombreTabla { get { return NombreTabla; } set { NombreTabla = value; } }
+        public List<string> _datos { get { return datos; } set { datos = value; } }
     }
 }

@@ -16,10 +16,12 @@ namespace BasesDatos
         {
             NombreBD = "";
             tablas = new List<Tabla>();
+            
         }
 
         public List<Tabla> Tablas { get { return tablas; } set { tablas = value; } }
         public string _NombreBD { get { return NombreBD; } set { NombreBD = value; } }
+        
 
 
 

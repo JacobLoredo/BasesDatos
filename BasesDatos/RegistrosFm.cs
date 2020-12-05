@@ -69,14 +69,36 @@ namespace BasesDatos
 
         public void CargarAtributos()
         {
+            string[] hola;
+            
+            if (tablaRegistros._datos.Count > 0)
+            {
+                dataGridView1.Rows.Clear();
+
+                for (int i = 0; i < tablaRegistros._datos.Count; i++)
+                {
+                    int cont = 1;
+                    hola = tablaRegistros._datos[i].Split(',',':');
+                    int n = dataGridView1.Rows.Add();
+                    for (int j = 0; j < dataGridView1.Rows[n].Cells.Count; j++)
+                    {
+                     dataGridView1.Rows[n].Cells[j].Value = hola[cont];
+                     cont += 2;
+                    }
+                    cont = 1;
+                }
+            }
             /*
-            if (tablaActual._Atributos.Count > 0)
+            if (tablaRegistros._Atributos.Count > 0)
             {
                 dataGridAtributos.Rows.Clear();
                 foreach (Atributo item in tablaActual._Atributos)
                 {
                     int n = dataGridAtributos.Rows.Add();
-
+             for (int i = 0; i < dataGridView1.Rows[n].Cells.Count;i++)
+                {
+                dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
+                }
                     dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
                     dataGridAtributos.Rows[n].Cells[1].Value = item._TipoDato;
                     dataGridAtributos.Rows[n].Cells[2].Value = item._TipoLLave;
@@ -84,7 +106,7 @@ namespace BasesDatos
             }
             */
         }
-       
+
 
         private void iconClose_Click(object sender, EventArgs e)
         {
@@ -123,9 +145,46 @@ namespace BasesDatos
             for (int i = 0; i < textBoxes.Count; i++)
             {
                 dataGridView1.Rows[n].Cells[i].Value =textBoxes[i].Text;
-                textBoxes[i].Text = "";
-            }
 
+                textBoxes[i].Text = "";
+                }
+           GuardarData();
+        }
+
+        private void GuardarData()
+        {
+            string datos="";
+            
+            int columna = 0;
+            tablaRegistros._datos.Clear();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                for (int i= 0; i < row.Cells.Count; i++)
+                {
+                    if (row.Cells[i].Value!=null)
+                    {
+                        if (i+1 == row.Cells.Count)
+                        {
+                            datos += tablaRegistros._Atributos[columna]._NombreAtributo.ToString() + ":" + row.Cells[i].Value.ToString();
+                            columna++;
+                        }
+                        else
+                        {
+                        datos += tablaRegistros._Atributos[columna]._NombreAtributo.ToString() + ":"+ row.Cells[i].Value.ToString()+",";
+                        columna++;
+
+                        }
+                    }
+                }
+                if (datos.ToString()!="")
+                {
+                    tablaRegistros._datos.Add(datos);
+
+                }
+                datos = "";
+                columna = 0;
+            }
+            Archivo.GuardaBase(baseActual);
         }
 
         private void ChecarDatoRepetido()
@@ -173,6 +232,17 @@ namespace BasesDatos
             }
             
             return ban;
-            } 
+            }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+           
+            dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+            tablaRegistros._datos.RemoveAt(dataGridView1.CurrentRow.Index);
+            Archivo.GuardaBase(baseActual);
+          //  dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+           
+        }
     }
 }
