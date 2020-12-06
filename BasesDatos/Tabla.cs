@@ -16,6 +16,7 @@ namespace BasesDatos
         {
             NombreTabla = nombre;
             atributos = new List<Atributo>();
+            datos = new List<string>();
         }
         public Tabla()
         {

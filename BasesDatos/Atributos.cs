@@ -39,19 +39,29 @@ namespace BasesDatos
             //MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
             if (CBTipoLlave.SelectedIndex ==1)
             {
-                MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
                 label4.Visible = true;
                 CBForanea.Visible = true;
                 foreach (Tabla item in @base.Tablas)
                 {
                     if (item._NombreTabla!=tablaActual._NombreTabla)
                     {
-                        CBForanea.Items.Add(item._NombreTabla.ToString());
+                        for (int i = 0; i < item._Atributos.Count; i++)
+                        {
+                        if (item._Atributos[i]._TipoLLave==1)
+                             CBForanea.Items.Add(item._NombreTabla.ToString());
+                        }
                     }
                 }
+                TBTamaño.Text = "4";
+                TBTamaño.Enabled = false;
+                CBTipoDato.SelectedIndex = 0;
+                CBTipoDato.Enabled = false;
             }
-            else
+            else if (CBTipoLlave.SelectedIndex == 1)
             {
+             
+                TBTamaño.Enabled = true;
+                CBTipoDato.Enabled = true;
                 label4.Visible = false;
                 CBForanea.Visible = false;
                 CBForanea.Items.Clear();
@@ -70,7 +80,23 @@ namespace BasesDatos
 
         private void CBTipoDato_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            TBTamaño.Enabled = true;
+            if (CBTipoDato.SelectedItem.ToString()=="F")
+            {
+                TBTamaño.Text = "8";
+                TBTamaño.Enabled = false;
+            }
+            else if (CBTipoDato.SelectedItem.ToString() == "E")
+            {
+                TBTamaño.Text = "4";
+                TBTamaño.Enabled = false;
+            }
+            else
+            {
+                TBTamaño.Text = "";
+                TBTamaño.Enabled = true;
+            }
+            
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -233,8 +259,13 @@ namespace BasesDatos
             }
             return ban;
         }
-        public Atributo CreaAtributo(string n,char TD,int LL) {
-            Atributo atributo = new Atributo(n,TD,LL);
+        public Atributo CreaAtributo(string n,char TD,int LL,int T) {
+            Atributo atributo = new Atributo(n,TD,LL,T);
+            return atributo;
+        }
+        public Atributo CreaAtributoFK(string n, char TD, int LL,string FK,int T)
+        {
+            Atributo atributo = new Atributo(n, TD, LL,FK,T);
             return atributo;
         }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
@@ -247,8 +278,21 @@ namespace BasesDatos
                 {
                     if (!ChecaClavePrimariaRepetida())
                     {
-                        Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1);
-                        tablaActual._Atributos.Add(atributo);
+                        if (CBTipoLlave.SelectedIndex==1)
+                        {
+                            Atributo atributo = CreaAtributoFK(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,CBForanea.Text, Convert.ToInt32(TBTamaño.Text));
+                            tablaActual._Atributos.Add(atributo);
+                            CBTipoDato.Enabled = true;
+                            TBTamaño.Text = "";
+                            TBTamaño.Enabled = true;
+                            CBForanea.Visible = false;
+                            CBForanea.Text = "";
+                        }
+                        else
+                        {
+                            Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,Convert.ToInt32(TBTamaño.Text));
+                            tablaActual._Atributos.Add(atributo);
+                        }
                         Archivo.GuardarTabla(tablaActual);
                         Archivo.GuardaBase(@base);
                         textBox1.Text = "";
@@ -286,6 +330,11 @@ namespace BasesDatos
             this.Tag = formRegistros;
             formRegistros.BringToFront();
             formRegistros.Show();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

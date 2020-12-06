@@ -27,41 +27,87 @@ namespace BasesDatos
             Archivo.BaseD = @baseActual;
             tablaRegistros = tabla;
             CreaTextBoxLabel();
-            CargarAtributos();
+            if (tablaRegistros._datos!=null)
+            {
+                CargarAtributos();
+
+            }
         }
 
         public void CreaTextBoxLabel()
         {
             foreach (Atributo item in tablaRegistros._Atributos)
             {
+                if (item._TipoLLave==2)
+                {
+                    continue;
+                }
+                else
+                {
+                    Label lb = new Label();
+                    TextBox tb = new TextBox();
 
-            Label lb = new Label();
-            TextBox tb = new TextBox();
+                    lb.Enabled = true;
+                    tb.Enabled = true;
 
-            lb.Enabled = true;
-            tb.Enabled = true;
+                    lb.Visible = true;
+                    tb.Visible = true;
 
-            lb.Visible = true;
-            tb.Visible = true;
+                    lb.Location = p1;
+                    tb.Location = p2;
 
-            lb.Location = p1;
-            tb.Location = p2;
-
-            lb.Text = item._NombreAtributo;
+                    lb.Text = item._NombreAtributo;
             
-            this.Controls.Add(tb);
-            this.Controls.Add(lb);
-            textBoxes.Add(tb);
-            labels.Add(lb);
-            p1.Y = p1.Y + 30;
-            p2.Y = p2.Y + 30;
+                    this.Controls.Add(tb);
+                    this.Controls.Add(lb);
+                    textBoxes.Add(tb);
+                    labels.Add(lb);
+                    p1.Y = p1.Y + 30;
+                    p2.Y = p2.Y + 30;
+                }
+            }
+            foreach (Atributo item in tablaRegistros._Atributos)
+            {
+                if (item._TipoLLave == 2)
+                {
+                    Label lb = new Label();
+                    ComboBox combo = new ComboBox();
+                    lb.Enabled = true;
+                    combo.Enabled = true;
+
+                    lb.Visible = true;
+                    combo.Visible = true;
+                    lb.Location = p1;
+                    combo.Location = p2;
+                    lb.Text = item._NombreAtributo;
+                    this.Controls.Add(combo);
+                    this.Controls.Add(lb);
+                   // baseActual.Tablas.in
+                    p1.Y = p1.Y + 30;
+                    p2.Y = p2.Y + 30;
+
+                }
             }
             dataGridView1.Location = p1;
             if (dataGridView1.Rows.Count < 2)
             {
                 foreach (Atributo atr in tablaRegistros._Atributos)//Agrega nuevas columnas segun los atributos existentes.
                 {
-                    dataGridView1.Columns.Add("Nom" + atr._NombreAtributo, atr._NombreAtributo);
+                    if (atr._TipoLLave==3)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        dataGridView1.Columns.Add("Nom" + atr._NombreAtributo, atr._NombreAtributo);
+                    }
+                }
+                foreach (Atributo atr in tablaRegistros._Atributos)
+                {
+                    if (atr._TipoLLave == 3)
+                    {
+                        dataGridView1.Columns.Add("Nom" + atr._NombreAtributo, atr._NombreAtributo);
+                    }
                 }
                
             }
@@ -88,23 +134,7 @@ namespace BasesDatos
                     cont = 1;
                 }
             }
-            /*
-            if (tablaRegistros._Atributos.Count > 0)
-            {
-                dataGridAtributos.Rows.Clear();
-                foreach (Atributo item in tablaActual._Atributos)
-                {
-                    int n = dataGridAtributos.Rows.Add();
-             for (int i = 0; i < dataGridView1.Rows[n].Cells.Count;i++)
-                {
-                dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
-                }
-                    dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
-                    dataGridAtributos.Rows[n].Cells[1].Value = item._TipoDato;
-                    dataGridAtributos.Rows[n].Cells[2].Value = item._TipoLLave;
-                }
-            }
-            */
+            
         }
 
 
@@ -130,6 +160,8 @@ namespace BasesDatos
             }
             else
             {
+                if (tablaRegistros._datos.Count>0)
+                {
                 for (int i = 0; i < tablaRegistros._Atributos.Count; i++)
                 {
                     if (tablaRegistros._Atributos[i]._TipoLLave == 1) 
@@ -147,6 +179,12 @@ namespace BasesDatos
                         
                     }
 
+                }
+
+                }
+                else
+                {
+                    AgregarDataGridView();
                 }
                 
                 //ChecarDatoRepetido();
@@ -170,7 +208,11 @@ namespace BasesDatos
             string datos="";
             
             int columna = 0;
-            tablaRegistros._datos.Clear();
+            if (tablaRegistros._datos!=null)
+            {
+                tablaRegistros._datos.Clear();
+
+            }
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 for (int i= 0; i < row.Cells.Count; i++)

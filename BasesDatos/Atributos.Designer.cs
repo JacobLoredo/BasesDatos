@@ -49,6 +49,8 @@
             this.btnBotonAgregar = new System.Windows.Forms.Button();
             this.iconClose = new FontAwesome.Sharp.IconButton();
             this.button1 = new System.Windows.Forms.Button();
+            this.TBTamaño = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.PanelDataAtributos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridAtributos)).BeginInit();
             this.PanelBotones.SuspendLayout();
@@ -96,6 +98,8 @@
             // 
             // PanelBotones
             // 
+            this.PanelBotones.Controls.Add(this.label5);
+            this.PanelBotones.Controls.Add(this.TBTamaño);
             this.PanelBotones.Controls.Add(this.CBForanea);
             this.PanelBotones.Controls.Add(this.label4);
             this.PanelBotones.Controls.Add(this.CBTipoLlave);
@@ -106,13 +110,13 @@
             this.PanelBotones.Controls.Add(this.textBox1);
             this.PanelBotones.Location = new System.Drawing.Point(43, 289);
             this.PanelBotones.Name = "PanelBotones";
-            this.PanelBotones.Size = new System.Drawing.Size(226, 132);
+            this.PanelBotones.Size = new System.Drawing.Size(246, 143);
             this.PanelBotones.TabIndex = 1;
             // 
             // CBForanea
             // 
             this.CBForanea.FormattingEnabled = true;
-            this.CBForanea.Location = new System.Drawing.Point(126, 93);
+            this.CBForanea.Location = new System.Drawing.Point(126, 119);
             this.CBForanea.Name = "CBForanea";
             this.CBForanea.Size = new System.Drawing.Size(97, 21);
             this.CBForanea.TabIndex = 14;
@@ -122,7 +126,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 93);
+            this.label4.Location = new System.Drawing.Point(3, 119);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(117, 17);
             this.label4.TabIndex = 13;
@@ -136,7 +140,7 @@
             "1-PK",
             "2-FK",
             "3-Ninguna"});
-            this.CBTipoLlave.Location = new System.Drawing.Point(126, 59);
+            this.CBTipoLlave.Location = new System.Drawing.Point(126, 85);
             this.CBTipoLlave.Name = "CBTipoLlave";
             this.CBTipoLlave.Size = new System.Drawing.Size(98, 21);
             this.CBTipoLlave.TabIndex = 12;
@@ -146,7 +150,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(0, 63);
+            this.label3.Location = new System.Drawing.Point(0, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(114, 17);
             this.label3.TabIndex = 11;
@@ -191,8 +195,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.textBox1.Location = new System.Drawing.Point(82, 0);
+            this.textBox1.Location = new System.Drawing.Point(80, 0);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(144, 20);
             this.textBox1.TabIndex = 0;
@@ -302,11 +305,29 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // TBTamaño
+            // 
+            this.TBTamaño.Location = new System.Drawing.Point(126, 59);
+            this.TBTamaño.Name = "TBTamaño";
+            this.TBTamaño.Size = new System.Drawing.Size(97, 20);
+            this.TBTamaño.TabIndex = 15;
+            this.TBTamaño.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(0, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 17);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Tamaño: ";
+            // 
             // FormAtributos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 433);
+            this.ClientSize = new System.Drawing.Size(732, 444);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.iconClose);
             this.Controls.Add(this.PanelBton);
@@ -349,5 +370,7 @@
         private System.Windows.Forms.ComboBox CBForanea;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox TBTamaño;
+        private System.Windows.Forms.Label label5;
     }
 }
