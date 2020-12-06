@@ -146,6 +146,7 @@ namespace BasesDatos
         private void button3_Click(object sender, EventArgs e)
         {
             bool TipoDatoIncorrecto=false;
+            bool PKRepetida = false;    
             for (int i = 0; i < tablaRegistros._Atributos.Count; i++)
             {
                 if (chechaTipoDato(tablaRegistros._Atributos[i], i)) 
@@ -166,21 +167,30 @@ namespace BasesDatos
                 {
                     if (tablaRegistros._Atributos[i]._TipoLLave == 1) 
                     {
-                        
-                        if (textBoxes[i].Text== dataGridView1.CurrentRow.Cells[i].Value.ToString())
-                        {
-                            MessageBox.Show("La Clave Primaria ya existe");
-                        }
-                        else
-                        {
-                            AgregarDataGridView();
-
-                        }
+                            foreach (DataGridViewRow item in dataGridView1.Rows)
+                            {
+                                if (item.Cells[i].Value != null)
+                                if (textBoxes[i].Text==item.Cells[i].Value.ToString() )    
+                                {
+                                    PKRepetida = true;
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                    }
+                }
+                    if (PKRepetida)
+                    {
+                        MessageBox.Show("Clave Primaria repetida");
                         
                     }
+                    else
+                    {
+                        AgregarDataGridView();
 
-                }
-
+                    }
                 }
                 else
                 {
