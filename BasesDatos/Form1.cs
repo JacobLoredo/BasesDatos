@@ -126,7 +126,7 @@ namespace BasesDatos
         private void cerrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             arc.CierraArchivo();
-            arc = null;
+            arc = new Archivo();
             if (this.PanelCentral.Controls.Count > 0)
                 this.PanelCentral.Controls.RemoveAt(0);
             MessageBox.Show("Cerrar ventana");
