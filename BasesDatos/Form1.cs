@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BasesDatos.Modulo_SQL;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using BasesDatos.Modulo_SQL;
 
 namespace BasesDatos
 {
@@ -149,7 +149,7 @@ namespace BasesDatos
 
         private void modificarToolStripMenuItem_Click(object sender, FormClosingEventArgs e)
         {
-            
+
         }
     }
 }

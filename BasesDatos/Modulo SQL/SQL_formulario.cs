@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace BasesDatos.Modulo_SQL
 {
-    public partial class SQL_formulario : Form
+    public partial class SQL_formulario : System.Windows.Forms.Form
     {
         private TabPage nueva_tab;
         private Gramatica mysql;
