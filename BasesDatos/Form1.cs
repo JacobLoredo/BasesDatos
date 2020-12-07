@@ -5,13 +5,13 @@ using BasesDatos.Modulo_SQL;
 
 namespace BasesDatos
 {
-    public partial class Base_Datos_formulario : Form
+    public partial class Form1 : Form
     {
         public string nombre_archivo;
         public Archivo arc;
         public long cabecera;
         public BaseDatos BaseDatos;
-        public Base_Datos_formulario()
+        public Form1()
         {
             InitializeComponent();
 
@@ -143,7 +143,7 @@ namespace BasesDatos
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            arc.EliminaBase(BaseDatos);
+            //arc.EliminaBase(BaseDatos);
             MessageBox.Show("La base de datos actual ha sido eliminada");
         }
 

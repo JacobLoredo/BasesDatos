@@ -13,7 +13,7 @@ namespace BasesDatos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Base_Datos_formulario());
+            Application.Run(new Form1());
         }
     }
 }

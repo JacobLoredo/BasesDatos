@@ -1,6 +1,6 @@
 ﻿namespace BasesDatos
 {
-    partial class Base_Datos_formulario
+    partial class Form1
     {
         /// <summary>
         /// Variable del diseñador necesaria.
