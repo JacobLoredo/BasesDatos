@@ -19,6 +19,7 @@ namespace BasesDatos
         public Point p2 = new Point(70, 30);
         public List<TextBox> textBoxes = new List<TextBox>();
         public List<Label> labels = new List<Label>();
+        public List<ComboBox> comboBoxes = new List<ComboBox>();
         public RegistrosFm(BaseDatos @base, Tabla tabla)
         {
             InitializeComponent();
@@ -82,10 +83,37 @@ namespace BasesDatos
                     lb.Text = item._NombreAtributo;
                     this.Controls.Add(combo);
                     this.Controls.Add(lb);
-                   // baseActual.Tablas.in
+                    labels.Add(lb);
+                    comboBoxes.Add(combo);
                     p1.Y = p1.Y + 30;
                     p2.Y = p2.Y + 30;
+                    foreach (Tabla tabla in baseActual.Tablas)
+                    {
+                        if (item._NombreFK==tabla._NombreTabla)
+                        {
+                            string[] datos;
+                            int cont = 1;
+                            int r = 0;
+                            for (int i = 0; i < tabla._Atributos.Count; i++)
+                            {
+                                if (tabla._Atributos[i]._TipoLLave == 1)
+                                {
+                                    r = i;
+                                }
+                            }
+                            for (int i = 0; i < tabla._datos.Count; i++)
+                            {
+                                    datos = tabla._datos[i].Split(',', ':');
+                                    combo.Items.Add(datos[r+1]);
+                                    cont += 2;
 
+                                
+                            }
+                            cont = 1;
+
+                        }
+
+                    }
                 }
             }
             dataGridView1.Location = p1;
@@ -93,7 +121,7 @@ namespace BasesDatos
             {
                 foreach (Atributo atr in tablaRegistros._Atributos)//Agrega nuevas columnas segun los atributos existentes.
                 {
-                    if (atr._TipoLLave==3)
+                    if (atr._TipoLLave==2)
                     {
                         continue;
                     }
@@ -104,7 +132,7 @@ namespace BasesDatos
                 }
                 foreach (Atributo atr in tablaRegistros._Atributos)
                 {
-                    if (atr._TipoLLave == 3)
+                    if (atr._TipoLLave == 2)
                     {
                         dataGridView1.Columns.Add("Nom" + atr._NombreAtributo, atr._NombreAtributo);
                     }
@@ -149,10 +177,18 @@ namespace BasesDatos
             bool PKRepetida = false;    
             for (int i = 0; i < tablaRegistros._Atributos.Count; i++)
             {
+                if (tablaRegistros._Atributos[i]._TipoLLave==2)
+                {
+                    continue;
+                }
+                else
+                {
+
                 if (chechaTipoDato(tablaRegistros._Atributos[i], i)) 
                 {
                     TipoDatoIncorrecto = true;
                     break;
+                }
                 }
             }
             if (TipoDatoIncorrecto)
@@ -209,7 +245,15 @@ namespace BasesDatos
                 dataGridView1.Rows[n].Cells[i].Value =textBoxes[i].Text;
 
                 textBoxes[i].Text = "";
+            }
+            if (comboBoxes.Count>0)
+            {
+                for (int  i = 0; i < comboBoxes.Count; i++)
+                {
+                    dataGridView1.Rows[n].Cells[i+textBoxes.Count].Value = comboBoxes[i].Text;
                 }
+
+            }
            GuardarData();
         }
 
@@ -314,6 +358,7 @@ namespace BasesDatos
         {
             int numTextBox=0;
             bool PKrepetida = false;
+           
             foreach (TextBox item in textBoxes)
             {
                 if (item.Text!="")
@@ -374,6 +419,17 @@ namespace BasesDatos
                     //dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
                 }
                 numTextBox++;
+            }
+            if (comboBoxes.Count > 0)
+            {
+                foreach (ComboBox combo in comboBoxes)
+                {
+                    if (combo.Text!="")
+                    {
+                        dataGridView1.CurrentRow.Cells[numTextBox-1+comboBoxes.Count].Value = combo.Text;
+
+                    }
+                }
             }
             GuardarData();
         }

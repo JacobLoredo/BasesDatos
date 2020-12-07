@@ -34,6 +34,8 @@
             this.TipoDato = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipoLlave = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PanelBotones = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.TBTamaño = new System.Windows.Forms.TextBox();
             this.CBForanea = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.CBTipoLlave = new System.Windows.Forms.ComboBox();
@@ -49,8 +51,6 @@
             this.btnBotonAgregar = new System.Windows.Forms.Button();
             this.iconClose = new FontAwesome.Sharp.IconButton();
             this.button1 = new System.Windows.Forms.Button();
-            this.TBTamaño = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.PanelDataAtributos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridAtributos)).BeginInit();
             this.PanelBotones.SuspendLayout();
@@ -113,6 +113,24 @@
             this.PanelBotones.Size = new System.Drawing.Size(246, 143);
             this.PanelBotones.TabIndex = 1;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(0, 59);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 17);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Tamaño: ";
+            // 
+            // TBTamaño
+            // 
+            this.TBTamaño.Location = new System.Drawing.Point(126, 59);
+            this.TBTamaño.Name = "TBTamaño";
+            this.TBTamaño.Size = new System.Drawing.Size(97, 20);
+            this.TBTamaño.TabIndex = 15;
+            this.TBTamaño.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
             // CBForanea
             // 
             this.CBForanea.FormattingEnabled = true;
@@ -121,6 +139,7 @@
             this.CBForanea.Size = new System.Drawing.Size(97, 21);
             this.CBForanea.TabIndex = 14;
             this.CBForanea.Visible = false;
+            this.CBForanea.SelectedIndexChanged += new System.EventHandler(this.CBForanea_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -304,24 +323,6 @@
             this.button1.Text = "Agregar Datos";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // TBTamaño
-            // 
-            this.TBTamaño.Location = new System.Drawing.Point(126, 59);
-            this.TBTamaño.Name = "TBTamaño";
-            this.TBTamaño.Size = new System.Drawing.Size(97, 20);
-            this.TBTamaño.TabIndex = 15;
-            this.TBTamaño.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(0, 59);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 17);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Tamaño: ";
             // 
             // FormAtributos
             // 

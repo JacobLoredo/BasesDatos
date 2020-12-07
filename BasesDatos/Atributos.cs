@@ -30,7 +30,19 @@ namespace BasesDatos
 
                     dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
                     dataGridAtributos.Rows[n].Cells[1].Value = item._TipoDato;
-                    dataGridAtributos.Rows[n].Cells[2].Value = item._TipoLLave;
+                    if (item._TipoLLave==1)
+                    {
+                        dataGridAtributos.Rows[n].Cells[2].Value = "PK";
+                    }
+                    else if(item._TipoLLave == 2)
+                    {
+                        dataGridAtributos.Rows[n].Cells[2].Value = "FK";
+                    }
+                    else
+                    {
+                         dataGridAtributos.Rows[n].Cells[2].Value = "Ninguna";
+
+                    }
                 }
             }
         }
@@ -45,11 +57,10 @@ namespace BasesDatos
                 {
                     if (item._NombreTabla!=tablaActual._NombreTabla)
                     {
-                        for (int i = 0; i < item._Atributos.Count; i++)
-                        {
-                        if (item._Atributos[i]._TipoLLave==1)
-                             CBForanea.Items.Add(item._NombreTabla.ToString());
-                        }
+                        
+                            if (!CBForanea.Items.Contains(item._NombreTabla.ToString()))
+                               CBForanea.Items.Add(item._NombreTabla.ToString());
+                        
                     }
                 }
                 TBTamaño.Text = "4";
@@ -185,6 +196,9 @@ namespace BasesDatos
         }
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
+            if ((tablaActual._datos.Count > 0))
+            {
+
             if (textBox1.Text != "" || CBTipoDato.Text != "" || CBTipoLlave.Text != "")
             {
                 int res = ChecaAtributoRepetida(textBox1.Text);
@@ -205,6 +219,11 @@ namespace BasesDatos
             else
             {
                 MessageBox.Show("Faltan campos por llenar");
+            }
+            }
+            else
+            {
+                MessageBox.Show("no se pueden modificar los atributos ya que contiene datos, eliminalos primero");
             }
         }
 
@@ -239,7 +258,7 @@ namespace BasesDatos
         public bool ChecaClavePrimariaRepetida()
         {
             bool ban = false;
-            if (tablaActual._Atributos.Count > 0)
+            if (tablaActual._Atributos.Count == 0)
             {
 
                 for (int i = 0; i < tablaActual._Atributos.Count; i++)
@@ -270,53 +289,69 @@ namespace BasesDatos
         }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "" && CBTipoDato.Text != "" && CBTipoLlave.Text != "")
+            if (tablaActual._datos.Count==0)
             {
 
-                int res = ChecaAtributoRepetida(textBox1.Text);
-                if (res == 0)
+                if (textBox1.Text != "" && CBTipoDato.Text != "" && CBTipoLlave.Text != "")
                 {
-                    if (!ChecaClavePrimariaRepetida())
+
+                    int res = ChecaAtributoRepetida(textBox1.Text);
+                    if (res == 0)
                     {
-                        if (CBTipoLlave.SelectedIndex==1)
+                        if (!ChecaClavePrimariaRepetida())
                         {
-                            Atributo atributo = CreaAtributoFK(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,CBForanea.Text, Convert.ToInt32(TBTamaño.Text));
-                            tablaActual._Atributos.Add(atributo);
-                            CBTipoDato.Enabled = true;
-                            TBTamaño.Text = "";
-                            TBTamaño.Enabled = true;
-                            CBForanea.Visible = false;
-                            CBForanea.Text = "";
+                            if (CBTipoLlave.SelectedIndex==1)
+                            {
+                                Atributo atributo = CreaAtributoFK(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,CBForanea.Text, Convert.ToInt32(TBTamaño.Text));
+                                tablaActual._Atributos.Add(atributo);
+                                CBTipoDato.Enabled = true;
+                                TBTamaño.Text = "";
+                                TBTamaño.Enabled = true;
+                                CBForanea.Visible = false;
+                                CBForanea.Text = "";
+                            }
+                            else
+                            {
+                                Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,Convert.ToInt32(TBTamaño.Text));
+                                tablaActual._Atributos.Add(atributo);
+                            }
+                            Archivo.GuardarTabla(tablaActual);
+                            Archivo.GuardaBase(@base);
+                            textBox1.Text = "";
+                            CBTipoDato.Text = "";
+                            CBTipoLlave.Text = "";
+                            CargarAtributos();
                         }
-                        else
-                        {
-                            Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,Convert.ToInt32(TBTamaño.Text));
-                            tablaActual._Atributos.Add(atributo);
-                        }
-                        Archivo.GuardarTabla(tablaActual);
-                        Archivo.GuardaBase(@base);
+                    }
+                    else
+                    {
+                        MessageBox.Show("El atributo deseado ya existe");
                         textBox1.Text = "";
-                        CBTipoDato.Text = "";
-                        CBTipoLlave.Text = "";
-                        CargarAtributos();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("El atributo deseado ya existe");
-                    textBox1.Text = "";
+                    MessageBox.Show("Faltan campos por llenar");
                 }
             }
             else
             {
-                MessageBox.Show("Faltan campos por llenar");
+                MessageBox.Show("no se puede agregar nuevos atributos ya que se contienen datos, eliminalos primero");
             }
         }
 
         private void btnBotonEliminar_Click(object sender, EventArgs e)
         {
-            BuscaAtributoEliminar();
-            CargarAtributos();
+            if (tablaActual._datos.Count>0)
+            {
+                BuscaAtributoEliminar();
+                CargarAtributos();
+
+            }
+            else
+            {
+                MessageBox.Show("no se puede agregar eliminar atributos ya que se contienen datos, eliminalos primero");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -333,6 +368,11 @@ namespace BasesDatos
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CBForanea_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
