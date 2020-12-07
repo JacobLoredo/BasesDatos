@@ -22,7 +22,7 @@ namespace BasesDatos
             openFile = new OpenFileDialog { InitialDirectory = Directory.GetCurrentDirectory() };
         }
 
-        public void AbrirBase()
+        public bool AbrirBase()
         {
             try
             {
@@ -41,22 +41,21 @@ namespace BasesDatos
                     BaseDatos bas = js.Deserialize<BaseDatos>(ruta);
 
                     BaseD = bas;
+                    return true;
                 }
                 else
                 {
-                    MessageBox.Show("Extension incorrecta");
-
+                    MessageBox.Show("No se seleccionó un archivo compatible.");
+                    return false;
                 }
             }
             catch (Exception e)
             {
-
                 MessageBox.Show(e.Message);
-
+                return false;
             }
-
-
         }
+
         public void CierraArchivo()
         {
 

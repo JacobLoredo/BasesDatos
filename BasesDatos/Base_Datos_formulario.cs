@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using BasesDatos.Modulo_SQL;
 
 namespace BasesDatos
 {
-    public partial class Form1 : Form
+    public partial class Base_Datos_formulario : Form
     {
         public string nombre_archivo;
         public Archivo arc;
         public long cabecera;
         public BaseDatos BaseDatos;
-        public Form1()
+        public Base_Datos_formulario()
         {
             InitializeComponent();
 
@@ -87,15 +88,17 @@ namespace BasesDatos
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             arc = new Archivo();
-            arc.AbrirBase();
-            BaseDatos = arc.BaseD;
-            FormEntidades formEntidades = new FormEntidades();
-            formEntidades.Archivo = arc;
+            // si se pudo abrir el archivo
+            if (arc.AbrirBase())
+            {
+                BaseDatos = arc.BaseD;
+                FormEntidades formEntidades = new FormEntidades();
+                formEntidades.Archivo = arc;
 
-            formEntidades.baseActual = arc.BaseD;
+                formEntidades.baseActual = arc.BaseD;
 
-            AbrirFormInPanel(formEntidades);
-
+                AbrirFormInPanel(formEntidades);
+            }
         }
 
 
@@ -131,9 +134,11 @@ namespace BasesDatos
                 this.PanelCentral.Controls.RemoveAt(0);
             MessageBox.Show("Cerrar ventana");
         }
-        public void CierraArchivo()
-        {
 
+        private void Abre_modulo_sql(object sender, EventArgs e)
+        {
+            SQL_formulario sql = new SQL_formulario();
+            sql.Show();
         }
     }
 }

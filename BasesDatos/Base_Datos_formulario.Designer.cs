@@ -1,6 +1,6 @@
 ﻿namespace BasesDatos
 {
-    partial class Form1
+    partial class Base_Datos_formulario
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -43,6 +43,7 @@
             this.guardarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.PanelCentral = new System.Windows.Forms.Panel();
+            this.sQLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PanelMenuVertical.SuspendLayout();
             this.PanelBarraTitulo.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -55,7 +56,7 @@
             this.PanelMenuVertical.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelMenuVertical.Location = new System.Drawing.Point(0, 0);
             this.PanelMenuVertical.Name = "PanelMenuVertical";
-            this.PanelMenuVertical.Size = new System.Drawing.Size(250, 650);
+            this.PanelMenuVertical.Size = new System.Drawing.Size(229, 650);
             this.PanelMenuVertical.TabIndex = 0;
             // 
             // label1
@@ -78,9 +79,9 @@
             this.PanelBarraTitulo.Controls.Add(this.iconClose);
             this.PanelBarraTitulo.Controls.Add(this.menuStrip1);
             this.PanelBarraTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelBarraTitulo.Location = new System.Drawing.Point(250, 0);
+            this.PanelBarraTitulo.Location = new System.Drawing.Point(229, 0);
             this.PanelBarraTitulo.Name = "PanelBarraTitulo";
-            this.PanelBarraTitulo.Size = new System.Drawing.Size(725, 50);
+            this.PanelBarraTitulo.Size = new System.Drawing.Size(746, 50);
             this.PanelBarraTitulo.TabIndex = 1;
             // 
             // iconMinimize
@@ -94,7 +95,7 @@
             this.iconMinimize.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
             this.iconMinimize.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconMinimize.IconSize = 40;
-            this.iconMinimize.Location = new System.Drawing.Point(569, 0);
+            this.iconMinimize.Location = new System.Drawing.Point(590, 0);
             this.iconMinimize.Name = "iconMinimize";
             this.iconMinimize.Rotation = 0D;
             this.iconMinimize.Size = new System.Drawing.Size(39, 50);
@@ -113,7 +114,7 @@
             this.iconMaximize.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
             this.iconMaximize.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconMaximize.IconSize = 40;
-            this.iconMaximize.Location = new System.Drawing.Point(608, 0);
+            this.iconMaximize.Location = new System.Drawing.Point(629, 0);
             this.iconMaximize.Name = "iconMaximize";
             this.iconMaximize.Rotation = 0D;
             this.iconMaximize.Size = new System.Drawing.Size(39, 50);
@@ -132,7 +133,7 @@
             this.iconRestore.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
             this.iconRestore.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconRestore.IconSize = 40;
-            this.iconRestore.Location = new System.Drawing.Point(647, 0);
+            this.iconRestore.Location = new System.Drawing.Point(668, 0);
             this.iconRestore.Name = "iconRestore";
             this.iconRestore.Rotation = 0D;
             this.iconRestore.Size = new System.Drawing.Size(39, 50);
@@ -170,7 +171,7 @@
             this.iconClose.IconChar = FontAwesome.Sharp.IconChar.Times;
             this.iconClose.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(25)))), ((int)(((byte)(45)))));
             this.iconClose.IconSize = 40;
-            this.iconClose.Location = new System.Drawing.Point(686, 0);
+            this.iconClose.Location = new System.Drawing.Point(707, 0);
             this.iconClose.Name = "iconClose";
             this.iconClose.Rotation = 0D;
             this.iconClose.Size = new System.Drawing.Size(39, 50);
@@ -182,12 +183,13 @@
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.archivoToolStripMenuItem1});
+            this.archivoToolStripMenuItem1,
+            this.sQLToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Margin = new System.Windows.Forms.Padding(50, 0, 0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(50, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(725, 50);
+            this.menuStrip1.Size = new System.Drawing.Size(746, 50);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.menuStrip1_MouseDown);
@@ -234,11 +236,18 @@
             // PanelCentral
             // 
             this.PanelCentral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelCentral.Location = new System.Drawing.Point(250, 50);
+            this.PanelCentral.Location = new System.Drawing.Point(229, 50);
             this.PanelCentral.Name = "PanelCentral";
-            this.PanelCentral.Size = new System.Drawing.Size(725, 600);
+            this.PanelCentral.Size = new System.Drawing.Size(746, 600);
             this.PanelCentral.TabIndex = 2;
             this.PanelCentral.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelCentral_Paint);
+            // 
+            // sQLToolStripMenuItem
+            // 
+            this.sQLToolStripMenuItem.Name = "sQLToolStripMenuItem";
+            this.sQLToolStripMenuItem.Size = new System.Drawing.Size(40, 46);
+            this.sQLToolStripMenuItem.Text = "SQL";
+            this.sQLToolStripMenuItem.Click += new System.EventHandler(this.Abre_modulo_sql);
             // 
             // Form1
             // 
@@ -280,6 +289,7 @@
         private FontAwesome.Sharp.IconButton iconMinimize;
         private FontAwesome.Sharp.IconButton iconMaximize;
         private System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem sQLToolStripMenuItem;
     }
 }
 
