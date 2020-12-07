@@ -57,7 +57,13 @@ namespace BasesDatos
 
 
         }
-        public void CierraArchivo()
+        public void EliminaBase(BaseDatos json)
+        {
+            string path = SaveD.InitialDirectory + "//" + BaseD._NombreBD;
+            Directory.Delete(path,true);
+
+        }
+            public void CierraArchivo()
         {
 
             if (BaseD != null)
@@ -116,6 +122,11 @@ namespace BasesDatos
         {
             File.Delete(SaveD.InitialDirectory + "//" + BaseD._NombreBD + "//" + nombreTabla + ".TB");
         }
+
+        public void ModificaNombreBD(BaseDatos @base) { 
+            
+            
+        }
         public void CreaArchivo(string obj, int op)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -130,8 +141,6 @@ namespace BasesDatos
                     break;
 
             }
-
-
         }
     }
 }

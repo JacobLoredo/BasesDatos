@@ -135,5 +135,16 @@ namespace BasesDatos
         {
 
         }
+
+        private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            arc.EliminaBase(BaseDatos);
+            MessageBox.Show("La base de datos actual ha sido eliminada");
+        }
+
+        private void modificarToolStripMenuItem_Click(object sender, FormClosingEventArgs e)
+        {
+            
+        }
     }
 }
