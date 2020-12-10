@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace BasesDatos.Modulo_SQL
@@ -65,9 +62,9 @@ namespace BasesDatos.Modulo_SQL
                 Regex r = new Regex(@"(SELECT|select)\s+");
                 entrada = r.Replace(entrada, "");
                 int indice_from = entrada.IndexOf("FROM");
-                if(indice_from < 0)
+                if (indice_from < 0)
                     indice_from = entrada.IndexOf("from");
-                
+
                 tablaA = entrada.Substring(indice_from + 5, entrada.Length - (indice_from + 5));
                 tablaA = tablaA.Replace(";", "");
                 r = new Regex(@"\s*");
@@ -86,7 +83,7 @@ namespace BasesDatos.Modulo_SQL
 
         public bool coincide_select_where(string entrada)
         {
-            MatchCollection mc = select_where.Matches(entrada); 
+            MatchCollection mc = select_where.Matches(entrada);
             if (mc.Count == 1 && mc[0].Length == entrada.Length)
             {
                 limpia_variables();
@@ -96,7 +93,7 @@ namespace BasesDatos.Modulo_SQL
                 int indice_from = entrada.IndexOf("FROM");
                 if (indice_from < 0)
                     indice_from = entrada.IndexOf("from");
-                
+
                 tablaA = entrada.Substring(indice_from + 5, entrada.Length - (indice_where - 7));
                 tablaA = tablaA.Replace(";", "");
                 tablaA = tablaA.Split(' ')[0];
@@ -117,7 +114,7 @@ namespace BasesDatos.Modulo_SQL
         public int obten_condicion(string entrada)
         {
             int indice_where = entrada.IndexOf("WHERE");
-            if(indice_where < 0)
+            if (indice_where < 0)
                 indice_where = entrada.IndexOf("where");
 
             int w = indice_where + 5;

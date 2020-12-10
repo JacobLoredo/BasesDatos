@@ -23,10 +23,10 @@ namespace BasesDatos
         private extern static void SendMessage(System.IntPtr hwnd, int msg, int wparam, int lparam);
         private void iconClose_Click(object sender, EventArgs e)
         {
-            if (arc!=null)
+            if (arc != null)
             {
-            arc.CierraArchivo();
-            } 
+                arc.CierraArchivo();
+            }
             arc = null;
             if (this.PanelCentral.Controls.Count > 0)
                 this.PanelCentral.Controls.RemoveAt(0);
@@ -146,11 +146,11 @@ namespace BasesDatos
 
         private void cambiarNombreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (toolStripTextBox1.Text!="")
+            if (toolStripTextBox1.Text != "")
             {
                 BaseDatos._NombreBD = toolStripTextBox1.Text;
             }
-            
+
         }
 
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,7 +163,7 @@ namespace BasesDatos
             MessageBox.Show("La base de datos actual ha sido eliminada");
         }
 
-        
+
 
         private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -173,16 +173,16 @@ namespace BasesDatos
         private void toolStripTextBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-            if (toolStripTextBox1.Text != "")
-            {
-                    BaseDatos._NombreBD=toolStripTextBox1.Text;
-                    arc.CreaArchivo(BaseDatos._NombreBD,0);
+                if (toolStripTextBox1.Text != "")
+                {
+                    BaseDatos._NombreBD = toolStripTextBox1.Text;
+                    arc.CreaArchivo(BaseDatos._NombreBD, 0);
 
-                   
+
                     MessageBox.Show(toolStripTextBox1.Text);
                     //BaseDatos._NombreBD = toolStripTextBox1.Text;
                     toolStripTextBox1.Text = "";
-            }
+                }
         }
     }
 }

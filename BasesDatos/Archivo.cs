@@ -88,8 +88,9 @@ namespace BasesDatos
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }
         }
 
-        public void EliminarBase(BaseDatos @base) {
-            Directory.Delete(SaveD.InitialDirectory + "//" + @base._NombreBD,true);
+        public void EliminarBase(BaseDatos @base)
+        {
+            Directory.Delete(SaveD.InitialDirectory + "//" + @base._NombreBD, true);
         }
         public void GuardaBase(BaseDatos json)
         {

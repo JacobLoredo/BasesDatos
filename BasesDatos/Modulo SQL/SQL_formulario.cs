@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BasesDatos.Modulo_SQL
@@ -28,7 +23,7 @@ namespace BasesDatos.Modulo_SQL
 
         private void Agrega_nueva_pestaña_sql(object sender, EventArgs e)
         {
-            
+
             return;
             TextBox entrada = new TextBox()
             {
@@ -56,7 +51,7 @@ namespace BasesDatos.Modulo_SQL
             nueva_tab.Controls[nueva_tab.Controls.Count - 3].Dock = DockStyle.Top;
             nueva_tab.Controls[nueva_tab.Controls.Count - 1].Dock = DockStyle.Bottom;
             nueva_tab.Controls[nueva_tab.Controls.Count - 2].Dock = DockStyle.Fill;
-            
+
 
             nueva_tab.Text = "SQL " + tab_ctrl.TabPages.Count + 1;
             tab_ctrl.TabPages.Add(nueva_tab);
@@ -66,11 +61,11 @@ namespace BasesDatos.Modulo_SQL
         {
             nueva_tab = new TabPage();
 
-            foreach(Control c in tab_ctrl.TabPages[0].Controls)
+            foreach (Control c in tab_ctrl.TabPages[0].Controls)
             {
                 Control nc = (Control)Activator.CreateInstance(c.GetType());
                 PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(c);
-                
+
                 foreach (PropertyDescriptor entrada in pdc)
                 {
                     object val = entrada.GetValue(c);
@@ -80,12 +75,12 @@ namespace BasesDatos.Modulo_SQL
                 // add control to new TabPage
                 nueva_tab.Controls.Add(nc);
             }
-            
+
         }
 
         private void tab_ctrl_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.F5)
+            if (e.KeyCode == Keys.F5)
             {
                 txt_compilacion.Text = ejecuta_sentencia();
                 //MessageBox.Show("f5 pressed!");

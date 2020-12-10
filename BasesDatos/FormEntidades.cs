@@ -129,7 +129,7 @@ namespace BasesDatos
             Archivo.GuardarTabla(baseActual.Tablas[index]);
             Archivo.GuardaBase(baseActual);
         }
-        
+
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
