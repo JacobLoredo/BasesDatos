@@ -17,7 +17,7 @@ namespace BasesDatos
             tablaActual = tabla;
             NombreTabla.Text += " " + tablaActual._NombreTabla;
             CargarAtributos();
-            
+
         }
         public void CargarAtributos()
         {
@@ -30,17 +30,17 @@ namespace BasesDatos
 
                     dataGridAtributos.Rows[n].Cells[0].Value = item._NombreAtributo;
                     dataGridAtributos.Rows[n].Cells[1].Value = item._TipoDato;
-                    if (item._TipoLLave==1)
+                    if (item._TipoLLave == 1)
                     {
                         dataGridAtributos.Rows[n].Cells[2].Value = "PK";
                     }
-                    else if(item._TipoLLave == 2)
+                    else if (item._TipoLLave == 2)
                     {
                         dataGridAtributos.Rows[n].Cells[2].Value = "FK";
                     }
                     else
                     {
-                         dataGridAtributos.Rows[n].Cells[2].Value = "Ninguna";
+                        dataGridAtributos.Rows[n].Cells[2].Value = "Ninguna";
 
                     }
                 }
@@ -49,18 +49,18 @@ namespace BasesDatos
         private void CBTipoLlave_SelectedIndexChanged(object sender, EventArgs e)
         {
             //MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
-            if (CBTipoLlave.SelectedIndex ==1)
+            if (CBTipoLlave.SelectedIndex == 1)
             {
                 label4.Visible = true;
                 CBForanea.Visible = true;
                 foreach (Tabla item in @base.Tablas)
                 {
-                    if (item._NombreTabla!=tablaActual._NombreTabla)
+                    if (item._NombreTabla != tablaActual._NombreTabla)
                     {
-                        
-                            if (!CBForanea.Items.Contains(item._NombreTabla.ToString()))
-                               CBForanea.Items.Add(item._NombreTabla.ToString());
-                        
+
+                        if (!CBForanea.Items.Contains(item._NombreTabla.ToString()))
+                            CBForanea.Items.Add(item._NombreTabla.ToString());
+
                     }
                 }
                 TBTamaño.Text = "4";
@@ -70,7 +70,7 @@ namespace BasesDatos
             }
             else if (CBTipoLlave.SelectedIndex == 1)
             {
-             
+
                 TBTamaño.Enabled = true;
                 CBTipoDato.Enabled = true;
                 label4.Visible = false;
@@ -92,7 +92,7 @@ namespace BasesDatos
         private void CBTipoDato_SelectedIndexChanged(object sender, EventArgs e)
         {
             TBTamaño.Enabled = true;
-            if (CBTipoDato.SelectedItem.ToString()=="F")
+            if (CBTipoDato.SelectedItem.ToString() == "F")
             {
                 TBTamaño.Text = "8";
                 TBTamaño.Enabled = false;
@@ -107,7 +107,7 @@ namespace BasesDatos
                 TBTamaño.Text = "";
                 TBTamaño.Enabled = true;
             }
-            
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace BasesDatos
             {
                 if (item._NombreAtributo == (string)dataGridAtributos.CurrentRow.Cells[0].Value)
                 {
-                   
+
                     tablaActual._Atributos.Remove(item);
                     Archivo.GuardarTabla(tablaActual);
                     Archivo.GuardaBase(@base);
@@ -196,30 +196,30 @@ namespace BasesDatos
         }
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
-            if ((tablaActual._datos.Count > 0))
+            if ((tablaActual._datos.Count == 0))
             {
 
-            if (textBox1.Text != "" || CBTipoDato.Text != "" || CBTipoLlave.Text != "")
-            {
-                int res = ChecaAtributoRepetida(textBox1.Text);
-                if (res == 0)
+                if (textBox1.Text != "" || CBTipoDato.Text != "" || CBTipoLlave.Text != "")
                 {
-                    if (!ChecaClavePrimariaRepetida())
+                    int res = ChecaAtributoRepetida(textBox1.Text);
+                    if (res == 0)
                     {
-                        BuscaAtributoModificar();
-                        CargarAtributos();
+                        if (!ChecaClavePrimariaRepetida())
+                        {
+                            BuscaAtributoModificar();
+                            CargarAtributos();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("El atributo deseado ya existe");
+                        textBox1.Text = "";
                     }
                 }
                 else
                 {
-                    MessageBox.Show("El atributo deseado ya existe");
-                    textBox1.Text = "";
+                    MessageBox.Show("Faltan campos por llenar");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Faltan campos por llenar");
-            }
             }
             else
             {
@@ -278,18 +278,19 @@ namespace BasesDatos
             }
             return ban;
         }
-        public Atributo CreaAtributo(string n,char TD,int LL,int T) {
-            Atributo atributo = new Atributo(n,TD,LL,T);
+        public Atributo CreaAtributo(string n, char TD, int LL, int T)
+        {
+            Atributo atributo = new Atributo(n, TD, LL, T);
             return atributo;
         }
-        public Atributo CreaAtributoFK(string n, char TD, int LL,string FK,int T)
+        public Atributo CreaAtributoFK(string n, char TD, int LL, string FK, int T)
         {
-            Atributo atributo = new Atributo(n, TD, LL,FK,T);
+            Atributo atributo = new Atributo(n, TD, LL, FK, T);
             return atributo;
         }
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
-            if (tablaActual._datos.Count==0)
+            if (tablaActual._datos.Count == 0)
             {
 
                 if (textBox1.Text != "" && CBTipoDato.Text != "" && CBTipoLlave.Text != "")
@@ -300,9 +301,9 @@ namespace BasesDatos
                     {
                         if (!ChecaClavePrimariaRepetida())
                         {
-                            if (CBTipoLlave.SelectedIndex==1)
+                            if (CBTipoLlave.SelectedIndex == 1)
                             {
-                                Atributo atributo = CreaAtributoFK(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,CBForanea.Text, Convert.ToInt32(TBTamaño.Text));
+                                Atributo atributo = CreaAtributoFK(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1, CBForanea.Text, Convert.ToInt32(TBTamaño.Text));
                                 tablaActual._Atributos.Add(atributo);
                                 CBTipoDato.Enabled = true;
                                 TBTamaño.Text = "";
@@ -312,7 +313,7 @@ namespace BasesDatos
                             }
                             else
                             {
-                                Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1,Convert.ToInt32(TBTamaño.Text));
+                                Atributo atributo = CreaAtributo(textBox1.Text, Convert.ToChar(CBTipoDato.Text), CBTipoLlave.SelectedIndex + 1, Convert.ToInt32(TBTamaño.Text));
                                 tablaActual._Atributos.Add(atributo);
                             }
                             Archivo.GuardarTabla(tablaActual);
@@ -342,7 +343,7 @@ namespace BasesDatos
 
         private void btnBotonEliminar_Click(object sender, EventArgs e)
         {
-            if (tablaActual._datos.Count>0)
+            if (tablaActual._datos.Count == 0)
             {
                 BuscaAtributoEliminar();
                 CargarAtributos();
@@ -356,7 +357,7 @@ namespace BasesDatos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            RegistrosFm formRegistros = new RegistrosFm(@base,tablaActual);
+            RegistrosFm formRegistros = new RegistrosFm(@base, tablaActual);
             AddOwnedForm(formRegistros);
             formRegistros.FormBorderStyle = FormBorderStyle.None;
             formRegistros.TopLevel = false;

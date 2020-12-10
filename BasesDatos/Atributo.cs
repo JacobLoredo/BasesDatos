@@ -8,7 +8,7 @@
         private string NombreFK;
         private int Tam;
 
-        public Atributo(string Nombre, char TDato, int TLlave,int tam)
+        public Atributo(string Nombre, char TDato, int TLlave, int tam)
         {
             NombreAtributo = Nombre;
             TipoDato = TDato;
@@ -16,7 +16,7 @@
             NombreFK = "";
             Tam = tam;
         }
-        public Atributo(string Nombre, char TDato, int TLlave,string FK,int tam)
+        public Atributo(string Nombre, char TDato, int TLlave, string FK, int tam)
         {
             NombreAtributo = Nombre;
             TipoDato = TDato;
