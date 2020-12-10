@@ -97,7 +97,11 @@ namespace BasesDatos.Modulo_SQL
                 return "de la tabla " + select.tablaA + " muestra todos las tuplas.";
             }
             else if (select.coincide_select_columns(entrada))
+            {
+                txt_salida.Text = select.ejecuta_select_columns();
                 return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos();
+            }
+                
             else if (select.coincide_select_where(entrada))
                 return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos() + " y se cumple que el atributo " + select.id + " " + select.signo + " " + select.valor;
             return "no coincide!";

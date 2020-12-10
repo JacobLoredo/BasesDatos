@@ -305,7 +305,7 @@ namespace BasesDatos
             int n = dataGridView1.Rows.Add();
             for (int i = 0; i < textBoxes.Count; i++)
             {
-                dataGridView1.Rows[n].Cells[i].Value = textBoxes[i].Text;
+                dataGridView1.Rows[n].Cells[i].Value = textBoxes[i].Text.Replace(',', '.');
 
                 textBoxes[i].Text = "";
             }
@@ -435,6 +435,8 @@ namespace BasesDatos
         {
             if (!ChecarReferecia())
             {
+                if (dataGridView1.Rows.Count == 1)
+                    return;
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
                 tablaRegistros._datos.RemoveAt(dataGridView1.CurrentRow.Index);
                 Archivo.GuardaBase(baseActual);
