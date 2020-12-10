@@ -13,12 +13,15 @@ namespace BasesDatos.Modulo_SQL
     public partial class SQL_formulario : System.Windows.Forms.Form
     {
         private TabPage nueva_tab;
-        private Gramatica mysql;
-
-        public SQL_formulario()
+        //private Gramatica mysql;
+        private BaseDatos BD;
+        private Select select;
+        public SQL_formulario(BaseDatos bd)
         {
+            this.BD = bd;
+            select = new Select(BD);
             InitializeComponent();
-            mysql = new Gramatica();
+            //mysql = new Gramatica();
             //clona_tab();
             tab_ctrl.TabPages[0].Text += " 1";
         }
@@ -92,12 +95,16 @@ namespace BasesDatos.Modulo_SQL
         public string ejecuta_sentencia()
         {
             string entrada = txtb_entrada.Text;
-            if (mysql.coincide_select_all(entrada))
-                return "de la tabla " + mysql.tablaA + " muestra todos las tuplas.";
-            else if (mysql.coincide_select_columns(entrada))
-                return "de la tabla " + mysql.tablaA + " muestra todos las tuplas pero solo con los atributos " + mysql.obten_atributos();
-            else if (mysql.coincide_select_where(entrada))
-                return "de la tabla " + mysql.tablaA + " muestra todos las tuplas pero solo con los atributos " + mysql.obten_atributos() + " y se cumple que el atributo " + mysql.id + " " + mysql.signo + " " + mysql.valor;
+            if (select.coincide_select_all(entrada))
+            {
+                select.ejecuta_select_all();
+                txt_salida.Text = select.resultado;
+                return "de la tabla " + select.tablaA + " muestra todos las tuplas.";
+            }
+            else if (select.coincide_select_columns(entrada))
+                return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos();
+            else if (select.coincide_select_where(entrada))
+                return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos() + " y se cumple que el atributo " + select.id + " " + select.signo + " " + select.valor;
             return "no coincide!";
         }
 

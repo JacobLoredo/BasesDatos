@@ -140,7 +140,7 @@ namespace BasesDatos
 
         private void Abre_modulo_sql(object sender, EventArgs e)
         {
-            SQL_formulario sql = new SQL_formulario();
+            SQL_formulario sql = new SQL_formulario(this.BaseDatos);
             sql.Show();
         }
 

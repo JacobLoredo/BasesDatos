@@ -78,6 +78,7 @@
       <DependentUpon>FormEntidades.cs</DependentUpon>
     </Compile>
     <Compile Include="Modulo SQL\Gramatica.cs" />
+    <Compile Include="Modulo SQL\Select.cs" />
     <Compile Include="Modulo SQL\SQL_formulario.cs">
       <SubType>Form</SubType>
     </Compile>

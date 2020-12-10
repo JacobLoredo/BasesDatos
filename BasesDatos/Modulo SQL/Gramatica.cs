@@ -14,6 +14,7 @@ namespace BasesDatos.Modulo_SQL
         public string signo = "";
         public string valor = "";
         public List<string> atributos;
+        public bool sentencia_correcta;
 
         // Define a regular expression for repeated words.
         public Regex select_all = new Regex(
@@ -33,6 +34,7 @@ namespace BasesDatos.Modulo_SQL
         public Gramatica()
         {
             atributos = new List<string>();
+            sentencia_correcta = false;
         }
 
 
@@ -46,8 +48,11 @@ namespace BasesDatos.Modulo_SQL
                 string res = r.Replace(entrada, "");
                 r = new Regex(@"(\s|;)*");
                 tablaA = r.Replace(res, "");
+                sentencia_correcta = true;
                 return true;
+         
             }
+            sentencia_correcta = false;
             return false;
         }
 
@@ -72,8 +77,10 @@ namespace BasesDatos.Modulo_SQL
                 entrada = entrada.Replace(",", "");
                 atributos = entrada.Split(' ').ToList();
                 atributos.RemoveAll(s => s == "");
+                sentencia_correcta = true;
                 return true;
             }
+            sentencia_correcta = false;
             return false;
         }
 
@@ -100,8 +107,10 @@ namespace BasesDatos.Modulo_SQL
                 entrada = entrada.Replace(",", "");
                 atributos = entrada.Split(' ').ToList();
                 atributos.RemoveAll(s => s == "");
+                sentencia_correcta = true;
                 return true;
             }
+            sentencia_correcta = false;
             return false;
         }
 
