@@ -29,25 +29,30 @@
         private void InitializeComponent()
         {
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.contenedor_textboxs = new System.Windows.Forms.TableLayoutPanel();
+            this.dgv_resultados = new System.Windows.Forms.DataGridView();
+            this.txt_salida = new System.Windows.Forms.TextBox();
             this.txtb_entrada = new System.Windows.Forms.TextBox();
             this.txt_compilacion = new System.Windows.Forms.TextBox();
-            this.txt_salida = new System.Windows.Forms.TextBox();
             this.tab_ctrl = new System.Windows.Forms.TabControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.agregarPestañaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarPestañaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarResultadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ejecutarSentenciaF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resolverAmbiguedadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noResolverAmbiguedadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1.SuspendLayout();
-            this.contenedor_textboxs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_resultados)).BeginInit();
             this.tab_ctrl.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.contenedor_textboxs);
+            this.tabPage1.Controls.Add(this.dgv_resultados);
+            this.tabPage1.Controls.Add(this.txt_salida);
+            this.tabPage1.Controls.Add(this.txtb_entrada);
+            this.tabPage1.Controls.Add(this.txt_compilacion);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -56,53 +61,48 @@
             this.tabPage1.Text = "SQL";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // contenedor_textboxs
+            // dgv_resultados
             // 
-            this.contenedor_textboxs.ColumnCount = 1;
-            this.contenedor_textboxs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.contenedor_textboxs.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.contenedor_textboxs.Controls.Add(this.txtb_entrada, 0, 0);
-            this.contenedor_textboxs.Controls.Add(this.txt_compilacion, 0, 2);
-            this.contenedor_textboxs.Controls.Add(this.txt_salida, 0, 1);
-            this.contenedor_textboxs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contenedor_textboxs.Location = new System.Drawing.Point(3, 3);
-            this.contenedor_textboxs.Name = "contenedor_textboxs";
-            this.contenedor_textboxs.RowCount = 3;
-            this.contenedor_textboxs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.contenedor_textboxs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.contenedor_textboxs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.contenedor_textboxs.Size = new System.Drawing.Size(823, 507);
-            this.contenedor_textboxs.TabIndex = 3;
-            // 
-            // txtb_entrada
-            // 
-            this.txtb_entrada.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtb_entrada.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtb_entrada.Location = new System.Drawing.Point(3, 3);
-            this.txtb_entrada.Multiline = true;
-            this.txtb_entrada.Name = "txtb_entrada";
-            this.txtb_entrada.Size = new System.Drawing.Size(817, 163);
-            this.txtb_entrada.TabIndex = 0;
-            // 
-            // txt_compilacion
-            // 
-            this.txt_compilacion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_compilacion.Location = new System.Drawing.Point(3, 341);
-            this.txt_compilacion.Multiline = true;
-            this.txt_compilacion.Name = "txt_compilacion";
-            this.txt_compilacion.Size = new System.Drawing.Size(817, 163);
-            this.txt_compilacion.TabIndex = 2;
+            this.dgv_resultados.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgv_resultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_resultados.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_resultados.Location = new System.Drawing.Point(3, 164);
+            this.dgv_resultados.Name = "dgv_resultados";
+            this.dgv_resultados.RowHeadersVisible = false;
+            this.dgv_resultados.Size = new System.Drawing.Size(823, 226);
+            this.dgv_resultados.TabIndex = 4;
             // 
             // txt_salida
             // 
             this.txt_salida.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txt_salida.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_salida.Location = new System.Drawing.Point(3, 172);
+            this.txt_salida.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txt_salida.Enabled = false;
+            this.txt_salida.Location = new System.Drawing.Point(3, 154);
             this.txt_salida.Multiline = true;
             this.txt_salida.Name = "txt_salida";
             this.txt_salida.ReadOnly = true;
-            this.txt_salida.Size = new System.Drawing.Size(817, 163);
+            this.txt_salida.Size = new System.Drawing.Size(823, 10);
             this.txt_salida.TabIndex = 1;
+            this.txt_salida.Visible = false;
+            // 
+            // txtb_entrada
+            // 
+            this.txtb_entrada.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txtb_entrada.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtb_entrada.Location = new System.Drawing.Point(3, 3);
+            this.txtb_entrada.Multiline = true;
+            this.txtb_entrada.Name = "txtb_entrada";
+            this.txtb_entrada.Size = new System.Drawing.Size(823, 151);
+            this.txtb_entrada.TabIndex = 0;
+            // 
+            // txt_compilacion
+            // 
+            this.txt_compilacion.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txt_compilacion.Location = new System.Drawing.Point(3, 390);
+            this.txt_compilacion.Multiline = true;
+            this.txt_compilacion.Name = "txt_compilacion";
+            this.txt_compilacion.Size = new System.Drawing.Size(823, 120);
+            this.txt_compilacion.TabIndex = 2;
             // 
             // tab_ctrl
             // 
@@ -130,7 +130,9 @@
             // 
             this.agregarPestañaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.agregarPestañaToolStripMenuItem1,
-            this.exportarResultadosToolStripMenuItem});
+            this.exportarResultadosToolStripMenuItem,
+            this.resolverAmbiguedadToolStripMenuItem,
+            this.noResolverAmbiguedadToolStripMenuItem});
             this.agregarPestañaToolStripMenuItem.Name = "agregarPestañaToolStripMenuItem";
             this.agregarPestañaToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.agregarPestañaToolStripMenuItem.Text = "Opciones";
@@ -138,14 +140,14 @@
             // agregarPestañaToolStripMenuItem1
             // 
             this.agregarPestañaToolStripMenuItem1.Name = "agregarPestañaToolStripMenuItem1";
-            this.agregarPestañaToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
+            this.agregarPestañaToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
             this.agregarPestañaToolStripMenuItem1.Text = "Agregar pestaña";
             this.agregarPestañaToolStripMenuItem1.Click += new System.EventHandler(this.Agrega_nueva_pestaña_sql);
             // 
             // exportarResultadosToolStripMenuItem
             // 
             this.exportarResultadosToolStripMenuItem.Name = "exportarResultadosToolStripMenuItem";
-            this.exportarResultadosToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.exportarResultadosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.exportarResultadosToolStripMenuItem.Text = "Exportar resultados";
             // 
             // ejecutarSentenciaF5ToolStripMenuItem
@@ -154,6 +156,20 @@
             this.ejecutarSentenciaF5ToolStripMenuItem.Size = new System.Drawing.Size(137, 20);
             this.ejecutarSentenciaF5ToolStripMenuItem.Text = "Ejecutar sentencia (F5)";
             this.ejecutarSentenciaF5ToolStripMenuItem.Click += new System.EventHandler(this.ejecutarSentenciaF5ToolStripMenuItem_Click);
+            // 
+            // resolverAmbiguedadToolStripMenuItem
+            // 
+            this.resolverAmbiguedadToolStripMenuItem.Name = "resolverAmbiguedadToolStripMenuItem";
+            this.resolverAmbiguedadToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.resolverAmbiguedadToolStripMenuItem.Text = "No permitir ambiguedad";
+            this.resolverAmbiguedadToolStripMenuItem.Click += new System.EventHandler(this.resolverAmbiguedadToolStripMenuItem_Click);
+            // 
+            // noResolverAmbiguedadToolStripMenuItem
+            // 
+            this.noResolverAmbiguedadToolStripMenuItem.Name = "noResolverAmbiguedadToolStripMenuItem";
+            this.noResolverAmbiguedadToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.noResolverAmbiguedadToolStripMenuItem.Text = "Permitir ambiguedad";
+            this.noResolverAmbiguedadToolStripMenuItem.Click += new System.EventHandler(this.noResolverAmbiguedadToolStripMenuItem_Click);
             // 
             // SQL_formulario
             // 
@@ -167,8 +183,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SQL_formulario";
             this.tabPage1.ResumeLayout(false);
-            this.contenedor_textboxs.ResumeLayout(false);
-            this.contenedor_textboxs.PerformLayout();
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_resultados)).EndInit();
             this.tab_ctrl.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -188,7 +204,9 @@
         private System.Windows.Forms.ToolStripMenuItem agregarPestañaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem agregarPestañaToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportarResultadosToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel contenedor_textboxs;
         private System.Windows.Forms.ToolStripMenuItem ejecutarSentenciaF5ToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dgv_resultados;
+        private System.Windows.Forms.ToolStripMenuItem resolverAmbiguedadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem noResolverAmbiguedadToolStripMenuItem;
     }
 }

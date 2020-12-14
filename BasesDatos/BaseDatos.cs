@@ -18,7 +18,14 @@ namespace BasesDatos
             tablas = new List<Tabla>();
 
         }
-
+        public Tabla obten_tabla(string tabla)
+        {
+            return Tablas.Find(t => t._NombreTabla == tabla);
+        }
+        public bool existe_tabla(string tabla)
+        {
+            return Tablas.Exists(t => t._NombreTabla == tabla);
+        }
         public List<Tabla> Tablas { get { return tablas; } set { tablas = value; } }
         public string _NombreBD { get { return NombreBD; } set { NombreBD = value; } }
 

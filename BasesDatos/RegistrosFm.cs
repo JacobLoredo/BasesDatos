@@ -382,7 +382,7 @@ namespace BasesDatos
 
                 if (atributo._TipoDato == 'E')
                 {
-                    if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[idTextbox].Text, "^[1-9][0-9]*$"))
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(textBoxes[idTextbox].Text, "^[0-9][0-9]*$"))
                     {
                         MessageBox.Show("El campo: " + labels[idTextbox].Text + " solo acepta numeros enteros");
                         textBoxes[idTextbox].Text = "";

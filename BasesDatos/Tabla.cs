@@ -25,6 +25,16 @@ namespace BasesDatos
             datos = new List<string>();
         }
 
+        public string[] lista_nombre_atributos()
+        {
+            string[] nombres_atributos = new string[atributos.Count];
+
+            for (int i = 0; i < nombres_atributos.Length; i++)
+                nombres_atributos[i] = atributos[i]._NombreAtributo;
+
+            return nombres_atributos;
+        }
+
         /// <value> Gets and set la lista de atributos de la tabla .</value>
         public List<Atributo> _Atributos { get { return atributos; } set { atributos = value; } }
         /// <value>Gets and set el nombre de la tabla</value>

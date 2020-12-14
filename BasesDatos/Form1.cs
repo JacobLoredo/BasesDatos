@@ -11,10 +11,10 @@ namespace BasesDatos
         public Archivo arc;
         public long cabecera;
         public BaseDatos BaseDatos;
+        private SQL_formulario sql;
         public Form1()
         {
             InitializeComponent();
-
             arc = new Archivo();
         }
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -101,6 +101,8 @@ namespace BasesDatos
                 formEntidades.baseActual = arc.BaseD;
 
                 AbrirFormInPanel(formEntidades);
+                if (sql != null)
+                    sql.actualiza_bd(BaseDatos);
             }
         }
 
@@ -140,7 +142,7 @@ namespace BasesDatos
 
         private void Abre_modulo_sql(object sender, EventArgs e)
         {
-            SQL_formulario sql = new SQL_formulario(this.BaseDatos);
+            sql = new SQL_formulario(this.BaseDatos);
             sql.Show();
         }
 

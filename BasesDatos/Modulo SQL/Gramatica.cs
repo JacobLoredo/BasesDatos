@@ -10,22 +10,36 @@ namespace BasesDatos.Modulo_SQL
         public string id = "";
         public string signo = "";
         public string valor = "";
+        public string atributo_inner = "";
         public List<string> atributos;
         public bool sentencia_correcta;
 
-        // Define a regular expression for repeated words.
+        /// <summary>
+        /// Expresion regular para 'select * from tabla"
+        /// </summary>
         public Regex select_all = new Regex(
-            @"(SELECT|select)\s+\*\s+(FROM|from)\s+\w+\s*;?\s*",
+            @"(SELECT|select)\s+\*\s+(FROM|from)\s+(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        // Define a regular expression for repeated words.
+        /// <summary>
+        /// Expresion regular para 'select atributos from tabla"
+        /// </summary>
         Regex select_colums = new Regex(
-            @"(SELECT|select)(\s+\w+,?)+\s+(FROM|from)\s+\w+\s*;?\s*",
+            @"(SELECT|select)(\s+\w+,?)+\s+(FROM|from)\s+(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        // Define a regular expression for repeated words.
+        /// <summary>
+        /// Expresion regular para 'select atributos from tabla id signo valor"
+        /// </summary>
         Regex select_where = new Regex(
-            @"(SELECT|select)(\s+\w+,?)+\s+(FROM|from)\s+\w+\s*(WHERE|where)\s+\w+\s+(=|>|<|>=|<=|<>)\s+\d+\s*;?",
+            @"(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s*(WHERE|where)\s+(\w+)\s+(=|>|<|>=|<=|<>)\s+(\d+)\s*;?",
+          RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Expresion regular para 'select atributos from tA Inner Join tB On tA.atr = tB.atr"
+        /// </summary>
+        Regex inner_join = new Regex(
+            @"(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s+=\s+(\w+)\.(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public Gramatica()
@@ -38,16 +52,14 @@ namespace BasesDatos.Modulo_SQL
         public bool coincide_select_all(string entrada)
         {
             MatchCollection mc = select_all.Matches(entrada);
+            GroupCollection gc = select_all.Match(entrada).Groups;
+
             if (mc.Count == 1 && mc[0].Length == entrada.Length)
             {
                 limpia_variables();
-                Regex r = new Regex(@"(SELECT|select)\s+\*\s+(FROM|from)\s+");
-                string res = r.Replace(entrada, "");
-                r = new Regex(@"(\s|;)*");
-                tablaA = r.Replace(res, "");
+                tablaA = limpia_cadena(gc[3].Value)[0];
                 sentencia_correcta = true;
                 return true;
-         
             }
             sentencia_correcta = false;
             return false;
@@ -56,24 +68,13 @@ namespace BasesDatos.Modulo_SQL
         public bool coincide_select_columns(string entrada)
         {
             MatchCollection mc = select_colums.Matches(entrada);
+            GroupCollection gc = select_colums.Match(entrada).Groups;
+
             if (mc.Count == 1 && mc[0].Length == entrada.Length)
             {
                 limpia_variables();
-                Regex r = new Regex(@"(SELECT|select)\s+");
-                entrada = r.Replace(entrada, "");
-                int indice_from = entrada.IndexOf("FROM");
-                if (indice_from < 0)
-                    indice_from = entrada.IndexOf("from");
-
-                tablaA = entrada.Substring(indice_from + 5, entrada.Length - (indice_from + 5));
-                tablaA = tablaA.Replace(";", "");
-                r = new Regex(@"\s*");
-                tablaA = r.Replace(tablaA, "");
-
-                entrada = entrada.Substring(0, indice_from);
-                entrada = entrada.Replace(",", "");
-                atributos = entrada.Split(' ').ToList();
-                atributos.RemoveAll(s => s == "");
+                tablaA = gc[4].Value;
+                atributos = limpia_cadena(gc[2].Value);
                 sentencia_correcta = true;
                 return true;
             }
@@ -84,30 +85,51 @@ namespace BasesDatos.Modulo_SQL
         public bool coincide_select_where(string entrada)
         {
             MatchCollection mc = select_where.Matches(entrada);
+            GroupCollection gc = select_where.Match(entrada).Groups;
+
             if (mc.Count == 1 && mc[0].Length == entrada.Length)
             {
                 limpia_variables();
-                int indice_where = obten_condicion(entrada);
-                Regex r = new Regex(@"(SELECT|select)\s+");
-                entrada = r.Replace(entrada, "");
-                int indice_from = entrada.IndexOf("FROM");
-                if (indice_from < 0)
-                    indice_from = entrada.IndexOf("from");
-
-                tablaA = entrada.Substring(indice_from + 5, entrada.Length - (indice_where - 7));
-                tablaA = tablaA.Replace(";", "");
-                tablaA = tablaA.Split(' ')[0];
-                r = new Regex(@"\s+");
-                tablaA = r.Replace(tablaA, " ");
-
-                entrada = entrada.Substring(0, indice_from);
-                entrada = entrada.Replace(",", "");
-                atributos = entrada.Split(' ').ToList();
-                atributos.RemoveAll(s => s == "");
+                tablaA = gc[5].Value;
+                atributos = limpia_cadena(gc[2].Value);
+                id = gc[7].Value;
+                signo = gc[8].Value;
+                valor = gc[9].Value;
                 sentencia_correcta = true;
                 return true;
             }
             sentencia_correcta = false;
+            return false;
+        }
+
+        public bool coincide_inner_join(string entrada)
+        {
+            MatchCollection mc = inner_join.Matches(entrada);
+            GroupCollection gc = inner_join.Match(entrada).Groups;
+
+            sentencia_correcta = false;
+
+            if (mc.Count == 1 && mc[0].Length == entrada.Length)
+            {
+                limpia_variables();
+                atributos = limpia_cadena(gc[2].Value);
+                tablaA = gc[5].Value;
+                tablaB = gc[7].Value;
+                
+                if(tablaA != gc[9].Value || tablaB != gc[11].Value)        
+                    return false;
+                
+                string atrA = gc[10].Value, atrB = gc[12].Value;
+
+                if (atrA != atrB)
+                    return false;
+
+                atributo_inner = atrA;
+
+                sentencia_correcta = true;
+                return true;
+            }
+
             return false;
         }
 
@@ -142,6 +164,21 @@ namespace BasesDatos.Modulo_SQL
             tablaB = "";
         }
 
+        /// <summary>
+        /// Divide una serie de palabras separadas por espacios y comas
+        /// </summary>
+        /// <param name="cadena"></param>
+        /// <returns>
+        /// Regresa una lista con solo las palabras
+        /// </returns>
+        private List<string> limpia_cadena(string cadena)
+        {
+            List<string> lista_atrs = new List<string>();
+            Regex r = new Regex(@"\s+|,");
+            lista_atrs = r.Replace(cadena, " ").Split(' ').ToList();
+            lista_atrs.RemoveAll(s => s == "");
+            return lista_atrs;
+        }
         public string obten_atributos()
         {
             string s = "";
