@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BasesDatos
@@ -26,7 +27,7 @@ namespace BasesDatos
             if (tablaRegistros._datos != null)
             {
                 CargarAtributos();
-
+                obten_registros(tablaRegistros);
             }
         }
 
@@ -426,7 +427,7 @@ namespace BasesDatos
             }
             if (ban)
             {
-                MessageBox.Show("Esta tabla esta referenciada en otro lugar, no se puede modificar los datos");
+                MessageBox.Show("Esta tabla esta referenciada en otro lugar, no se puede modificar su clave Primaria, los demas elementos se actualizaran");
             }
             return ban;
         }
@@ -442,6 +443,58 @@ namespace BasesDatos
                 Archivo.GuardaBase(baseActual);
 
             }
+        }
+        private string elimina_nombre_atributo(string tupla, Tabla t)
+        {
+            foreach (string atributo in t.lista_nombre_atributos())
+                tupla = tupla.Replace(atributo + ":", "");
+         /*   if (id != "")
+                tupla = tupla.Replace(id + ":", "");
+         */
+            return tupla;
+        }
+        private List<List<string>> obten_registros(Tabla t)
+        {
+            List<List<string>> registros = new List<List<string>>();
+            // por cada tupla
+            for (int i = 0; i < t._datos.Count; i++)
+            {
+                registros.Add(new List<string>());
+
+                // separamos la tupla por cada uno de sus metadatos
+                string[] datos_split = elimina_nombre_atributo(t._datos[i], t).Split(',');
+                // por cada metadato
+                for (int j = 0; j < datos_split.Length; j++)
+                {
+                   
+                        // simplemente añadimos el registro
+                        registros.Last().Add(datos_split[j]);
+                   
+                }
+            }
+          
+            return registros;
+        }
+        public bool checarReferenciaElimina() {
+            bool ban = false;
+            foreach (Tabla item in baseActual.Tablas)
+            {
+                foreach (Atributo A in item._Atributos)
+                {
+                    if (tablaRegistros._NombreTabla == A._NombreFK && item._datos.Count > 0)
+                    {
+
+                        ban = true;
+                        break;
+                    }
+                }
+            }
+            if (ban)
+            {
+                MessageBox.Show("Esta tabla esta referenciada en otro lugar, no se puede modificar su clave Primaria, los demas elementos se actualizaran");
+            }
+            return ban;
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -476,14 +529,19 @@ namespace BasesDatos
                                     }
                                     else
                                     {
-                                       
+
                                     }
                                 }
-                                if (!PKrepetida&&!ChecarReferecia())
+                                if (!PKrepetida && !ChecarReferecia())
                                 {
                                     dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
                                     textBoxes[numTextBox].Text = "";
                                 }
+                            }
+                            else
+                            {
+                                dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                                textBoxes[numTextBox].Text = "";
                             }
                         }
 
@@ -502,6 +560,10 @@ namespace BasesDatos
                             dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
                         }
                     }
+                    else if (tablaRegistros._Atributos[numTextBox]._TipoDato == 'C') {
+
+                        dataGridView1.CurrentRow.Cells[numTextBox].Value = item.Text;
+                    }
 
                 }
                 numTextBox++;
@@ -510,7 +572,7 @@ namespace BasesDatos
             {
                 foreach (ComboBox combo in comboBoxes)
                 {
-                    if (combo.Text != "")
+                    if (combo.Text != ""&&ChecarReferecia())
                     {
                         dataGridView1.CurrentRow.Cells[numTextBox - 1 + comboBoxes.Count].Value = combo.Text;
 
