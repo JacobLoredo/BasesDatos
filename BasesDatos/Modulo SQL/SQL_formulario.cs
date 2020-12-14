@@ -125,7 +125,7 @@ namespace BasesDatos.Modulo_SQL
             }
             ejecuta = false;
             limpia_grid();
-            return select.resultado;
+            return "Error de Sintaxis!.";
         }
 
         private void ejecutarSentenciaF5ToolStripMenuItem_Click(object sender, EventArgs e)
