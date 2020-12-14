@@ -2,6 +2,9 @@
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Clase que crea una base de datos 
+    /// </summary>
     public class BaseDatos
     {
         private string NombreBD;

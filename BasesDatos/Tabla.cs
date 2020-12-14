@@ -20,11 +20,13 @@ namespace BasesDatos
         }
         public Tabla()
         {
-
             atributos = new List<Atributo>();
             datos = new List<string>();
         }
-
+        /// <summary>
+        /// Funcion que lista los nombres de cada atributo
+        /// </summary>
+        /// <returns>nombre_atributos</returns>
         public string[] lista_nombre_atributos()
         {
             string[] nombres_atributos = new string[atributos.Count];
@@ -39,6 +41,7 @@ namespace BasesDatos
         public List<Atributo> _Atributos { get { return atributos; } set { atributos = value; } }
         /// <value>Gets and set el nombre de la tabla</value>
         public string _NombreTabla { get { return NombreTabla; } set { NombreTabla = value; } }
+        /// <value> Gets and set la lista de datos de la tabla .</value>
         public List<string> _datos { get { return datos; } set { datos = value; } }
     }
 }

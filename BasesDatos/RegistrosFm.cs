@@ -27,7 +27,7 @@ namespace BasesDatos
             if (tablaRegistros._datos != null)
             {
                 CargarAtributos();
-                obten_registros(tablaRegistros);
+                
             }
         }
 
@@ -281,7 +281,7 @@ namespace BasesDatos
                         {
 
                             referencia = true;
-                            break;
+                           
                         }
                     }
                     if (!vacio && !sincampos && !referencia)
@@ -414,14 +414,33 @@ namespace BasesDatos
         }
         private bool ChecarReferecia() {
             bool ban = false;
+            int indicePK;
+            int indiceFK;
+            List<List<string>> datosActuales = new List<List<string>>();
+            datosActuales = obten_registros(tablaRegistros);
+            indicePK= BuscaClavePrimaria(tablaRegistros);
+            
             foreach (Tabla item in baseActual.Tablas)
             {
                 foreach (Atributo A in item._Atributos)
                 {
                     if (tablaRegistros._NombreTabla==A._NombreFK&&item._datos.Count>0)
-                    {
-                        ban = true;
-                        break;
+                    {   
+                        List<List<string>> datosReferencia = new List<List<string>>();
+                        datosReferencia= obten_registros(item);
+                        indiceFK = BuscaIndiceKF(item);
+
+                        
+                        
+                            foreach (List<string> DK in datosReferencia)
+                            {
+                                if (datosActuales[dataGridView1.CurrentRow.Index][indicePK] == DK[indiceFK])
+                                {
+                                    ban = true;
+                                    break;
+                                }
+                            }  
+                        
                     }
                 }
             }
@@ -431,6 +450,33 @@ namespace BasesDatos
             }
             return ban;
         }
+
+        private int BuscaIndiceKF(Tabla tabla)
+        {
+            int PK = new int();
+            for (int i = 0; i < tabla._Atributos.Count; i++)
+            {
+                if (tabla._Atributos[i]._NombreFK == tablaRegistros._NombreTabla)
+                {
+                    PK = i;
+                }
+            }
+            return PK;
+        }
+
+        private int BuscaClavePrimaria(Tabla tabla)
+        {
+            int PK = new int();
+            for (int i = 0; i < tabla._Atributos.Count; i++)
+            {
+                if (tabla._Atributos[i]._TipoLLave==1)
+                {
+                    PK = i;
+                }
+            }
+            return PK;
+        }
+
         //Funcion para borrar registros
         private void button1_Click(object sender, EventArgs e)
         {
@@ -572,7 +618,7 @@ namespace BasesDatos
             {
                 foreach (ComboBox combo in comboBoxes)
                 {
-                    if (combo.Text != ""&&ChecarReferecia())
+                    if (combo.Text != ""&&checarReferenciaElimina())
                     {
                         dataGridView1.CurrentRow.Cells[numTextBox - 1 + comboBoxes.Count].Value = combo.Text;
 
