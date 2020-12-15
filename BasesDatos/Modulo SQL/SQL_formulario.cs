@@ -106,18 +106,15 @@ namespace BasesDatos.Modulo_SQL
             string entrada = txtb_entrada.Text;
             if (select.coincide_select_all(entrada) && select.ejecuta_select_all())
             {
-                txt_salida.Text = select.resultado;
-                return "de la tabla " + select.tablaA + " muestra todos las tuplas.";
+                return select.resultado;
             }
             else if (select.coincide_select_columns(entrada) && select.ejecuta_select_columns(false))
             {
-                txt_salida.Text = select.resultado;
-                return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos();
+                return select.resultado;
             }
             else if (select.coincide_select_where(entrada) && select.ejecuta_select_columns(true))
             {
-                txt_salida.Text = select.resultado;
-                return "de la tabla " + select.tablaA + " muestra todos las tuplas pero solo con los atributos " + select.obten_atributos() + " y se cumple que el atributo " + select.id + " " + select.signo + " " + select.valor;
+                return select.resultado;
             }
             else if (select.coincide_inner_join(entrada) && select.ejecuta_inner_join())
             {
@@ -125,7 +122,7 @@ namespace BasesDatos.Modulo_SQL
             }
             ejecuta = false;
             limpia_grid();
-            return "Error de Sintaxis!.";
+            return select.resultado;
         }
 
         private void ejecutarSentenciaF5ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,21 +146,30 @@ namespace BasesDatos.Modulo_SQL
                 return;
             limpia_grid();
 
-            // agregando el encabezado del grid
-            for (int i = 0; i < select.atributos_tablaA.Length; i++)
+            try
             {
-                if(!select.resuelve_ambiguedad)
-                    dgv_resultados.Columns.Add(select.atributos_tablaA[i], select.atributos_tablaA[i]);
-                else
-                    dgv_resultados.Columns.Add(select.tablaA + "." + select.atributos_tablaA[i], select.tablaA + "." + select.atributos_tablaA[i]);
+                agrega_cabecera_datos();
+                elimina_columnas_sobrantes();
+                organiza_columnas();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                limpia_grid();
+            }
+        }
+
+        private void agrega_cabecera_datos()
+        {
+            // agregando el encabezado del grid
+            for (int i = 0; i < select.atributos_tablaA.Count; i++)
+            {
+                dgv_resultados.Columns.Add(select.tablaA + "." + select.atributos_tablaA[i], select.atributos_tablaA[i]);
             }
 
-            for (int i = 0; i < select.atributos_tablaB.Length; i++)
+            for (int i = 0; i < select.atributos_tablaB.Count; i++)
             {
-                if (!select.resuelve_ambiguedad)
-                    dgv_resultados.Columns.Add(select.atributos_tablaB[i], select.atributos_tablaB[i]);
-                else
-                    dgv_resultados.Columns.Add(select.tablaB + "." + select.atributos_tablaB[i], select.tablaB + "." + select.atributos_tablaB[i]);
+                dgv_resultados.Columns.Add(select.tablaB + "." + select.atributos_tablaB[i], select.atributos_tablaB[i]);
             }
 
             // agregando los datos
@@ -171,29 +177,52 @@ namespace BasesDatos.Modulo_SQL
             {
                 dgv_resultados.Rows.Add(select.datos[i].ToArray());
             }
+        }
 
-            // ocultando las columnas que no nos interesan
-            for (int i = 0; i < select.atr_no_selA.Count; i++)
-                dgv_resultados.Columns[select.atr_no_selA[i]].Visible = false;
 
-            int desplazamiento = select.atr_no_selA.Count + 1;
+        private void elimina_columnas_sobrantes()
+        {
+            // borrando las columnas que no nos interesan
+            for (int i = 0; i < select.ansA.Count; i++)
+                dgv_resultados.Columns.Remove(dgv_resultados.Columns[select.tablaA + "." + select.ansA[i]]);
 
-            for (int i = 0; i < select.atr_no_selB.Count; i++)
-                dgv_resultados.Columns[select.atr_no_selB[i] + desplazamiento].Visible = false;
+            int desplazamiento = select.ansA.Count + 1;
 
+            for (int i = 0; i < select.ansB.Count; i++)
+                dgv_resultados.Columns.Remove(dgv_resultados.Columns[select.tablaB + "." + select.ansB[i]]);
+        }
+
+        private void organiza_columnas()
+        {
             // reorganizando las columnas
-            for (int i = 0; i < select.orden_atrA.Count; i++)
-                dgv_resultados.Columns[select.orden_atrA[i]].DisplayIndex = i;
+            for (int i = 0; i < select.atributos.Count; i++)
+            {
+                // probando atributos de la tabla a
+                if (dgv_resultados.Columns.Contains(select.tablaA + "." + select.atributos[i]))
+                {
+                    dgv_resultados.Columns[select.tablaA + "." + select.atributos[i]].DisplayIndex = i;
+                }
+                else if(dgv_resultados.Columns.Contains(select.atributos[i]))
+                {
+                    dgv_resultados.Columns[select.atributos[i]].DisplayIndex = i;
+                }
+                // probando atributos de la tabla b
+                else if(dgv_resultados.Columns.Contains(select.tablaB + "." + select.atributos[i]))
+                {
+                    dgv_resultados.Columns[select.tablaB + "." + select.atributos[i]].DisplayIndex = i;
+                }
+                else if (dgv_resultados.Columns.Contains(select.atributos[i]))
+                {
+                    dgv_resultados.Columns[select.atributos[i]].DisplayIndex = i;
+                }
+                if (select.atributos[i].Contains("."))
+                    dgv_resultados.Columns[select.atributos[i]].HeaderText = select.atributos[i];
+            }
         }
 
-        private void resolverAmbiguedadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void limpiaGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            select.resuelve_ambiguedad = false;
-        }
-
-        private void noResolverAmbiguedadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            select.resuelve_ambiguedad = true;
+            limpia_grid();
         }
     }
 }

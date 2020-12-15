@@ -23,16 +23,21 @@ namespace BasesDatos
             atributos = new List<Atributo>();
             datos = new List<string>();
         }
+
         /// <summary>
         /// Funcion que lista los nombres de cada atributo
         /// </summary>
         /// <returns>nombre_atributos</returns>
-        public string[] lista_nombre_atributos()
+        public List<string> lista_nombre_atributos()
         {
-            string[] nombres_atributos = new string[atributos.Count];
+            List<string> nombres_atributos = new List<string>();
 
-            for (int i = 0; i < nombres_atributos.Length; i++)
+            for (int i = 0; i < atributos.Count; i++)
+            {
+                nombres_atributos.Add("");
                 nombres_atributos[i] = atributos[i]._NombreAtributo;
+            }
+                
 
             return nombres_atributos;
         }

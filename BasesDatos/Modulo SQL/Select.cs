@@ -9,9 +9,9 @@ namespace BasesDatos.Modulo_SQL
     class Select : Gramatica
     {
         public string resultado;
-        public string[] atributos_tablaA, atributos_tablaB;
+        public List<string> atributos_tablaA, atributos_tablaB;
         public List<List<string>> datos;
-        public List<int> atr_no_selA, atr_no_selB, orden_atrA, orden_atrB;
+        public List<string> ansA, ansB;
         public BaseDatos BD;
         public bool resuelve_ambiguedad;
         public Select(BaseDatos bd)
@@ -20,10 +20,10 @@ namespace BasesDatos.Modulo_SQL
             resultado = "";
             this.BD = bd;
             datos = new List<List<string>>();
-            atr_no_selA = new List<int>();
-            atr_no_selB = new List<int>();
-            atributos_tablaA = new string[1];
-            atributos_tablaB = new string[1];
+            ansA = new List<string>();
+            ansB = new List<string>();
+            atributos_tablaA = new List<string>();
+            atributos_tablaB = new List<string>();
         }
 
         #region ejecuciones 
@@ -33,27 +33,36 @@ namespace BasesDatos.Modulo_SQL
             {
                 if (t._NombreTabla.Replace(" ", "") == tablaA)
                 {
+                    if (atributos_repetidos())
+                    {
+                        resultado = "Existen atributos repetidos!.";
+                        return false;
+                    }
+
                     inicializa_variables(t, null);
-                    //resultado = tablaA + "\r\n";
+
                     foreach (Atributo a in t._Atributos)
                     {
                         resultado += a._NombreAtributo + "\t";
                         this.atributos.Add(a._NombreAtributo);
                     }
-                    //resultado += "\r\n";
+
                     datos = obten_registros(t, false);
-                    /*for (int i = 0; i < t._datos.Count; i++)
-                    {
-                        datos.Add(new List<string>());
-                        resultado += t._datos[i] + "\r\n";
-                        foreach (string metadato in elimina_nombre_atributo(t._datos[i], t).Split(','))
-                            datos.Last().Add(metadato);
-                    }*/
                     resultado = "Ejecución terminada correctamente.";
                     return true;
                 }
             }
             resultado = "La tabla no existe!.";
+            return false;
+        }
+
+        private bool atributos_repetidos()
+        {
+            foreach(string atr in this.atributos)
+            {
+                if (this.atributos.Count(a => a == atr) > 1)
+                    return true;
+            }
             return false;
         }
 
@@ -64,7 +73,11 @@ namespace BasesDatos.Modulo_SQL
                 if (t._NombreTabla.Replace(" ", "") == tablaA)
                 {
                     inicializa_variables(t, null);
-
+                    if (atributos_repetidos())
+                    {
+                        resultado = "Existen atributos repetidos!.";
+                        return false;
+                    }
                     // verificamos que existan todos los atributos a mostrar
                     if (!verifica_atributos(t, where))
                     {
@@ -72,8 +85,9 @@ namespace BasesDatos.Modulo_SQL
                         return false;
                     }
 
-                    reorganiza_atributos(t, null);
-                    atr_no_selA = separa_atributos_a_mostrar(t);
+                    //reorganiza_atributos(t, null);
+                    ansA = separa_atributos_a_mostrar(t, false);
+
                     datos = obten_registros(t, where);
                     resultado = "Ejecución terminada correctamente.";
                     return true;
@@ -92,13 +106,30 @@ namespace BasesDatos.Modulo_SQL
 
             if (ta != null && tb != null)
             {
-                // comprobamos que los atributos seleccionados existan al menos en una de las dos tablas
-                foreach(string a in atributos)
+                // comprobamos que las tablas referenciadas por los atributos existan
+                if (!verifica_tablas(ta, tb, this.atributos))
                 {
-                    if (!resuelve_ambiguedad && verifica_atributos(ta, new string[] { a }) && verifica_atributos(tb, new string[] { a }))
+                    resultado = "No existe alguna tabla referenciada!.";
+                    return false;
+                }
+
+                // comprobamos que los atributos seleccionados existan al menos en una de las dos tablas
+                foreach (string a in atributos)
+                {
+                    if (atributos_repetidos())
                     {
-                        resultado = "Existe ambiguiedad en un atributo!.";
+                        resultado = "Existen atributos repetidos!.";
                         return false;
+                    }
+
+                    if (verifica_atributos(ta, new string[] { a }) && verifica_atributos(tb, new string[] { a }))
+                    {
+                        // verificamos que los atributos de cada tabla existan
+                        if(!(verifica_atributos(ta) && verifica_atributos(tb)))
+                        {
+                            resultado = "Algun atributo no existe en una de las tablas!.";
+                            return false;
+                        }
                     }
                     if (!verifica_atributos(ta, new string[] { a }) && !verifica_atributos(tb, new string[] { a }))
                     {
@@ -109,8 +140,10 @@ namespace BasesDatos.Modulo_SQL
 
                 inicializa_variables(ta, tb);
 
-                atr_no_selA = separa_atributos_a_mostrar(ta);
-                atr_no_selB = separa_atributos_a_mostrar(tb);
+                //reorganiza_atributos(ta, tb);
+
+                ansA = separa_atributos_a_mostrar(ta, false);
+                ansB = separa_atributos_a_mostrar(tb, false);
 
                 int ind_atr_tA = ta.lista_nombre_atributos().ToList().IndexOf(atributo_inner);
                 int ind_atr_tB = tb.lista_nombre_atributos().ToList().IndexOf(atributo_inner);
@@ -167,7 +200,7 @@ namespace BasesDatos.Modulo_SQL
             }
             return true;
         }
-
+        
         private bool verifica_atributos(Tabla t, bool where)
         {
             if (!verifica_atributos(t, this.atributos.ToArray()))
@@ -182,10 +215,41 @@ namespace BasesDatos.Modulo_SQL
         private bool verifica_atributos(Tabla t, string[] atributos)
         {
             List<string> atrs = t.lista_nombre_atributos().ToList();
-            foreach (string s in atributos)
+
+            foreach (string s in obten_parte_atributos(atributos.ToList()))
                 if (!atrs.Contains(s))
                     return false;
             return true;
+        }
+
+        private bool verifica_tablas(Tabla a, Tabla b, List<string> atributos)
+        {
+            string t = "";
+            foreach(string s in atributos)
+            {
+                if (s.Contains('.'))
+                {
+                    t = s.Substring(0, s.IndexOf('.'));
+                    if (a._NombreTabla != t && b._NombreTabla != t)
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        private bool verifica_atributos(Tabla tabla)
+        {
+            List<string> atr_de_tabla = new List<string>();
+
+            foreach(string s in atributos)
+            {
+
+                if(s.IndexOf(tabla._NombreTabla) == 0)
+                {
+                    atr_de_tabla.Add(s.Substring((s.IndexOf('.') + 1), (s.Length - s.IndexOf('.') - 1)));
+                }
+            }
+            return verifica_atributos(tabla, atr_de_tabla.ToArray());
         }
 
         private bool verifica_where(Tabla t)
@@ -223,12 +287,6 @@ namespace BasesDatos.Modulo_SQL
             for (int i = 0; i < ra.Count; i++)
             {
                 id_ta = ra[i][ia];
-                /*ind_tb = rb.FindIndex(tupla => tupla[ib] == id_ta);
-                if (ind_tb >= 0 && rb[ind_tb][ib] == id_ta)
-                {
-                    foreach (string s in rb[ind_tb])
-                        ra[i].Add(s);
-                }*/
                 foreach (List<string> list in rb.FindAll(tupla => tupla[ib] == id_ta))
                 {
                     resultado.Add(clona_lista(ra[i]));
@@ -276,7 +334,50 @@ namespace BasesDatos.Modulo_SQL
 
             return res;
         }
-       
+
+        private List<string> separa_atributos_a_mostrar(Tabla t, bool hola)
+        {
+            List<string> res = new List<string>();
+
+            List<string> atributos_especificos = obten_parte_atributos(null);
+
+            // separamos los atributos que nos interesan de los que no
+            for (int i = 0; i < t._Atributos.Count; i++)
+            {
+                if (!atributos_especificos.Contains(t._Atributos[i]._NombreAtributo))
+                    res.Add(t._Atributos[i]._NombreAtributo);
+            }
+
+            return res;
+        }
+
+        public List<string> obten_parte_atributos(List<string> lista_atributos)
+        {
+            List<string> atributos_especificos = new List<string>();
+            string t = "";
+            
+            List<string> atributos_usar;
+
+            if (lista_atributos != null)
+                atributos_usar = lista_atributos;
+            else
+                atributos_usar = this.atributos;
+
+            foreach (string atr in atributos_usar)
+            {
+                // si contiene un punto, solo obtenemos el nombre del atributo
+                if (atr.Contains('.'))
+                {
+                    t = atr.Substring((atr.IndexOf('.') + 1), (atr.Length - atr.IndexOf('.') - 1));
+                    atributos_especificos.Add(t);
+                }
+                else
+                    atributos_especificos.Add(atr);
+            }
+
+            return atributos_especificos;
+        }
+
         /// <summary>
         /// Obtiene los datos de la tabla
         /// </summary>
@@ -319,18 +420,18 @@ namespace BasesDatos.Modulo_SQL
 
         private void inicializa_variables(Tabla ta, Tabla tb)
         {
+            atributos_tablaA = new List<string>();
+            atributos_tablaB = new List<string>();
+            ansA = new List<string>();
+            ansB = new List<string>();
             if (ta != null)
                 atributos_tablaA = ta.lista_nombre_atributos();
             if (tb != null)
                 atributos_tablaB = tb.lista_nombre_atributos();
-            orden_atrA = new List<int>();
-            orden_atrB = new List<int>();
-            atr_no_selA = new List<int>();
-            atr_no_selB = new List<int>();
             datos.Clear();
         }
 
-        private void reorganiza_atributos(Tabla ta, Tabla tb)
+        /*private void reorganiza_atributos(Tabla ta, Tabla tb)
         {
             for (int i = 0; i < this.atributos.Count; i++)
             {
@@ -339,7 +440,7 @@ namespace BasesDatos.Modulo_SQL
                 if (tb != null)
                     orden_atrB.Add(tb.lista_nombre_atributos().ToList().IndexOf(this.atributos[i]));
             }
-        }
+        }*/
         #endregion
     }
 }

@@ -39,8 +39,7 @@
             this.agregarPestañaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportarResultadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ejecutarSentenciaF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resolverAmbiguedadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noResolverAmbiguedadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.limpiaGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_resultados)).BeginInit();
             this.tab_ctrl.SuspendLayout();
@@ -63,11 +62,14 @@
             // 
             // dgv_resultados
             // 
+            this.dgv_resultados.AllowUserToAddRows = false;
+            this.dgv_resultados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgv_resultados.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgv_resultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_resultados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_resultados.Location = new System.Drawing.Point(3, 164);
             this.dgv_resultados.Name = "dgv_resultados";
+            this.dgv_resultados.ReadOnly = true;
             this.dgv_resultados.RowHeadersVisible = false;
             this.dgv_resultados.Size = new System.Drawing.Size(823, 226);
             this.dgv_resultados.TabIndex = 4;
@@ -97,10 +99,12 @@
             // 
             // txt_compilacion
             // 
+            this.txt_compilacion.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.txt_compilacion.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txt_compilacion.Location = new System.Drawing.Point(3, 390);
             this.txt_compilacion.Multiline = true;
             this.txt_compilacion.Name = "txt_compilacion";
+            this.txt_compilacion.ReadOnly = true;
             this.txt_compilacion.Size = new System.Drawing.Size(823, 120);
             this.txt_compilacion.TabIndex = 2;
             // 
@@ -131,8 +135,7 @@
             this.agregarPestañaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.agregarPestañaToolStripMenuItem1,
             this.exportarResultadosToolStripMenuItem,
-            this.resolverAmbiguedadToolStripMenuItem,
-            this.noResolverAmbiguedadToolStripMenuItem});
+            this.limpiaGridToolStripMenuItem});
             this.agregarPestañaToolStripMenuItem.Name = "agregarPestañaToolStripMenuItem";
             this.agregarPestañaToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.agregarPestañaToolStripMenuItem.Text = "Opciones";
@@ -140,14 +143,14 @@
             // agregarPestañaToolStripMenuItem1
             // 
             this.agregarPestañaToolStripMenuItem1.Name = "agregarPestañaToolStripMenuItem1";
-            this.agregarPestañaToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
+            this.agregarPestañaToolStripMenuItem1.Size = new System.Drawing.Size(205, 22);
             this.agregarPestañaToolStripMenuItem1.Text = "Agregar pestaña";
             this.agregarPestañaToolStripMenuItem1.Click += new System.EventHandler(this.Agrega_nueva_pestaña_sql);
             // 
             // exportarResultadosToolStripMenuItem
             // 
             this.exportarResultadosToolStripMenuItem.Name = "exportarResultadosToolStripMenuItem";
-            this.exportarResultadosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.exportarResultadosToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.exportarResultadosToolStripMenuItem.Text = "Exportar resultados";
             // 
             // ejecutarSentenciaF5ToolStripMenuItem
@@ -157,19 +160,12 @@
             this.ejecutarSentenciaF5ToolStripMenuItem.Text = "Ejecutar sentencia (F5)";
             this.ejecutarSentenciaF5ToolStripMenuItem.Click += new System.EventHandler(this.ejecutarSentenciaF5ToolStripMenuItem_Click);
             // 
-            // resolverAmbiguedadToolStripMenuItem
+            // limpiaGridToolStripMenuItem
             // 
-            this.resolverAmbiguedadToolStripMenuItem.Name = "resolverAmbiguedadToolStripMenuItem";
-            this.resolverAmbiguedadToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.resolverAmbiguedadToolStripMenuItem.Text = "No permitir ambiguedad";
-            this.resolverAmbiguedadToolStripMenuItem.Click += new System.EventHandler(this.resolverAmbiguedadToolStripMenuItem_Click);
-            // 
-            // noResolverAmbiguedadToolStripMenuItem
-            // 
-            this.noResolverAmbiguedadToolStripMenuItem.Name = "noResolverAmbiguedadToolStripMenuItem";
-            this.noResolverAmbiguedadToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.noResolverAmbiguedadToolStripMenuItem.Text = "Permitir ambiguedad";
-            this.noResolverAmbiguedadToolStripMenuItem.Click += new System.EventHandler(this.noResolverAmbiguedadToolStripMenuItem_Click);
+            this.limpiaGridToolStripMenuItem.Name = "limpiaGridToolStripMenuItem";
+            this.limpiaGridToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.limpiaGridToolStripMenuItem.Text = "Limpia grid";
+            this.limpiaGridToolStripMenuItem.Click += new System.EventHandler(this.limpiaGridToolStripMenuItem_Click);
             // 
             // SQL_formulario
             // 
@@ -206,7 +202,6 @@
         private System.Windows.Forms.ToolStripMenuItem exportarResultadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ejecutarSentenciaF5ToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgv_resultados;
-        private System.Windows.Forms.ToolStripMenuItem resolverAmbiguedadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem noResolverAmbiguedadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem limpiaGridToolStripMenuItem;
     }
 }

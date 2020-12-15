@@ -9,6 +9,12 @@ namespace BasesDatos
     {
         private string NombreBD;
         private List<Tabla> tablas;
+
+        public BaseDatos()
+        {
+
+        }
+
         /// <summary>
         /// Constructor de la clase BD
         /// </summary>

@@ -18,28 +18,28 @@ namespace BasesDatos.Modulo_SQL
         /// Expresion regular para 'select * from tabla"
         /// </summary>
         public Regex select_all = new Regex(
-            @"(SELECT|select)\s+\*\s+(FROM|from)\s+(\w+)\s*;?\s*",
+            @"\s*\n*\t*(SELECT|select)\s+\*\s+(FROM|from)\s+(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// Expresion regular para 'select atributos from tabla"
         /// </summary>
         Regex select_colums = new Regex(
-            @"(SELECT|select)(\s+\w+,?)+\s+(FROM|from)\s+(\w+)\s*;?\s*",
+            @"\s*\n*\t*(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// Expresion regular para 'select atributos from tabla id signo valor"
         /// </summary>
         Regex select_where = new Regex(
-            @"(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s*(WHERE|where)\s+(\w+)\s+(=|>|<|>=|<=|<>)\s+(\d+)\s*;?",
+            @"\s*\n*\t*(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s*(WHERE|where)\s+(\w+)\s+(=|>|<|>=|<=|<>)\s+(\d+)\s*;?",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// Expresion regular para 'select atributos from tA Inner Join tB On tA.atr = tB.atr"
         /// </summary>
         Regex inner_join = new Regex(
-            @"(SELECT|select)((\s+\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s+=\s+(\w+)\.(\w+)\s*;?\s*",
+            @"\s*\n*\t*(SELECT|select)((\s+(\w+\.)?\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s+=\s+(\w+)\.(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public Gramatica()
@@ -73,7 +73,7 @@ namespace BasesDatos.Modulo_SQL
             if (mc.Count == 1 && mc[0].Length == entrada.Length)
             {
                 limpia_variables();
-                tablaA = gc[4].Value;
+                tablaA = gc[5].Value;
                 atributos = limpia_cadena(gc[2].Value);
                 sentencia_correcta = true;
                 return true;
@@ -113,13 +113,13 @@ namespace BasesDatos.Modulo_SQL
             {
                 limpia_variables();
                 atributos = limpia_cadena(gc[2].Value);
-                tablaA = gc[5].Value;
-                tablaB = gc[7].Value;
+                tablaA = gc[6].Value;
+                tablaB = gc[8].Value;
                 
-                if(tablaA != gc[9].Value || tablaB != gc[11].Value)        
+                if(tablaA != gc[10].Value || tablaB != gc[12].Value)        
                     return false;
                 
-                string atrA = gc[10].Value, atrB = gc[12].Value;
+                string atrA = gc[11].Value, atrB = gc[13].Value;
 
                 if (atrA != atrB)
                     return false;
@@ -133,26 +133,6 @@ namespace BasesDatos.Modulo_SQL
             return false;
         }
 
-        public int obten_condicion(string entrada)
-        {
-            int indice_where = entrada.IndexOf("WHERE");
-            if (indice_where < 0)
-                indice_where = entrada.IndexOf("where");
-
-            int w = indice_where + 5;
-            int l = entrada.Length - w;
-            entrada = entrada.Substring(w, l);
-
-            entrada = entrada.Replace(";", "");
-            List<string> condicion = entrada.Split(' ').ToList();
-            condicion.RemoveAll(s => s == "");
-
-            id = condicion[0];
-            signo = condicion[1];
-            valor = condicion[2];
-
-            return indice_where + 5;
-        }
 
         public void limpia_variables()
         {
