@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Clase para el form principal donde se cargara toda la informacion
+    /// </summary>
     public partial class Form1 : Form
     {
         public string nombre_archivo;
@@ -12,15 +15,25 @@ namespace BasesDatos
         public long cabecera;
         public BaseDatos BaseDatos;
         private SQL_formulario sql;
+       
         public Form1()
         {
             InitializeComponent();
             arc = new Archivo();
         }
+        /// <summary>
+        /// Importacion de elementos para poder serializar con JSON
+        /// </summary>
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hwnd, int msg, int wparam, int lparam);
+        
+        /// <summary>
+        /// Evento para cerrar la ventana principal y todos los forms
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconClose_Click(object sender, EventArgs e)
         {
             if (arc != null)
@@ -51,6 +64,11 @@ namespace BasesDatos
 
         }
 
+        /// <summary>
+        /// Evento del Icono para hacer mas chica la ventana
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconButton3_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
@@ -58,14 +76,22 @@ namespace BasesDatos
             iconRestore.Visible = false;
 
         }
-
+        /// <summary>
+        /// Eveno del icono para hacer mas grande la ventana
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconButton1_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
             iconMaximize.Visible = false;
             iconRestore.Visible = true;
         }
-
+        /// <summary>
+        /// Evento para minimizar la ventana
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -76,6 +102,10 @@ namespace BasesDatos
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
+       /// <summary>
+       /// Funcion para abrir un Form y que lo herede el Form principal
+       /// </summary>
+       /// <param name="FormHijo">Form a crear y heredar al Form1 </param>
         private void AbrirFormInPanel(object FormHijo)
         {
             if (this.PanelCentral.Controls.Count > 0)
