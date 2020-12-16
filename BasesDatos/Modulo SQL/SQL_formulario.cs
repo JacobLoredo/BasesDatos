@@ -97,6 +97,7 @@ namespace BasesDatos.Modulo_SQL
         public string ejecuta_sentencia()
         {
             ejecuta = true;
+            select.resultado = "Error de sintaxis!.";
             // si no hay tablas, amonos
             if (!select.hay_tablas())
             {

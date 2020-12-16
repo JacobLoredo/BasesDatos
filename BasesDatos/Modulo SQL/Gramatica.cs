@@ -39,7 +39,7 @@ namespace BasesDatos.Modulo_SQL
         /// Expresion regular para 'select atributos from tA Inner Join tB On tA.atr = tB.atr"
         /// </summary>
         Regex inner_join = new Regex(
-            @"\s*\n*\t*(SELECT|select)((\s+(\w+\.)?\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s+=\s+(\w+)\.(\w+)\s*;?\s*",
+            @"\s*\n*\t*(SELECT|select)((\s+(\w+\.)?\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public Gramatica()
