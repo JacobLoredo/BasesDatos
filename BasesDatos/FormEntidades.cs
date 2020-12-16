@@ -89,7 +89,7 @@ namespace BasesDatos
         /// Funcion que comprueba si la tabla nueva a ingresar ya existe
         /// </summary>
         /// <param name="NombreEntidad">Nombre de la tabla nueva a ingresar</param>
-        /// <returns></returns>
+        /// <returns>indice de la entidad repetida</returns>
         public int ChecaEntidadRepetida(string NombreEntidad)
         {
             int repetido = 0;
