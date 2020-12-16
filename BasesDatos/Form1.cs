@@ -46,7 +46,11 @@ namespace BasesDatos
 
             Application.Exit();
         }
-
+        /// <summary>
+        /// Evento para mover y hacer mas grade el campo de vision 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconButton2_Click(object sender, EventArgs e)
         {
             if (PanelMenuVertical.Width == 250)
@@ -58,12 +62,6 @@ namespace BasesDatos
                 PanelMenuVertical.Width = 250;
             }
         }
-
-        private void PanelCentral_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Evento del Icono para hacer mas chica la ventana
         /// </summary>
@@ -96,7 +94,6 @@ namespace BasesDatos
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

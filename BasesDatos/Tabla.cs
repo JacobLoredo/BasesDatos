@@ -11,19 +11,24 @@ namespace BasesDatos
         private List<Atributo> atributos;
         private List<string> datos;
 
-        /// <param name="nombre">Nombre de la tabla a crear.</param>
+        /// <summary>
+        /// Constructor de la tabla
+        /// </summary>
+        /// <param name="nombre">Nombre de la tabla</param>
         public Tabla(string nombre)
         {
             NombreTabla = nombre;
             atributos = new List<Atributo>();
             datos = new List<string>();
         }
+        /// <summary>
+        /// Construcor de la Tabla
+        /// </summary>
         public Tabla()
         {
             atributos = new List<Atributo>();
             datos = new List<string>();
         }
-
         /// <summary>
         /// Funcion que lista los nombres de cada atributo
         /// </summary>
@@ -41,7 +46,6 @@ namespace BasesDatos
 
             return nombres_atributos;
         }
-
         /// <value> Gets and set la lista de atributos de la tabla .</value>
         public List<Atributo> _Atributos { get { return atributos; } set { atributos = value; } }
         /// <value>Gets and set el nombre de la tabla</value>

@@ -90,7 +90,6 @@ namespace BasesDatos
         /// </summary>
         /// <param name="NombreEntidad">Nombre de la tabla nueva a ingresar</param>
         /// <returns></returns>
-
         public int ChecaEntidadRepetida(string NombreEntidad)
         {
             int repetido = 0;

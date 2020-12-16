@@ -70,7 +70,5 @@
         /// /Funcion que regresa y cambia el nombre de la tabla con la cual se esta relacionada.
         /// </summary>
         public string _NombreFK { get { return NombreFK; } set { NombreFK = value; } }
-       
-
     }
 }

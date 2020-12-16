@@ -672,10 +672,13 @@ namespace BasesDatos
             }
             if (comboBoxes.Count > 0)
             {
+                
                 foreach (ComboBox combo in comboBoxes)
                 {
+                    
                     if (combo.Text != ""&&!checarReferenciaElimina())
                     {
+
                         dataGridView1.CurrentRow.Cells[numTextBox - 1 + comboBoxes.Count].Value = combo.Text;
 
                     }
