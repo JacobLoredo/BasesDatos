@@ -10,10 +10,21 @@ namespace BasesDatos
     /// </summary>
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Nombre del archivo
+        /// </summary>
         public string nombre_archivo;
+        /// <summary>
+        ///Archivo para poder guardar la informacion
+        /// </summary>
         public Archivo arc;
-        public long cabecera;
+       /// <summary>
+       /// Base de datos en la que se esyta trabajando
+       /// </summary>
         public BaseDatos BaseDatos;
+        /// <summary>
+        /// FOrmulario para hacer consultas sql
+        /// </summary>
         private SQL_formulario sql;
        
         public Form1()

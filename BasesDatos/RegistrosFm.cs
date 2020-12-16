@@ -11,13 +11,37 @@ namespace BasesDatos
     /// </summary>
     public partial class RegistrosFm : Form
     {
+        /// <summary>
+        /// Base de datos donde se esta trabajando
+        /// </summary>
         public BaseDatos @baseActual;
+        /// <summary>
+        /// Tabla donde se van a ingresar los datos 
+        /// </summary>
         public Tabla tablaRegistros;
+        /// <summary>
+        /// Archivo para guardar la informacion
+        /// </summary>
         public Archivo Archivo;
+        /// <summary>
+        /// Punto para colocar elementos en form
+        /// </summary>
         public Point p1 = new Point(15, 30);//Posicion X,Y de los label.
+        /// <summary>
+        /// Punto para colocar elementos en el form
+        /// </summary>
         public Point p2 = new Point(70, 30);
+        /// <summary>
+        /// Lista de texbox para poder agregar registros
+        /// </summary>
         public List<TextBox> textBoxes = new List<TextBox>();
+        /// <summary>
+        /// Lista de labels para mostrar el nombre de los atributos
+        /// </summary>
         public List<Label> labels = new List<Label>();
+        /// <summary>
+        /// Lista de comboxes en caso de que exita una relacion entre tablas y mostrar los datos de esta
+        /// </summary>
         public List<ComboBox> comboBoxes = new List<ComboBox>();
        /// <summary>
        /// Constructor del forma Registros

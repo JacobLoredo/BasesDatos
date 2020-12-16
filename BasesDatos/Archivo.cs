@@ -10,13 +10,37 @@ namespace BasesDatos
     /// </summary>
     public class Archivo
     {
+        /// <summary>
+        /// / Elemeno para poder escribir en el archivo
+        /// </summary>
         public StreamWriter escribe;
+        /// <summary>
+        /// Elemento para poder leer en el archivo
+        /// </summary>
         public StreamReader lee;
+        /// <summary>
+        /// Nombre del Archivo
+        /// </summary>
         public string nombre_archivo;
+        /// <summary>
+        /// Elemento que nos permite visualizar y guardar un archivo
+        /// </summary>
         public SaveFileDialog SaveD;
+        /// <summary>
+        /// Elemento que nos permite visualizar y abrir un archivo
+        /// </summary>
         public OpenFileDialog openFile;
+        /// <summary>
+        /// Elemento que nos permite manejar el archivo
+        /// </summary>
         public FileStream ArchivoFuente;
+        /// <summary>
+        /// Elemento que nos permite manejar la carpeta donde se guardara la BD
+        /// </summary>
         public DirectoryInfo di;
+        /// <summary>
+        /// Base de datos que se va a manejar
+        /// </summary>
         public BaseDatos BaseD;
         /// <summary>
         /// Constructor de la clase

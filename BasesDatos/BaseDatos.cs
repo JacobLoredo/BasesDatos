@@ -7,7 +7,13 @@ namespace BasesDatos
     /// </summary>
     public class BaseDatos
     {
+        /// <summary>
+        /// Nombre de la Base de datos
+        /// </summary>
         private string NombreBD;
+        /// <summary>
+        /// Lista de todas las tabals de la base de datos
+        /// </summary>
         private List<Tabla> tablas;
         /// <summary>
         /// Constructror sin parametros

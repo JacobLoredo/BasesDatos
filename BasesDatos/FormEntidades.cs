@@ -8,7 +8,13 @@ namespace BasesDatos
     /// </summary>
     public partial class FormEntidades : Form
     {
+        /// <summary>
+        /// Archivo para guardar la informacion
+        /// </summary>
         public Archivo Archivo;
+        /// <summary>
+        /// Base de datos en la que se esta trabajando
+        /// </summary>
         public BaseDatos baseActual;
         /// <summary>
         /// Constructor

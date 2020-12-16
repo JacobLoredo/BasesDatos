@@ -8,10 +8,25 @@
     /// </summary>
     public class Atributo
     {
+        /// <summary>
+        /// NOmbre del atributo
+        /// </summary>
         private string NombreAtributo;
+        /// <summary>
+        /// TIpo de dato del atributo Int,Float, String
+        /// </summary>
         private char TipoDato;
+        /// <summary>
+        /// Tipo de llave del atributo PK,FK,ninguno
+        /// </summary>
         private int TipoLlave;
+        /// <summary>
+        /// Nombre de la tabla si tiene referencia 
+        /// </summary>
         private string NombreFK;
+        /// <summary>
+        /// Tamaño del atributo
+        /// </summary>
         private int Tam;
         /// <summary>
         /// Constructor de la clase

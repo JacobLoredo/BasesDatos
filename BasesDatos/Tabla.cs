@@ -7,8 +7,17 @@ namespace BasesDatos
     /// </summary>
     public class Tabla
     {
+        /// <summary>
+        /// NOmbre de la tabla
+        /// </summary>
         private string NombreTabla;
+        /// <summary>
+        /// Lista de atributos de la tabla
+        /// </summary>
         private List<Atributo> atributos;
+        /// <summary>
+        /// Lista de los datos que contiene la tabla
+        /// </summary>
         private List<string> datos;
 
         /// <summary>

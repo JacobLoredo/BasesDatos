@@ -8,8 +8,17 @@ namespace BasesDatos
     /// </summary>
     public partial class FormAtributos : Form
     {
+        /// <summary>
+        /// Base de datos actual
+        /// </summary>
         public BaseDatos @base;
+        /// <summary>
+        /// Tabla donde se esta trabajando
+        /// </summary>
         public Tabla tablaActual;
+        /// <summary>
+        /// Archivo para poder guardar la BD
+        /// </summary>
         public Archivo Archivo;
         /// <summary>
         /// Constructor de la clase
