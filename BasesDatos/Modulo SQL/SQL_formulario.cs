@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace BasesDatos.Modulo_SQL
 {
+    /// <summary>
+    /// Formulario para la parte de las consultas
+    /// </summary>
     public partial class SQL_formulario : System.Windows.Forms.Form
     {
         private TabPage nueva_tab;
@@ -12,6 +15,13 @@ namespace BasesDatos.Modulo_SQL
         private BaseDatos BD;
         private Select select;
         private bool ejecuta;
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bd">
+        /// Base de datos con la cual trabajar
+        /// </param>
         public SQL_formulario(BaseDatos bd)
         {
             ejecuta = false;
@@ -23,14 +33,24 @@ namespace BasesDatos.Modulo_SQL
             tab_ctrl.TabPages[0].Text += " 1";
         }
 
+        /// <summary>
+        /// Cambia la referencia de nuestra base de datos por una nueva
+        /// </summary>
+        /// <param name="nueva_bd">
+        /// Nueva base de datos a referenciar
+        /// </param>
         public void actualiza_bd(BaseDatos nueva_bd)
         {
             select.BD = nueva_bd;
         }
+
+        /// <summary>
+        /// Añade una nueva pestaña a la forma
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Agrega_nueva_pestaña_sql(object sender, EventArgs e)
         {
-
-            return;
             TextBox entrada = new TextBox()
             {
                 Font = new Font("Consolas", 12),
@@ -63,27 +83,11 @@ namespace BasesDatos.Modulo_SQL
             tab_ctrl.TabPages.Add(nueva_tab);
         }
 
-        public void clona_tab()
-        {
-            nueva_tab = new TabPage();
-
-            foreach (Control c in tab_ctrl.TabPages[0].Controls)
-            {
-                Control nc = (Control)Activator.CreateInstance(c.GetType());
-                PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(c);
-
-                foreach (PropertyDescriptor entrada in pdc)
-                {
-                    object val = entrada.GetValue(c);
-                    entrada.SetValue(nc, val);
-                }
-
-                // add control to new TabPage
-                nueva_tab.Controls.Add(nc);
-            }
-
-        }
-
+        /// <summary>
+        /// Evento que existe al presionarse una tecla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tab_ctrl_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -94,6 +98,12 @@ namespace BasesDatos.Modulo_SQL
             }
         }
 
+        /// <summary>
+        /// Trata de ejecutar una sentencia sql
+        /// </summary>
+        /// <returns>
+        /// Una cadena que contiene informacion acerca de la ejecución
+        /// </returns>
         public string ejecuta_sentencia()
         {
             ejecuta = true;
@@ -126,12 +136,20 @@ namespace BasesDatos.Modulo_SQL
             return select.resultado;
         }
 
+        /// <summary>
+        /// Ejecuta una sentencia al presionar la tecla F5
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ejecutarSentenciaF5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             txt_compilacion.Text = ejecuta_sentencia();
             muestra_resultados_grid();
         }
 
+        /// <summary>
+        /// Limpia los renglones y columas del datagridview
+        /// </summary>
         public void limpia_grid()
         {
             if (select.atributos != null)
@@ -141,6 +159,9 @@ namespace BasesDatos.Modulo_SQL
             }
         }
 
+        /// <summary>
+        /// Muestra los resultados en el grid de la ultima consulta ejecutada
+        /// </summary>
         private void muestra_resultados_grid()
         {
             if (!ejecuta)
@@ -160,6 +181,9 @@ namespace BasesDatos.Modulo_SQL
             }
         }
 
+        /// <summary>
+        /// Agrega los headers al grid
+        /// </summary>
         private void agrega_cabecera_datos()
         {
             // agregando el encabezado del grid
@@ -180,7 +204,9 @@ namespace BasesDatos.Modulo_SQL
             }
         }
 
-
+        /// <summary>
+        /// Elimina las columnas que no deseamos observar como parte del resultado
+        /// </summary>
         private void elimina_columnas_sobrantes()
         {
             // borrando las columnas que no nos interesan
@@ -193,6 +219,9 @@ namespace BasesDatos.Modulo_SQL
                 dgv_resultados.Columns.Remove(dgv_resultados.Columns[select.tablaB + "." + select.ansB[i]]);
         }
 
+        /// <summary>
+        /// Reorganiza las columnas mostradas para que coincida con la secuencia pedida por la consulta SQL
+        /// </summary>
         private void organiza_columnas()
         {
             // reorganizando las columnas
@@ -221,6 +250,11 @@ namespace BasesDatos.Modulo_SQL
             }
         }
 
+        /// <summary>
+        /// Evento que se produce al dar click al botón de limpiar el grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void limpiaGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             limpia_grid();

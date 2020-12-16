@@ -6,17 +6,48 @@ using System.Threading.Tasks;
 
 namespace BasesDatos.Modulo_SQL
 {
+    /// <summary>
+    /// Clase que extiende a la clase gramatica, para encargarse de las ejecuciones de las consultas
+    /// </summary>
     class Select : Gramatica
     {
+        /// <summary>
+        /// Guarda información acerca del resultado de una ejecución
+        /// </summary>
         public string resultado;
-        public List<string> atributos_tablaA, atributos_tablaB;
+        /// <summary>
+        /// Lista de los nombres a desplegar de la tabla A
+        /// </summary>
+        public List<string> atributos_tablaA;
+        /// <summary>
+        /// Lista de los nombres a desplegar de la tabla A
+        /// </summary>
+        public List<string> atributos_tablaB;
+        /// <summary>
+        /// Lista con las tuplas a desplegar de la consulta
+        /// </summary>
         public List<List<string>> datos;
-        public List<string> ansA, ansB;
+        /// <summary>
+        /// Lista de los nombres a ocultar de la tabla A
+        /// </summary>
+        public List<string> ansA;
+        /// <summary>
+        /// Lista de los nombres a ocultar de la tabla B
+        /// </summary>
+        public List<string> ansB;
+        /// <summary>
+        /// Base de datos
+        /// </summary>
         public BaseDatos BD;
-        public bool resuelve_ambiguedad;
+
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="bd">
+        /// Base de datos con la que estamos trabajando
+        /// </param>
         public Select(BaseDatos bd)
         {
-            resuelve_ambiguedad = false;
             resultado = "";
             this.BD = bd;
             datos = new List<List<string>>();
@@ -27,6 +58,12 @@ namespace BasesDatos.Modulo_SQL
         }
 
         #region ejecuciones 
+        /// <summary>
+        /// Trata de ejecutar una consulta de tipo SELECT * FROM TABLA
+        /// </summary>
+        /// <returns>
+        /// Verdadero si se ejecuta correctamente, falso en caso contrario
+        /// </returns>
         public bool ejecuta_select_all()
         {
             foreach (Tabla t in BD.Tablas)
@@ -56,9 +93,15 @@ namespace BasesDatos.Modulo_SQL
             return false;
         }
 
+        /// <summary>
+        /// Verifica si existen atributos repetidos en la consulta
+        /// </summary>
+        /// <returns>
+        /// Verdadero si existen, falso en caso contrario
+        /// </returns>
         private bool atributos_repetidos()
         {
-            foreach(string atr in this.atributos)
+            foreach (string atr in this.atributos)
             {
                 if (this.atributos.Count(a => a == atr) > 1)
                     return true;
@@ -66,6 +109,15 @@ namespace BasesDatos.Modulo_SQL
             return false;
         }
 
+        /// <summary>
+        /// Trata de ejecutar una consulta de tipo SELECT "LISTA ATRIBUTOS" FROM TABLA
+        /// </summary>
+        /// <param name="where">
+        /// Indicamos si existe la clausula WHERE en la sentencia, para que posteriormente sea comprobada
+        /// </param>
+        /// <returns>
+        /// Verdadero si se ejecuta correctamente, falso en caso contrario
+        /// </returns>
         public bool ejecuta_select_columns(bool where)
         {
             foreach (Tabla t in BD.Tablas)
@@ -86,7 +138,7 @@ namespace BasesDatos.Modulo_SQL
                     }
 
                     //reorganiza_atributos(t, null);
-                    ansA = separa_atributos_a_mostrar(t, false);
+                    ansA = separa_atributos_a_mostrar_nombres(t);
 
                     datos = obten_registros(t, where);
                     resultado = "Ejecución terminada correctamente.";
@@ -98,6 +150,12 @@ namespace BasesDatos.Modulo_SQL
         }
         #endregion
 
+        /// <summary>
+        /// Trata de ejecutar una consulta de tipo SELECT LISTA ATRIBUTOS FROM TABLA_A INNER JOIN TABLA_B ON TABLA_A.id = TABLA_B.id
+        /// </summary>
+        /// <returns>
+        /// Verdadero si se ejecuta correctamente, falso en caso contrario
+        /// </returns>
         public bool ejecuta_inner_join()
         {
             // comprobamos que existan las dos tablas
@@ -125,7 +183,7 @@ namespace BasesDatos.Modulo_SQL
                     if (verifica_atributos(ta, new string[] { a }) && verifica_atributos(tb, new string[] { a }))
                     {
                         // verificamos que los atributos de cada tabla existan
-                        if(!(verifica_atributos(ta) && verifica_atributos(tb)))
+                        if (!(verifica_atributos(ta) && verifica_atributos(tb)))
                         {
                             resultado = "Algun atributo no existe en una de las tablas!.";
                             return false;
@@ -142,8 +200,8 @@ namespace BasesDatos.Modulo_SQL
 
                 //reorganiza_atributos(ta, tb);
 
-                ansA = separa_atributos_a_mostrar(ta, false);
-                ansB = separa_atributos_a_mostrar(tb, false);
+                ansA = separa_atributos_a_mostrar_nombres(ta);
+                ansB = separa_atributos_a_mostrar_nombres(tb);
 
                 int ind_atr_tA = ta.lista_nombre_atributos().ToList().IndexOf(atributo_inner);
                 int ind_atr_tB = tb.lista_nombre_atributos().ToList().IndexOf(atributo_inner);
@@ -158,6 +216,16 @@ namespace BasesDatos.Modulo_SQL
         }
 
         #region verificaciones
+        /// <summary>
+        /// Verifica si una tabla cumple la condicion dictada por la clausula WHERE
+        /// </summary>
+        /// <param name="t">
+        /// Tabla a la cual pertenece la tupla
+        /// </param>
+        /// <param name="tupla">
+        /// Tupla para verificiar
+        /// </param>
+        /// <returns>Verdadero si cumple la condicion, falso en caso contrario</returns>
         public bool cumple_condicion(Tabla t, string[] tupla)
         {
             int indice_atributo_condicional = t.lista_nombre_atributos().ToList().IndexOf(id);
@@ -187,6 +255,12 @@ namespace BasesDatos.Modulo_SQL
             return false;
         }
 
+        /// <summary>
+        /// Verificamos que existan tablas
+        /// </summary>
+        /// <returns>
+        /// Verdadero si hay, falso en caso contrario
+        /// </returns>
         public bool hay_tablas()
         {
             if (BD == null)
@@ -200,7 +274,19 @@ namespace BasesDatos.Modulo_SQL
             }
             return true;
         }
-        
+
+        /// <summary>
+        /// Verifica que de la lista local 'atributos' esten contenidas en una tabla dada
+        /// </summary>
+        /// <param name="t">
+        /// Tabla de la cual queremos saber si existen los atributos
+        /// </param>
+        /// <param name="where">
+        /// Para indicar si tiene que verificar el atributo referenciado por la clausula where
+        /// </param>
+        /// <returns>
+        /// Verdadero si la tabla contiene todos los atributos, falso en caso contrario
+        /// </returns>
         private bool verifica_atributos(Tabla t, bool where)
         {
             if (!verifica_atributos(t, this.atributos.ToArray()))
@@ -212,6 +298,18 @@ namespace BasesDatos.Modulo_SQL
             return true;
         }
 
+        /// <summary>
+        /// Verifica que de la lista local 'atributos' esten contenidas en una tabla dada
+        /// </summary>
+        /// <param name="t">
+        /// Tabla de la cual queremos saber si existen los atributos
+        /// </param>
+        /// <param name="atributos">
+        /// Atributos a verificar
+        /// </param>
+        /// <returns>
+        /// Verdadero si la tabla contiene todos los atributos, falso en caso contrario
+        /// </returns>
         private bool verifica_atributos(Tabla t, string[] atributos)
         {
             List<string> atrs = t.lista_nombre_atributos().ToList();
@@ -222,10 +320,17 @@ namespace BasesDatos.Modulo_SQL
             return true;
         }
 
+        /// <summary>
+        /// Verifica que una lista de atributos esten contenido en al menos una de las dos tablas
+        /// </summary>
+        /// <param name="a">Tabla A</param>
+        /// <param name="b">Tabla B</param>
+        /// <param name="atributos">Lista de atributos</param>
+        /// <returns>Verdadero si la tabla contiene todos los atributos, falso en caso contrario</returns>
         private bool verifica_tablas(Tabla a, Tabla b, List<string> atributos)
         {
             string t = "";
-            foreach(string s in atributos)
+            foreach (string s in atributos)
             {
                 if (s.Contains('.'))
                 {
@@ -237,6 +342,13 @@ namespace BasesDatos.Modulo_SQL
             return true;
         }
 
+        /// <summary>
+        /// Verifica que la lista local de atributos exista dentro de una tabla
+        /// </summary>
+        /// <param name="tabla">
+        /// Tabla de la cual queremos verificar los atributos
+        /// </param>
+        /// <returns></returns>
         private bool verifica_atributos(Tabla tabla)
         {
             List<string> atr_de_tabla = new List<string>();
@@ -252,6 +364,13 @@ namespace BasesDatos.Modulo_SQL
             return verifica_atributos(tabla, atr_de_tabla.ToArray());
         }
 
+        /// <summary>
+        /// Comprueba que las partes referenciadas por el WHERE existan
+        /// </summary>
+        /// <param name="t">Tabla para verificar</param>
+        /// <returns>
+        /// Verdadero si la tabla cumple, falso en caso contrario
+        /// </returns>
         private bool verifica_where(Tabla t)
         {
             List<string> nombre_atributos = t.lista_nombre_atributos().ToList();
@@ -273,6 +392,17 @@ namespace BasesDatos.Modulo_SQL
         #endregion
 
         #region utilidades
+        /// <summary>
+        /// Obtienen las tuplas unidas por la clausula inner join
+        /// </summary>
+        /// <param name="a">Tabla A</param>
+        /// <param name="b">Tabla B</param>
+        /// <param name="ia">Indice del atributo union de la tabla a</param>
+        /// <param name="ib">Indice del atributo union de la tabla b</param>
+        /// <returns>
+        /// Una lista con las tuplas que cumplen la condicion
+        /// tupla a + tupla b
+        /// </returns>
         private List<List<string>> obten_tuplas_inner_join(Tabla a, Tabla b, int ia, int ib)
         {
             List<List<string>> ra = obten_registros(a, false);
@@ -302,6 +432,11 @@ namespace BasesDatos.Modulo_SQL
             return resultado;
         }
 
+        /// <summary>
+        /// Clona una lista
+        /// </summary>
+        /// <param name="lista">Lista a clonar</param>
+        /// <returns>Lista clonada</returns>
         private List<string> clona_lista(List<string> lista)
         {
             List<string> clona = new List<string>();
@@ -310,6 +445,12 @@ namespace BasesDatos.Modulo_SQL
             return clona;
         }
 
+        /// <summary>
+        /// Elimina la parte del nombre del atributo de una tupla
+        /// </summary>
+        /// <param name="tupla">Tupla</param>
+        /// <param name="t">Tabla</param>
+        /// <returns>La tupla sin el nombre de los atributos</returns>
         private string elimina_nombre_atributo(string tupla, Tabla t)
         {
             foreach (string atributo in t.lista_nombre_atributos())
@@ -322,7 +463,10 @@ namespace BasesDatos.Modulo_SQL
         /// <summary>
         /// Obtiene los indices de los atributos que deseamos mostrar
         /// </summary>
-        private List<int> separa_atributos_a_mostrar(Tabla t)
+        /// <returns>
+        /// Lista con los indices de los atributos
+        /// </returns>
+        private List<int> separa_atributos_a_mostrar_indices(Tabla t)
         {
             List<int> res = new List<int>();
             // separamos los atributos que nos interesan de los que no
@@ -335,7 +479,12 @@ namespace BasesDatos.Modulo_SQL
             return res;
         }
 
-        private List<string> separa_atributos_a_mostrar(Tabla t, bool hola)
+        /// <summary>
+        ///  Obtiene los nombres de los atributos que deseamos mostrar
+        /// </summary>
+        /// <param name="t">Tabla que contiene los atributos</param>
+        /// <returns>Lista de los nombres de los atributos</returns>
+        private List<string> separa_atributos_a_mostrar_nombres(Tabla t)
         {
             List<string> res = new List<string>();
 
@@ -351,6 +500,13 @@ namespace BasesDatos.Modulo_SQL
             return res;
         }
 
+        /// <summary>
+        /// De la lista de atributos, elimina la parte Tabla. , si es que existe
+        /// </summary>
+        /// <param name="lista_atributos">Nombre de atributos a limpiar</param>
+        /// <returns>
+        /// Una lista de atributos sin las referencias de las tablas
+        /// </returns>
         public List<string> obten_parte_atributos(List<string> lista_atributos)
         {
             List<string> atributos_especificos = new List<string>();
@@ -418,6 +574,11 @@ namespace BasesDatos.Modulo_SQL
             return registros;
         }
 
+        /// <summary>
+        /// Inicializa variables locales
+        /// </summary>
+        /// <param name="ta">Tabla A</param>
+        /// <param name="tb">Tabla B</param>
         private void inicializa_variables(Tabla ta, Tabla tb)
         {
             atributos_tablaA = new List<string>();
@@ -430,17 +591,6 @@ namespace BasesDatos.Modulo_SQL
                 atributos_tablaB = tb.lista_nombre_atributos();
             datos.Clear();
         }
-
-        /*private void reorganiza_atributos(Tabla ta, Tabla tb)
-        {
-            for (int i = 0; i < this.atributos.Count; i++)
-            {
-                if (ta != null)
-                    orden_atrA.Add(ta.lista_nombre_atributos().ToList().IndexOf(this.atributos[i]));
-                if (tb != null)
-                    orden_atrB.Add(tb.lista_nombre_atributos().ToList().IndexOf(this.atributos[i]));
-            }
-        }*/
         #endregion
     }
 }

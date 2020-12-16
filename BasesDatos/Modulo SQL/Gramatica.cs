@@ -4,14 +4,42 @@ using System.Text.RegularExpressions;
 
 namespace BasesDatos.Modulo_SQL
 {
+    /// <summary>
+    /// Clase que se encarga de la parte sintactica de las consultas
+    /// </summary>
     class Gramatica
     {
-        public string tablaA, tablaB;
+        /// <summary>
+        /// Nombre de la tabla A
+        /// </summary>
+        public string tablaA;
+        /// <summary>
+        /// Nombre de la tabla B
+        /// </summary>
+        public string tablaB;
+        /// <summary>
+        /// Atributo a comprar
+        /// </summary>
         public string id = "";
+        /// <summary>
+        /// Signo de comparación
+        /// </summary>
         public string signo = "";
+        /// <summary>
+        /// Valor numérico a comprar
+        /// </summary>
         public string valor = "";
+        /// <summary>
+        /// Atributo de union entre dos tablas
+        /// </summary>
         public string atributo_inner = "";
+        /// <summary>
+        /// Lista de atributos referenciados por las sentencias
+        /// </summary>
         public List<string> atributos;
+        /// <summary>
+        /// Indica si la sentencia es correcta o no
+        /// </summary>
         public bool sentencia_correcta;
 
         /// <summary>
@@ -42,13 +70,23 @@ namespace BasesDatos.Modulo_SQL
             @"\s*\n*\t*(SELECT|select)((\s+(\w+\.)?\w+,?)+)\s+(FROM|from)\s+(\w+)\s+(inner join|INNER JOIN)\s+(\w+)\s+(ON|on)\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)\s*;?\s*",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
         public Gramatica()
         {
             atributos = new List<string>();
             sentencia_correcta = false;
         }
 
-
+        /// <summary>
+        /// Verifica que una entrada coincida con la una consulta SELECT * FROM TABLA
+        /// </summary>
+        /// <param name="entrada">
+        /// Cadena que contiene la consulta
+        /// </param>
+        /// <returns>
+        /// Verdadero si coincide, falso en caso contrario</returns>
         public bool coincide_select_all(string entrada)
         {
             MatchCollection mc = select_all.Matches(entrada);
@@ -64,7 +102,14 @@ namespace BasesDatos.Modulo_SQL
             sentencia_correcta = false;
             return false;
         }
-
+        /// <summary>
+        /// Verifica que una entrada coincida con la una consulta SELECT ATRIBUTOS FROM TABLA
+        /// </summary>
+        /// <param name="entrada">
+        /// Cadena que contiene la consulta
+        /// </param>
+        /// <returns>
+        /// Verdadero si coincide, falso en caso contrario</returns>
         public bool coincide_select_columns(string entrada)
         {
             MatchCollection mc = select_colums.Matches(entrada);
@@ -81,7 +126,14 @@ namespace BasesDatos.Modulo_SQL
             sentencia_correcta = false;
             return false;
         }
-
+        /// <summary>
+        /// Verifica que una entrada coincida con la una consulta SELECT ATRIBUTOS FROM TABLA WHERE ID SIGNO VALOR
+        /// </summary>
+        /// <param name="entrada">
+        /// Cadena que contiene la consulta
+        /// </param>
+        /// <returns>
+        /// Verdadero si coincide, falso en caso contrario</returns>
         public bool coincide_select_where(string entrada)
         {
             MatchCollection mc = select_where.Matches(entrada);
@@ -101,7 +153,14 @@ namespace BasesDatos.Modulo_SQL
             sentencia_correcta = false;
             return false;
         }
-
+        /// <summary>
+        /// Verifica que una entrada coincida con la una consulta SELECT ATRIBUTOS FROM TABLA_A INNER JOIN TABLA_A ON TABLA_A.ID = TABLA_B.ID
+        /// </summary>
+        /// <param name="entrada">
+        /// Cadena que contiene la consulta
+        /// </param>
+        /// <returns>
+        /// Verdadero si coincide, falso en caso contrario</returns>
         public bool coincide_inner_join(string entrada)
         {
             MatchCollection mc = inner_join.Matches(entrada);
@@ -133,7 +192,9 @@ namespace BasesDatos.Modulo_SQL
             return false;
         }
 
-
+        /// <summary>
+        /// Limpia las variables locales
+        /// </summary>
         public void limpia_variables()
         {
             id = "";
@@ -149,7 +210,7 @@ namespace BasesDatos.Modulo_SQL
         /// </summary>
         /// <param name="cadena"></param>
         /// <returns>
-        /// Regresa una lista con solo las palabras
+        /// Regresa una lista con solo las palabras sin espacios ni comas
         /// </returns>
         private List<string> limpia_cadena(string cadena)
         {
@@ -158,13 +219,6 @@ namespace BasesDatos.Modulo_SQL
             lista_atrs = r.Replace(cadena, " ").Split(' ').ToList();
             lista_atrs.RemoveAll(s => s == "");
             return lista_atrs;
-        }
-        public string obten_atributos()
-        {
-            string s = "";
-            foreach (string str in atributos)
-                s += str + " ";
-            return s;
         }
     }
 }
