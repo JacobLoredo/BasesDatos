@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Formulario para ingresar registros a una tabla 
+    /// </summary>
     public partial class RegistrosFm : Form
     {
         public BaseDatos @baseActual;
@@ -16,6 +19,11 @@ namespace BasesDatos
         public List<TextBox> textBoxes = new List<TextBox>();
         public List<Label> labels = new List<Label>();
         public List<ComboBox> comboBoxes = new List<ComboBox>();
+       /// <summary>
+       /// Constructor del forma Registros
+       /// </summary>
+       /// <param name="base">Base de datos actual</param>
+       /// <param name="tabla">Tabla actual donde se estan ingresando datos</param>
         public RegistrosFm(BaseDatos @base, Tabla tabla)
         {
             InitializeComponent();
@@ -30,7 +38,9 @@ namespace BasesDatos
                 
             }
         }
-
+        /// <summary>
+        /// Funcion que crea los textbox y combox necesarios de manera dinamica dependiendo de la cantidad de atributos
+        /// </summary>
         public void CreaTextBoxLabel()
         {
             foreach (Atributo item in tablaRegistros._Atributos)
@@ -136,7 +146,9 @@ namespace BasesDatos
 
             }
         }
-
+        /// <summary>
+        /// Funcion que carga los datos en un dataGriedView
+        /// </summary>
         public void CargarAtributos()
         {
             string[] hola;
@@ -161,12 +173,20 @@ namespace BasesDatos
 
         }
 
-
+        /// <summary>
+        /// Evento para cerrar el Form de Registros
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Evento para agregar un nuevo datos a la tabla actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
             bool TipoDatoIncorrecto = false;
@@ -300,7 +320,9 @@ namespace BasesDatos
 
             }
         }
-
+        /// <summary>
+        /// Funcion que se encargade poner el nuevo registro en el dataGridView
+        /// </summary>
         private void AgregarDataGridView()
         {
             int n = dataGridView1.Rows.Add();
@@ -321,7 +343,9 @@ namespace BasesDatos
             }
             GuardarData();
         }
-
+        /// <summary>
+        /// Funcion que guarda el registro en el archivo, lo toma directamente del dataGriedView
+        /// </summary>
         private void GuardarData()
         {
             string datos = "";
@@ -361,15 +385,12 @@ namespace BasesDatos
             }
             Archivo.GuardaBase(baseActual);
         }
-
-        private void ChecarDatoRepetido()
-        {
-
-        }
-        private void checarTipoCampo(Atributo atributo, int idTextbox)
-        {
-
-        }
+        /// <summary>
+        /// Funcion que verifica que el tipo de dato sea el correcto en un texbox 
+        /// </summary>
+        /// <param name="atributo">El atributo que se va a verificar</param>
+        /// <param name="idTextbox">id del texbox que donde se puso el dato</param>
+        /// <returns></returns>
         private bool chechaTipoDato(Atributo atributo, int idTextbox)
         {
             bool ban = false;
@@ -412,6 +433,10 @@ namespace BasesDatos
 
             return ban;
         }
+       /// <summary>
+       /// Funcion que checa si existe alguna referencia en alguna otra tabla
+       /// </summary>
+       /// <returns></returns>
         private bool ChecarReferecia() {
             bool ban = false;
             int indicePK;
@@ -450,7 +475,11 @@ namespace BasesDatos
             }
             return ban;
         }
-
+        /// <summary>
+        /// funcion que busca el indice cuando hay clave FK
+        /// </summary>
+        /// <param name="tabla">Tabla donde se buscara la Clave FK</param>
+        /// <returns>Indice del atributo donde se encuentra esa clave FK</returns>
         private int BuscaIndiceKF(Tabla tabla)
         {
             int PK = new int();
@@ -463,7 +492,11 @@ namespace BasesDatos
             }
             return PK;
         }
-
+        /// <summary>
+        /// Funcion que busca dentro de una tabla cual es el indice de su clave PK
+        /// </summary>
+        /// <param name="tabla">Tabla donde se buscara la clave PK</param>
+        /// <returns>indice de donde se encuentra el indice PK</returns>
         private int BuscaClavePrimaria(Tabla tabla)
         {
             int PK = new int();
@@ -477,7 +510,11 @@ namespace BasesDatos
             return PK;
         }
 
-        //Funcion para borrar registros
+        /// <summary>
+        /// Evento del boton para poder eliminar algun registro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (!ChecarReferecia())
@@ -490,6 +527,12 @@ namespace BasesDatos
 
             }
         }
+        /// <summary>
+        /// Funcion que elimina el nombre del atributo en los datos
+        /// </summary>
+        /// <param name="tupla">Registro completo</param>
+        /// <param name="t">tabla donde se encuentra</param>
+        /// <returns>cadena con la informacion del registro </returns>
         private string elimina_nombre_atributo(string tupla, Tabla t)
         {
             foreach (string atributo in t.lista_nombre_atributos())
@@ -499,6 +542,11 @@ namespace BasesDatos
          */
             return tupla;
         }
+       /// <summary>
+       /// Funcion que obtienen todos los registros dentro de la tabla Actual
+       /// </summary>
+       /// <param name="t">Tabla donde se obtendran los registros</param>
+       /// <returns>Lista de listas de cadenas con cada registro separado por atributos</returns>
         private List<List<string>> obten_registros(Tabla t)
         {
             List<List<string>> registros = new List<List<string>>();
@@ -521,6 +569,10 @@ namespace BasesDatos
           
             return registros;
         }
+       /// <summary>
+       /// Funcion que se encarga de checar si se puede eliminar un dato referenciado
+       /// </summary>
+       /// <returns>Si se puede eliminar o no</returns>
         public bool checarReferenciaElimina() {
             bool ban = false;
             foreach (Tabla item in baseActual.Tablas)
@@ -542,7 +594,11 @@ namespace BasesDatos
             return ban;
 
         }
-
+        /// <summary>
+        /// Evenot del boton para poder modificar la informacion de un registro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             int numTextBox = 0;
@@ -618,7 +674,7 @@ namespace BasesDatos
             {
                 foreach (ComboBox combo in comboBoxes)
                 {
-                    if (combo.Text != ""&&checarReferenciaElimina())
+                    if (combo.Text != ""&&!checarReferenciaElimina())
                     {
                         dataGridView1.CurrentRow.Cells[numTextBox - 1 + comboBoxes.Count].Value = combo.Text;
 

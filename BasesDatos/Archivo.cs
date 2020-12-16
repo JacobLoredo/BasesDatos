@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Clase para poder guardar BD
+    /// </summary>
     public class Archivo
     {
         public StreamWriter escribe;
@@ -15,13 +18,18 @@ namespace BasesDatos
         public FileStream ArchivoFuente;
         public DirectoryInfo di;
         public BaseDatos BaseD;
-
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
         public Archivo()
         {
             SaveD = new SaveFileDialog { InitialDirectory = Directory.GetCurrentDirectory() };
             openFile = new OpenFileDialog { InitialDirectory = Directory.GetCurrentDirectory() };
         }
-
+        /// <summary>
+        /// funcion que indica si la BD se puede o no abrir 
+        /// </summary>
+        /// <returns>Verdadero o falso si se puede abrir la BD</returns>
         public bool AbrirBase()
         {
             try
@@ -55,7 +63,9 @@ namespace BasesDatos
                 return false;
             }
         }
-
+        /// <summary>
+        /// funcion que cierra la base de datos y el archivo
+        /// </summary>
         public void CierraArchivo()
         {
 
@@ -64,6 +74,10 @@ namespace BasesDatos
                 BaseD = null;
             }
         }
+       /// <summary>
+       /// Funcion que guarda una tabla en un archivo especifico
+       /// </summary>
+       /// <param name="json">Tabla que se quiere guardar</param>
         public void GuardarTabla(Tabla json)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -87,11 +101,18 @@ namespace BasesDatos
             }
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }
         }
-
+        /// <summary>
+        /// Funcion que elimina la base de datos 
+        /// </summary>
+        /// <param name="base">Base de datos a eliminar</param>
         public void EliminarBase(BaseDatos @base)
         {
             Directory.Delete(SaveD.InitialDirectory + "//" + @base._NombreBD, true);
         }
+       /// <summary>
+       /// Funcion que Guarda una base de datos completa
+       /// </summary>
+       /// <param name="json">Base de datos a guardar</param>
         public void GuardaBase(BaseDatos json)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -114,10 +135,19 @@ namespace BasesDatos
             }
             catch (Exception) { MessageBox.Show("No se pudo guardar el archivo."); }
         }
+       /// <summary>
+       /// Funcion que elimina una tabla de la BD
+       /// </summary>
+       /// <param name="nombreTabla"></param>
         public void EliminaTabla(string nombreTabla)
         {
             File.Delete(SaveD.InitialDirectory + "//" + BaseD._NombreBD + "//" + nombreTabla + ".TB");
         }
+       /// <summary>
+       /// Funcion que Crea el archivo BD y su carpeta
+       /// </summary>
+       /// <param name="obj">NOmbre de la BD</param>
+       /// <param name="op">Crear con carpeta</param>
         public void CreaArchivo(string obj, int op)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();

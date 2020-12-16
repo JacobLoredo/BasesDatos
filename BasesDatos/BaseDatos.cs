@@ -9,12 +9,13 @@ namespace BasesDatos
     {
         private string NombreBD;
         private List<Tabla> tablas;
-
+        /// <summary>
+        /// Constructror sin parametros
+        /// </summary>
         public BaseDatos()
         {
 
         }
-
         /// <summary>
         /// Constructor de la clase BD
         /// </summary>
@@ -41,7 +42,6 @@ namespace BasesDatos
        /// Get and Set que regresa todas las tablas en la base de datos
        /// </summary>
         public List<Tabla> Tablas { get { return tablas; } set { tablas = value; } }
-        
         /// <summary>
         /// Get and Set que regresa el nombre de la base de datos
         /// </summary>

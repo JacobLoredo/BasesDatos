@@ -129,7 +129,6 @@
             this.TBTamaño.Name = "TBTamaño";
             this.TBTamaño.Size = new System.Drawing.Size(97, 20);
             this.TBTamaño.TabIndex = 15;
-            this.TBTamaño.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // CBForanea
             // 
@@ -139,7 +138,6 @@
             this.CBForanea.Size = new System.Drawing.Size(97, 21);
             this.CBForanea.TabIndex = 14;
             this.CBForanea.Visible = false;
-            this.CBForanea.SelectedIndexChanged += new System.EventHandler(this.CBForanea_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -174,7 +172,6 @@
             this.label3.Size = new System.Drawing.Size(114, 17);
             this.label3.TabIndex = 11;
             this.label3.Text = "Tipo De Llave:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label1
             // 
@@ -210,7 +207,6 @@
             this.label2.Size = new System.Drawing.Size(74, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "Nombre: ";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBox1
             // 
@@ -218,7 +214,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(144, 20);
             this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // NombreTabla
             // 

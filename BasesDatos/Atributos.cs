@@ -3,11 +3,19 @@ using System.Windows.Forms;
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Form para ingresar atributos a las tablas de la base de datos
+    /// </summary>
     public partial class FormAtributos : Form
     {
         public BaseDatos @base;
         public Tabla tablaActual;
         public Archivo Archivo;
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
+        /// <param name="tabla">Tabla donde se van a ingresar los atributos</param>
+        /// <param name="baseDatos">Base de datos en la que se esta trabajando</param>
         public FormAtributos(Tabla tabla, BaseDatos baseDatos)
         {
             InitializeComponent();
@@ -19,6 +27,9 @@ namespace BasesDatos
             CargarAtributos();
 
         }
+        /// <summary>
+        /// Funcion que carga los atributos existentes dentro del dataGridView
+        /// </summary>
         public void CargarAtributos()
         {
             if (tablaActual._Atributos.Count > 0)
@@ -46,6 +57,11 @@ namespace BasesDatos
                 }
             }
         }
+        /// <summary>
+        /// Evento del Combox que contiene los diferentes tipos de llaves
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CBTipoLlave_SelectedIndexChanged(object sender, EventArgs e)
         {
             //MessageBox.Show(CBTipoLlave.SelectedIndex.ToString());
@@ -78,17 +94,15 @@ namespace BasesDatos
                 CBForanea.Items.Clear();
             }
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// Evento del Combox que contiene los diferentes tipos de datos que se pueden ingresar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CBTipoDato_SelectedIndexChanged(object sender, EventArgs e)
         {
             TBTamaño.Enabled = true;
@@ -109,19 +123,12 @@ namespace BasesDatos
             }
 
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
+       
+        /// <summary>
+        /// Funcion que busca el atributo a modificar
+        /// </summary>
         public void BuscaAtributoModificar()
         {
-
             foreach (Atributo item in tablaActual._Atributos)
             {
                 if (item._NombreAtributo == (string)dataGridAtributos.CurrentRow.Cells[0].Value)
@@ -133,6 +140,9 @@ namespace BasesDatos
 
             }
         }
+       /// <summary>
+       /// Funcion que busca el atributo a eliminar
+       /// </summary>
         public void BuscaAtributoEliminar()
         {
 
@@ -149,6 +159,10 @@ namespace BasesDatos
 
             }
         }
+        /// <summary>
+        /// Funcion que modifica un atributo por su indice en la tablas
+        /// </summary>
+        /// <param name="index">indice del atributo a modificar</param>
         public void ModificaAtributo(int index)
         {
             /*Checa cada unas de las posibilidades en las que la persona quiera cambiar 1 o mas elementos de un atributo*/
@@ -194,6 +208,11 @@ namespace BasesDatos
             CargarAtributos();
 
         }
+       /// <summary>
+       /// Evento para modifcar un atributo
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
             if ((tablaActual._datos.Count == 0))
@@ -227,12 +246,21 @@ namespace BasesDatos
             }
         }
 
-
+        /// <summary>
+        /// Evento que cierra el forma actual de Atributos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iconClose_Click_1(object sender, EventArgs e)
         {
             this.Close();
 
         }
+       /// <summary>
+       /// Funcion que checa que el atributo a ingresar no se encuentra ya en la tabla actual
+       /// </summary>
+       /// <param name="NombreAtributo">Nombre del atributo a chechar si esta repetido</param>
+       /// <returns></returns>
         public int ChecaAtributoRepetida(string NombreAtributo)
         {
             int repetido = 0;
@@ -255,6 +283,10 @@ namespace BasesDatos
             }
             return repetido;
         }
+        /// <summary>
+        /// Funcion que regresa si el atributo a ingresar es de Tipo PK y si no se encuentra 
+        /// </summary>
+        /// <returns>si se encuentra repetida la clave primaria o no</returns>
         public bool ChecaClavePrimariaRepetida()
         {
             bool ban = false;
@@ -278,16 +310,38 @@ namespace BasesDatos
             }
             return ban;
         }
+       /// <summary>
+       /// Funcion que crea un nuevo atributo
+       /// </summary>
+       /// <param name="n">Nombre del atributo</param>
+       /// <param name="TD">Tipo de dato</param>
+       /// <param name="LL">Tipo de llave </param>
+       /// <param name="T">Tamaño del dato</param>
+       /// <returns></returns>
         public Atributo CreaAtributo(string n, char TD, int LL, int T)
         {
             Atributo atributo = new Atributo(n, TD, LL, T);
             return atributo;
         }
+        /// <summary>
+        /// Funcion que crea un nuevo atributo que contiene una referencia FK
+        /// </summary>
+        /// <param name="n">Nombre del atributo nuevo</param>
+        /// <param name="TD">Tipo de dato</param>
+        /// <param name="LL">Tipo de llave</param>
+        /// <param name="FK">Nombre de la tabla con la que se relaciona FK</param>
+        /// <param name="T">Tamaño del atributo</param>
+        /// <returns>Nuevo atributo creado</returns>
         public Atributo CreaAtributoFK(string n, char TD, int LL, string FK, int T)
         {
             Atributo atributo = new Atributo(n, TD, LL, FK, T);
             return atributo;
         }
+       /// <summary>
+       /// Evento para agregar un nuevo atributo
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
             if (tablaActual._datos.Count == 0)
@@ -340,7 +394,11 @@ namespace BasesDatos
                 MessageBox.Show("no se puede agregar nuevos atributos ya que se contienen datos, eliminalos primero");
             }
         }
-
+        /// <summary>
+        /// Evento que elimina un atributo 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBotonEliminar_Click(object sender, EventArgs e)
         {
             if (tablaActual._datos.Count == 0)
@@ -354,7 +412,11 @@ namespace BasesDatos
                 MessageBox.Show("no se puede agregar eliminar atributos ya que se contienen datos, eliminalos primero");
             }
         }
-
+        /// <summary>
+        /// Evento que crea una nueva instancia para ingresar registros en la tabla Actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             RegistrosFm formRegistros = new RegistrosFm(@base, tablaActual);
@@ -366,16 +428,6 @@ namespace BasesDatos
             this.Tag = formRegistros;
             formRegistros.BringToFront();
             formRegistros.Show();
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CBForanea_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

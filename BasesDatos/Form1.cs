@@ -117,7 +117,11 @@ namespace BasesDatos
             this.PanelCentral.Tag = form;
             form.Show();
         }
-
+        /// <summary>
+        /// Evento que abre una base de datos y crea su instancia correspondiente
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             arc = new Archivo();
@@ -136,7 +140,11 @@ namespace BasesDatos
             }
         }
 
-
+        /// <summary>
+        /// Evento que crea una nueva instancia y captura el nombre de una base de datos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (arc.SaveD.ShowDialog() == DialogResult.OK)
@@ -160,7 +168,11 @@ namespace BasesDatos
         {
 
         }
-
+        /// <summary>
+        /// Evento que cierra un archivo de base de datos completamente 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cerrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             arc.CierraArchivo();
@@ -169,13 +181,21 @@ namespace BasesDatos
                 this.PanelCentral.Controls.RemoveAt(0);
             MessageBox.Show("Cerrar ventana");
         }
-
+        /// <summary>
+        /// Evento que abre el Form para realizar consultas con la base de datos actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Abre_modulo_sql(object sender, EventArgs e)
         {
             sql = new SQL_formulario(this.BaseDatos);
             sql.Show();
         }
-
+        /// <summary>
+        /// Evento para llenar un textbox para cambiar el nombre de una base de datos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cambiarNombreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (toolStripTextBox1.Text != "")
@@ -184,7 +204,11 @@ namespace BasesDatos
             }
 
         }
-
+        /// <summary>
+        /// Evento que elimina la base de datos actual
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             arc.EliminarBase(BaseDatos);
@@ -194,14 +218,15 @@ namespace BasesDatos
                 this.PanelCentral.Controls.RemoveAt(0);
             MessageBox.Show("La base de datos actual ha sido eliminada");
         }
-
-
-
         private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripTextBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

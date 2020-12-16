@@ -3,15 +3,25 @@ using System.Windows.Forms;
 
 namespace BasesDatos
 {
+    /// <summary>
+    /// Form para mostrar las tablas en la base de datos
+    /// </summary>
     public partial class FormEntidades : Form
     {
         public Archivo Archivo;
         public BaseDatos baseActual;
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public FormEntidades()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Evento que pasa cuando recien inicia carga los elementos en la base de datos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormEntidades_Load(object sender, EventArgs e)
         {
             if (baseActual != null)
@@ -21,6 +31,9 @@ namespace BasesDatos
             }
 
         }
+        /// <summary>
+        /// Funcion que se encarga de leer las tablas y las carga en el DataGriedView
+        /// </summary>
         public void cargaTablas()
         {
             if (baseActual.Tablas.Count > 0)
@@ -33,6 +46,11 @@ namespace BasesDatos
                 }
             }
         }
+        /// <summary>
+        /// Evento para agregar una nueva tabla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBotonAgregar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
@@ -52,6 +70,9 @@ namespace BasesDatos
                 textBox1.Text = "";
             }
         }
+        /// <summary>
+        /// Funcion que actualiza el contenido del DataGridView
+        /// </summary>
         public void actualizaDataGrid()
         {
             DataGridEntidades.Rows.Clear();
@@ -63,7 +84,13 @@ namespace BasesDatos
                 DataGridEntidades.Rows[n].Cells[0].Value = tb._NombreTabla;
 
             }
-        }
+        } 
+        /// <summary>
+        /// Funcion que comprueba si la tabla nueva a ingresar ya existe
+        /// </summary>
+        /// <param name="NombreEntidad">Nombre de la tabla nueva a ingresar</param>
+        /// <returns></returns>
+
         public int ChecaEntidadRepetida(string NombreEntidad)
         {
             int repetido = 0;
@@ -90,6 +117,9 @@ namespace BasesDatos
         {
 
         }
+        /// <summary>
+        /// Funcion que busca la tabla para realizar la modificacion de nombre
+        /// </summary>
         public void BuscaTablaModificar()
         {
 
@@ -105,6 +135,9 @@ namespace BasesDatos
 
             }
         }
+        /// <summary>
+        /// Funcion que busca la tabla para poder eliminarla de la base de datos
+        /// </summary>
         public void BuscaTablaEliminar()
         {
 
@@ -122,6 +155,10 @@ namespace BasesDatos
 
             }
         }
+        /// <summary>
+        /// Funcion que busca el nombre de la tabla por indice para modificar el nombre
+        /// </summary>
+        /// <param name="index">indice de la tabla a modificar</param>
         public void ModificaNombreTabla(int index)
         {
             Archivo.EliminaTabla(baseActual.Tablas[index]._NombreTabla);
@@ -129,7 +166,11 @@ namespace BasesDatos
             Archivo.GuardarTabla(baseActual.Tablas[index]);
             Archivo.GuardaBase(baseActual);
         }
-
+        /// <summary>
+        /// Evento del boton para modificar una tabla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBotonModificar_Click(object sender, EventArgs e)
         {
             int res = ChecaEntidadRepetida(textBox1.Text);
@@ -146,12 +187,19 @@ namespace BasesDatos
             }
 
         }
-
+        /// <summary>
+        /// Evento del boton para eliminar una tabla
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBotonEliminar_Click(object sender, EventArgs e)
         {
-
             BuscaTablaEliminar();
         }
+        /// <summary>
+        /// Funcion que regresa una tabla
+        /// </summary>
+        /// <returns>regresa la tabla si coincide con algun elemento existente</returns>
         public Tabla RegresaTabla()
         {
             Tabla tabla = new Tabla();
@@ -167,6 +215,11 @@ namespace BasesDatos
             return tabla;
 
         }
+       /// <summary>
+       /// Evento del boton para agregar atributos dentro de una tabla en especifico
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void btnBotonAgregarAtributos_Click(object sender, EventArgs e)
         {
             FormAtributos formAtributos = new FormAtributos(RegresaTabla(), baseActual);
